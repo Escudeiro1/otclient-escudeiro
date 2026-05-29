@@ -35,6 +35,21 @@ Image::Image(const Size& size, const int bpp, const uint8_t* pixels) : m_size(si
         memcpy(&m_pixels[0], pixels, m_pixels.size());
 }
 
+ImagePtr Image::scaledNearest(int newW, int newH) const {
+    auto result = std::make_shared<Image>(Size(newW, newH), m_bpp);
+    auto& dst = result->getPixels();
+    for (int y = 0; y < newH; ++y) {
+        for (int x = 0; x < newW; ++x) {
+            int srcX = x * m_size.width() / newW;
+            int srcY = y * m_size.height() / newH;
+            const uint8_t* src = m_pixels.data() + (srcY * m_size.width() + srcX) * m_bpp;
+            uint8_t* d = dst.data() + (y * newW + x) * m_bpp;
+            std::copy(src, src + m_bpp, d);
+        }
+    }
+    return result;
+}
+
 ImagePtr Image::load(const std::string& file)
 {
     const auto& path = g_resources.guessFilePath(file, "png");

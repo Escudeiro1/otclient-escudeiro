@@ -1173,6 +1173,15 @@ void X11Window::restoreMouseCursor()
     });
 }
 
+void X11Window::clearMouseCursors()
+{
+    for (auto& state : m_cursors) {
+        for (Cursor c : state.cursors)
+            XFreeCursor(m_display, c);
+    }
+    m_cursors.clear();
+}
+
 int X11Window::internalLoadMouseCursor(const ImagePtr& image, const Point& hotSpot)
 {
     static constexpr uint8_t kCursorAlphaThreshold = 32;

@@ -77,6 +77,7 @@ public:
     void setMouseCursor(int cursorId);
     void setSystemCursor(const std::string& cursorName) override;
     void restoreMouseCursor();
+    void clearMouseCursors() override;
 
     void setTitle(const std::string_view title);
     void setMinimumSize(const Size& minimumSize);

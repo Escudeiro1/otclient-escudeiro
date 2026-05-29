@@ -68,6 +68,8 @@ public:
     virtual void setMouseCursor(int cursorId) = 0;
     virtual void restoreMouseCursor() = 0;
     virtual void setSystemCursor(const std::string& /*cursorName*/) {}
+    virtual void clearMouseCursors() {}
+    void setMouseCursorScale(float scale) { m_cursorScale = scale; }
 
     virtual void setTitle(std::string_view title) = 0;
     virtual void setMinimumSize(const Size& minimumSize) = 0;
@@ -170,6 +172,7 @@ protected:
     bool m_maximized{ false };
     bool m_vsync{ false };
     float m_displayDensity{ DEFAULT_DISPLAY_DENSITY };
+    float m_cursorScale{ 1.0f };
 
     std::function<void()> m_onClose;
     OnResizeCallback m_onResize;

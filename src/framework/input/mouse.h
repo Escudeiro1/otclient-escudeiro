@@ -40,6 +40,7 @@ public:
     
     void setUseNativeCursor(bool useNative) { m_useNativeCursor = useNative; }
     bool isUsingNativeCursor() const { return m_useNativeCursor; }
+    void setCursorScale(float scale);
 
 private:
     void checkStackSize();
@@ -47,6 +48,7 @@ private:
     stdext::map<std::string, int> m_cursors;
     std::deque<int> m_cursorStack;
     bool m_useNativeCursor{ false };
+    std::string m_cursorsFile;
 };
 
 extern Mouse g_mouse;

@@ -37,6 +37,7 @@ void Mouse::terminate()
 
 void Mouse::loadCursors(const std::string& filename)
 {
+    m_cursorsFile = filename;
     const auto& path = g_resources.guessFilePath(filename, "otml");
     try {
         const auto& doc = OTMLDocument::parse(path);
@@ -112,6 +113,17 @@ void Mouse::popCursor(const std::string& name)
             g_window.restoreMouseCursor();
         }
     }
+}
+
+void Mouse::setCursorScale(float scale)
+{
+    g_window.setMouseCursorScale(scale);
+    if (m_cursorsFile.empty())
+        return;
+    m_cursors.clear();
+    m_cursorStack.clear();
+    g_window.clearMouseCursors();
+    loadCursors(m_cursorsFile);
 }
 
 bool Mouse::isCursorChanged()

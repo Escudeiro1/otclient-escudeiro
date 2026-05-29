@@ -481,6 +481,17 @@ return {
             hudWidget:setText(string.format('HUD Scale: %sx', math.max(value + 0.5, 1)))
         end
     },
+    mouseCursorScale                  = {
+        value = 1,
+        action = function(value, options, controller, panels, extraWidgets)
+            local scale = value / 2 + 0.5
+            local widget = panels.interfaceHUD:recursiveGetChildById('mouseCursorScale')
+            widget:setText(string.format('Mouse cursor scale: %sx', scale))
+            if not g_mouse.isUsingNativeCursor() then
+                g_mouse.setCursorScale(scale)
+            end
+        end
+    },
     creatureInformationScale          = {
         value = g_platform.isMobile() and 2 or 0,
         action = function(value, options, controller, panels, extraWidgets)

@@ -46,6 +46,7 @@ public:
 
         m_pixels.resize((m_size = size).area() * static_cast<size_t>(m_bpp), 0);
     }
+    ImagePtr scaledNearest(int newW, int newH) const;
     bool nextMipmap();
 
     void flipVertically();
