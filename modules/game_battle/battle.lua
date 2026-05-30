@@ -1479,6 +1479,9 @@ function init()
     Keybind.new("Windows", "Show/hide battle list", "Ctrl+B", "")
     Keybind.bind("Windows", "Show/hide battle list", {{ type = KEY_DOWN, callback = toggle }})
 
+    Keybind.new("Battle", "Attack first in list", {[CHAT_MODE.ON] = "", [CHAT_MODE.OFF] = "Space"}, "")
+    Keybind.bind("Battle", "Attack first in list", {{ type = KEY_DOWN, callback = function() attackNext() end }})
+
     -- Setup scrollbar - use default MiniWindow behavior
     local scrollbar = battleWindow:getChildById('miniwindowScrollBar')
     if scrollbar then
@@ -2609,6 +2612,7 @@ function terminate() -- Terminating the Module (unload)
     toggleFilterButton = nil
 
     Keybind.delete("Windows", "Show/hide battle list")
+    Keybind.delete("Battle", "Attack first in list")
 
     disconnect(g_game, {
         onAttackingCreatureChange = onAttack,

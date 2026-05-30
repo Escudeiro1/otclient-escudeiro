@@ -1111,6 +1111,13 @@ function onContainerOpen(container, previousContainer)
     if not previousContainer then
         local panel = modules.game_interface.findContentPanelAvailable(containerWindow, cellSize.height)
         panel:addChild(containerWindow)
+        local savedOnClose = containerWindow.onClose
+        containerWindow.onClose = nil
+        containerWindow:setupOnStart()
+        containerWindow.onClose = savedOnClose
+        if not containerWindow:isVisible() then
+            containerWindow:setVisible(true)
+        end
     end
 
     if not previousContainer or previousContainer:getCapacity() >= container:getCapacity() then
