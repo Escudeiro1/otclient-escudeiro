@@ -28,7 +28,7 @@ GameStore = {}
 -- == Enums ==--
 GameStore.website = {
     WEBSITE_GETCOINS = "https://github.com/mehah/otclient",
-    --IMAGES_URL =  "http://localhost/images/store/" --./game_store --https://docs.opentibiabr.com/opentibiabr/downloads/website-applications/applications#store-for-client-13-1
+    IMAGES_URL = "https://ot.inmundosstuff.com/images/store/"
 }
 
 GameStore.CoinType = {
@@ -119,14 +119,19 @@ end
 
 local function setImagenHttp(widget, url, isIcon)
     if GameStore.website.IMAGES_URL then
-        HTTP.downloadImage(GameStore.website.IMAGES_URL .. url, function(path, err)
+        local fullUrl = GameStore.website.IMAGES_URL .. url:gsub("^/", "")
+        g_logger.info("[store] fetching: " .. fullUrl)
+        HTTP.downloadImage(fullUrl, function(path, err)
             if err then
-                g_logger.warning("HTTP error: " .. err .. " - " .. GameStore.website.IMAGES_URL .. url)
-                if isIcon then
-                    widget:setIcon("/game_store/images/dynamic-image-error")
-                else
-                    widget:setImageSource("/game_store/images/dynamic-image-error")
-                    widget:setImageFixedRatio(false)
+                local sizeDir = url:match("^/?(%d+)/")
+                if sizeDir then
+                    local fallbackUrl = GameStore.website.IMAGES_URL .. sizeDir .. "/base.png"
+                    HTTP.downloadImage(fallbackUrl, function(fbPath, fbErr)
+                        if not fbErr then
+                            if isIcon then widget:setIcon(fbPath)
+                            else widget:setImageSource(fbPath) end
+                        end
+                    end)
                 end
                 return
             end
