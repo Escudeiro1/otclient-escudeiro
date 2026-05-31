@@ -120,7 +120,7 @@ end
 local function setImagenHttp(widget, url, isIcon)
     if GameStore.website.IMAGES_URL then
         local fullUrl = GameStore.website.IMAGES_URL .. url:gsub("^/", "")
-        g_logger.info("[store] fetching: " .. fullUrl)
+        --g_logger.info("[store] fetching: " .. fullUrl)
         HTTP.downloadImage(fullUrl, function(path, err)
             if err then
                 local sizeDir = url:match("^/?(%d+)/")
