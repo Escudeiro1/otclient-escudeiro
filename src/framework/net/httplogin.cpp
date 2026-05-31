@@ -32,13 +32,120 @@
 #include "httplogin.h"
 #include <framework/core/asyncdispatcher.h>
 #include <framework/core/eventdispatcher.h>
+#include <framework/core/logger.h>
 #include <nlohmann/json.hpp>
+#include <cctype>
+#include <spdlog/spdlog.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/fetch.h>
 #endif
 
 using json = nlohmann::json;
+
+namespace {
+    constexpr std::string_view s_redacted = "***";
+    constexpr std::size_t s_maxSanitizedBodySize = 2048;
+
+    std::string toLowerCopy(const std::string_view value)
+    {
+        std::string out;
+        out.reserve(value.size());
+        for (const auto c : value) {
+            out.push_back(static_cast<char>(std::tolower(static_cast<unsigned char>(c))));
+        }
+        return out;
+    }
+
+    std::string redactTokenLikeValue(const std::string& value)
+    {
+        if (value.empty() || value.size() <= 8) {
+            return std::string{ s_redacted };
+        }
+        return value.substr(0, 4) + "..." + value.substr(value.size() - 4);
+    }
+
+    bool isSensitiveRequestField(const std::string_view key)
+    {
+        const auto lowered = toLowerCopy(key);
+        return lowered.find("password") != std::string::npos
+            || lowered.find("token") != std::string::npos
+            || lowered.find("session") != std::string::npos;
+    }
+
+    bool isSensitiveResponseField(const std::string_view key)
+    {
+        const auto lowered = toLowerCopy(key);
+        return lowered.find("token") != std::string::npos
+            || lowered.find("session") != std::string::npos
+            || lowered.find("cookie") != std::string::npos;
+    }
+
+    bool isSensitiveHeaderKey(const std::string_view key)
+    {
+        const auto lowered = toLowerCopy(key);
+        return lowered == "authorization"
+            || lowered == "proxy-authorization"
+            || lowered == "cookie"
+            || lowered == "set-cookie"
+            || lowered == "x-auth-token";
+    }
+
+    std::string sanitizeHeaderValue(const std::string_view key, const std::string_view value)
+    {
+        if (isSensitiveHeaderKey(key)) {
+            return std::string{ s_redacted };
+        }
+        return std::string{ value };
+    }
+
+    void sanitizeJson(json& value, const bool requestBody)
+    {
+        if (value.is_object()) {
+            for (auto it = value.begin(); it != value.end(); ++it) {
+                const bool sensitiveField = requestBody ? isSensitiveRequestField(it.key()) : isSensitiveResponseField(it.key());
+                if (sensitiveField) {
+                    if (!requestBody && it.value().is_string()) {
+                        it.value() = redactTokenLikeValue(it.value().get<std::string>());
+                    } else {
+                        it.value() = std::string{ s_redacted };
+                    }
+                    continue;
+                }
+                sanitizeJson(it.value(), requestBody);
+            }
+            return;
+        }
+
+        if (value.is_array()) {
+            for (auto& item : value) {
+                sanitizeJson(item, requestBody);
+            }
+        }
+    }
+
+    std::string sanitizeHttpBody(const std::string& body, const bool requestBody)
+    {
+        const auto truncateBodyForLog = [](const std::string& rawBody) {
+            if (rawBody.size() <= s_maxSanitizedBodySize) {
+                return rawBody;
+            }
+            return rawBody.substr(0, s_maxSanitizedBodySize) + "...";
+        };
+
+        if (body.empty()) {
+            return {};
+        }
+
+        try {
+            auto parsed = json::parse(body);
+            sanitizeJson(parsed, requestBody);
+            return parsed.dump();
+        } catch (...) {
+            return fmt::format("[unparsed-body] {}", truncateBodyForLog(body));
+        }
+    }
+}
 
 LoginHttp::LoginHttp() {
     this->characters.clear();
@@ -53,27 +160,34 @@ void LoginHttp::cancel() {
 }
 
 void LoginHttp::Logger(const auto& req, const auto& res) {
-    std::cout << "======= LOG ======= " << std::endl;
-    std::cout << "-- REQUEST --" << std::endl;
-    std::cout << req.method << std::endl;
-    std::cout << req.path << std::endl;
-    std::cout << req.body << std::endl;
+    if (!spdlog::should_log(spdlog::level::debug)) {
+        return;
+    }
+
+    const auto sanitizedRequestBody = sanitizeHttpBody(req.body, true);
+    const auto sanitizedResponseBody = sanitizeHttpBody(res.body, false);
+
+    g_logger.debug("======= HTTP LOG =======");
+    g_logger.debug("-- REQUEST --");
+    g_logger.debug("{}", req.method);
+    g_logger.debug("{}", req.path);
+    g_logger.debug("{}", sanitizedRequestBody);
 
     for (auto itr = req.headers.begin(); itr != req.headers.end(); ++itr) {
-        std::cout << itr->first << '\t' << itr->second << '\n';
+        g_logger.debug("{}\t{}", itr->first, sanitizeHeaderValue(itr->first, itr->second));
     }
-    std::cout << "-- RESPONSE --" << std::endl;
-    std::cout << res.version << std::endl;
-    std::cout << res.status << std::endl;
-    std::cout << res.reason << std::endl;
-    std::cout << res.body << std::endl;
-    std::cout << res.location << std::endl;
+    g_logger.debug("-- RESPONSE --");
+    g_logger.debug("{}", res.version);
+    g_logger.debug("{}", res.status);
+    g_logger.debug("{}", res.reason);
+    g_logger.debug("{}", sanitizedResponseBody);
+    g_logger.debug("{}", res.location);
 
     for (auto itr = res.headers.begin(); itr != res.headers.end(); ++itr) {
-        std::cout << itr->first << '\t' << itr->second << '\n';
+        g_logger.debug("{}\t{}", itr->first, sanitizeHeaderValue(itr->first, itr->second));
     }
 
-    std::cout << "========= " << std::endl;
+    g_logger.debug("=========");
 }
 
 void LoginHttp::startHttpLogin(const std::string& host, const std::string& path,
@@ -89,14 +203,11 @@ void LoginHttp::startHttpLogin(const std::string& host, const std::string& path,
 
     if (auto res = cli.Post(path, headers, body.dump(1), "application/json")) {
         if (res->status == 200) {
-            const json bodyResponse = json::parse(res->body);
-            std::cout << bodyResponse.dump() << std::endl;
-
-            std::cout << std::boolalpha << json::accept(res->body) << std::endl;
+            g_logger.debug("{}", sanitizeHttpBody(res->body, false));
         }
     } else {
         const auto err = res.error();
-        std::cout << "HTTP error: " << to_string(err) << std::endl;
+        g_logger.warning("HTTP error: {}", to_string(err));
     }
 }
 
@@ -290,17 +401,15 @@ LoginHttp::HttpResponse LoginHttp::loginHttpsJson(const std::string& host,
         client.Post(path, headers, body.dump(), "application/json");
     if (!response) {
         this->errorMessage = "Failed to connect to server (HTTPS). Check the address and port.";
-        std::cout << "HTTPS error: unknown" << std::endl;
+        g_logger.warning("HTTPS error: {}", to_string(response.error()));
     } else if (response->status != Success) {
         this->errorMessage = "HTTP " + std::to_string(response->status);
         if (!response->reason.empty()) {
             this->errorMessage += " - " + response->reason;
         }
-        std::cout << "HTTPS error: " << to_string(response.error())
-            << std::endl;
+        g_logger.warning("HTTPS request returned HTTP {} {}", response->status, response->reason);
     } else {
-        std::cout << "HTTPS status: " << to_string(response.error())
-            << std::endl;
+        g_logger.debug("HTTPS status: HTTP {}", response->status);
     }
 
     if (!response)
@@ -335,17 +444,15 @@ LoginHttp::HttpResponse LoginHttp::loginHttpJson(const std::string& host,
         client.Post(path, headers, body.dump(), "application/json");
     if (!response) {
         this->errorMessage = "Failed to connect to server (HTTP). Check the address and port.";
-        std::cout << "HTTP error: unknown" << std::endl;
+        g_logger.warning("HTTP error: {}", to_string(response.error()));
     } else if (response->status != Success) {
         this->errorMessage = "HTTP " + std::to_string(response->status);
         if (!response->reason.empty()) {
             this->errorMessage += " - " + response->reason;
         }
-        std::cout << "HTTP error: " << to_string(response.error())
-            << std::endl;
+        g_logger.warning("HTTP request returned HTTP {} {}", response->status, response->reason);
     } else {
-        std::cout << "HTTP status: " << to_string(response.error())
-            << std::endl;
+        g_logger.debug("HTTP status: HTTP {}", response->status);
     }
     if (!response)
         return {};
@@ -360,7 +467,7 @@ bool LoginHttp::parseJsonResponse(const std::string& body) {
         if (cancelled.load()) return false;
         responseJson = json::parse(body);
     } catch (...) {
-        g_logger.info("Failed to parse json response");
+        g_logger.warning("Failed to parse json response");
         this->errorMessage = "Invalid response received from server (expected JSON).";
         return false;
     }

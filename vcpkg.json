@@ -23,6 +23,7 @@
     "zlib",
     "bshoshany-thread-pool",
     "fmt",
+    "spdlog",
     "utfcpp",
     "gtest",
     "freetype",
