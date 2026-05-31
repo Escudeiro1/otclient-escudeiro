@@ -1,7 +1,7 @@
 // todo change to css/html
 MainWindow
   !text: tr('Pick reward')
-  size: 451 390
+  size: 451 410
   @onEscape: modules.game_rewardwall.destroyPickReward()
   padding: 20
   color: #c0c0c0

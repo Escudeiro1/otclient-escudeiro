@@ -541,7 +541,7 @@ function rewardWallController:onClickDisplayWindowsPickRewardWindow(event)
                 getItem:getChildById('item'):setItemId(item.itemId)
                 getItem:getChildById('title'):setText(item.name)
                 getItem:setBackgroundColor((i % 2 == 0) and COLORS.BASE_1 or COLORS.BASE_2)
-                getItem.totalWeight = item.weight or 1
+                getItem.totalWeight = (item.weight or 100) / 100
                 getItem.itemsToSelect = itemsToSelect
 
             end
@@ -729,7 +729,7 @@ function onTextChangeChangeNumber(getPanel)
         local weightLabel = widget:getChildById('weight')
         if weightLabel then
             local weightText = weightLabel:getText()
-            local weightValue = tonumber(weightText:match("(%d+)"))
+            local weightValue = tonumber(weightText:match("([%d%.]+)"))
             if weightValue then
                 totalWeight = totalWeight + weightValue
             end
