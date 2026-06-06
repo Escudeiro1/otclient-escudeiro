@@ -569,7 +569,12 @@ function rewardWallController:onClickDisplayWindowsPickRewardWindow(event)
     elseif event.target.bundleType == bundleType.XPBOOST or event.target.bundleType == bundleType.PREY then
         hide()
         actualUsed = {}
-        managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
+        if bonusShrine == OPEN_WINDOWS.SHRINE then
+            g_game.requestGetRewardDaily(bonusShrine, actualUsed)
+            show()
+        else
+            managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
+        end
     end
 end
 
@@ -692,7 +697,12 @@ function onClickBtnOk()
     if table.empty(actualUsed) then
         return
     end
-    managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
+    if bonusShrine == OPEN_WINDOWS.SHRINE then
+        g_game.requestGetRewardDaily(bonusShrine, actualUsed)
+        destroyPickReward(false)
+    else
+        managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
+    end
 end
 
 function destroyPickReward(bool)
