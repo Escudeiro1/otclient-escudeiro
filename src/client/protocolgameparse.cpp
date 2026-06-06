@@ -3840,13 +3840,13 @@ void ProtocolGame::parseCreaturesMark(const InputMessagePtr& msg)
     }
 
     if (squareType == 0) {
-        creature->hideStaticSquare();
+        creature->hideServerSquare();
         creature->removeTimedSquare();
         return;
     }
 
     if (squareType == 2) {
-        creature->showStaticSquare(Color::from8bit(squareColor != 0 ? squareColor : 1));
+        creature->showServerSquare(Color::from8bit(squareColor != 0 ? squareColor : 1));
     } else {
         creature->addTimedSquare(squareColor);
     }
@@ -4191,9 +4191,9 @@ CreaturePtr ProtocolGame::getCreature(const InputMessagePtr& msg, int type) cons
 
             if (creature) {
                 if (mark == 0xff) {
-                    creature->hideStaticSquare();
+                    creature->hideServerSquare();
                 } else {
-                    creature->showStaticSquare(Color::from8bit(mark));
+                    creature->showServerSquare(Color::from8bit(mark));
                 }
             }
         }

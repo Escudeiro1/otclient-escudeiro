@@ -654,6 +654,10 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<Creature>("setManaPercent", &Creature::setManaPercent);
     g_lua.bindClassMemberFunction<Creature>("showStaticSquare", &Creature::showStaticSquare);
     g_lua.bindClassMemberFunction<Creature>("hideStaticSquare", &Creature::hideStaticSquare);
+    g_lua.bindClassMemberFunction<Creature>("showServerSquare", &Creature::showServerSquare);
+    g_lua.bindClassMemberFunction<Creature>("hideServerSquare", &Creature::hideServerSquare);
+    g_lua.bindClassMemberFunction<Creature>("isServerSquareVisible", &Creature::isServerSquareVisible);
+    g_lua.bindClassMemberFunction<Creature>("getServerSquareColor", &Creature::getServerSquareColor);
     g_lua.bindClassMemberFunction<Creature>("isWalking", &Creature::isWalking);
     g_lua.bindClassMemberFunction<Creature>("isInvisible", &Creature::isInvisible);
     g_lua.bindClassMemberFunction<Creature>("isDead", &Creature::isDead);

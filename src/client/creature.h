@@ -88,6 +88,8 @@ public:
     void removeTimedSquare() { m_showTimedSquare = false; }
     void showStaticSquare(const Color& color) { m_showStaticSquare = true; m_staticSquareColor = color; }
     void hideStaticSquare() { m_showStaticSquare = false; }
+    void showServerSquare(const Color& color) { m_showServerSquare = true; m_serverSquareColor = color; }
+    void hideServerSquare() { m_showServerSquare = false; }
 
     // walk related
     void turn(Otc::Direction direction);
@@ -140,6 +142,8 @@ public:
     Color getTimedSquareColor() { return m_timedSquareColor; }
     bool isStaticSquareVisible() { return m_showStaticSquare; }
     Color getStaticSquareColor() { return m_staticSquareColor; }
+    bool isServerSquareVisible() { return m_showServerSquare; }
+    Color getServerSquareColor() { return m_serverSquareColor; }
 
     ticks_t getWalkTicksElapsed() { return m_walkTimer.ticksElapsed(); }
 
@@ -315,6 +319,7 @@ private:
 
     Color m_timedSquareColor{ Color::white };
     Color m_staticSquareColor{ Color::white };
+    Color m_serverSquareColor{ Color::white };
     Color m_informationColor{ Color::white };
 
     Bounce m_bounce;
@@ -360,6 +365,7 @@ private:
     bool m_allowAppearWalk{ false };
     bool m_showTimedSquare{ false };
     bool m_showStaticSquare{ false };
+    bool m_showServerSquare{ false };
     bool m_cameraFollowing{ false };
 
     bool m_removed{ true };

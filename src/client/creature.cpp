@@ -85,8 +85,14 @@ void Creature::draw(const Point& dest, const bool drawThings, LightView* /*light
             g_drawPool.addBoundingRect(Rect(dest + (m_walkOffset - getDisplacement() + 2) * g_drawPool.getScaleFactor(), Size(28 * g_drawPool.getScaleFactor())), m_timedSquareColor, std::max<int>(static_cast<int>(2 * g_drawPool.getScaleFactor()), 1));
         }
 
+        // Server-sent PvP frame (e.g. yellow aggression square) — never cleared by UI actions
+        if (m_showServerSquare) {
+            g_drawPool.addBoundingRect(Rect(dest + (m_walkOffset - getDisplacement()) * g_drawPool.getScaleFactor(), Size(g_gameConfig.getSpriteSize() * g_drawPool.getScaleFactor())), m_serverSquareColor, std::max<int>(static_cast<int>(2 * g_drawPool.getScaleFactor()), 1));
+        }
+
+        // UI square (battle list targeting / hover) — drawn on top of server square
         if (m_showStaticSquare) {
-            g_drawPool.addBoundingRect(Rect(dest + (m_walkOffset - getDisplacement()) * g_drawPool.getScaleFactor(), Size(g_gameConfig.getSpriteSize() * g_drawPool.getScaleFactor())), m_staticSquareColor, std::max<int>(static_cast<int>(2 * g_drawPool.getScaleFactor()), 1));
+            g_drawPool.addBoundingRect(Rect(dest + (m_walkOffset - getDisplacement() + 2) * g_drawPool.getScaleFactor(), Size(28 * g_drawPool.getScaleFactor())), m_staticSquareColor, std::max<int>(static_cast<int>(2 * g_drawPool.getScaleFactor()), 1));
         }
 
         auto _dest = dest + m_walkOffset * g_drawPool.getScaleFactor();
