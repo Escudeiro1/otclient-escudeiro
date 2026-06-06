@@ -71,7 +71,8 @@ local CONST_WINDOWS_BOX = {
     ALREADY = 1,
     RELEASE = 2,
     CONFIRMATION_IRA = 3, -- IRA = Instant Reward Access
-    NO_IRA = 4
+    NO_IRA = 4,
+    CONFIRMATION_SHRINE = 5
 }
 
 local BOX_CONFIGS = {
@@ -98,6 +99,22 @@ local BOX_CONFIGS = {
     [CONST_WINDOWS_BOX.NO_IRA] = {
         title = "Warning: No Sufficient Instant Reward Access",
         content = "Remember! you can always collect your daily reward for free by visiting a reward shrine!\nyou do not have an Instant Reward Access.\nVisit the store to buy more!"
+    },
+    [CONST_WINDOWS_BOX.CONFIRMATION_SHRINE] = {
+        title = "Collect Daily Reward",
+        content = "Do you want to collect your daily reward at this shrine?",
+        okCallback = function()
+            g_game.requestGetRewardDaily(bonusShrine, actualUsed)
+            if windowsPickWindow then
+                windowsPickWindow:destroy()
+                windowsPickWindow = nil
+            end
+            if generalBox then
+                generalBox:destroy()
+                generalBox = nil
+            end
+            show()
+        end
     }
 }
 
@@ -569,12 +586,8 @@ function rewardWallController:onClickDisplayWindowsPickRewardWindow(event)
     elseif event.target.bundleType == bundleType.XPBOOST or event.target.bundleType == bundleType.PREY then
         hide()
         actualUsed = {}
-        if bonusShrine == OPEN_WINDOWS.SHRINE then
-            g_game.requestGetRewardDaily(bonusShrine, actualUsed)
-            show()
-        else
-            managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
-        end
+        local box = bonusShrine == OPEN_WINDOWS.SHRINE and CONST_WINDOWS_BOX.CONFIRMATION_SHRINE or CONST_WINDOWS_BOX.CONFIRMATION_IRA
+        managerMessageBoxWindow(box)
     end
 end
 
@@ -697,12 +710,8 @@ function onClickBtnOk()
     if table.empty(actualUsed) then
         return
     end
-    if bonusShrine == OPEN_WINDOWS.SHRINE then
-        g_game.requestGetRewardDaily(bonusShrine, actualUsed)
-        destroyPickReward(false)
-    else
-        managerMessageBoxWindow(CONST_WINDOWS_BOX.CONFIRMATION_IRA)
-    end
+    local box = bonusShrine == OPEN_WINDOWS.SHRINE and CONST_WINDOWS_BOX.CONFIRMATION_SHRINE or CONST_WINDOWS_BOX.CONFIRMATION_IRA
+    managerMessageBoxWindow(box)
 end
 
 function destroyPickReward(bool)
