@@ -856,6 +856,7 @@ void ProtocolGame::parseRequestPurchaseData(const InputMessagePtr& msg)
 
 void ProtocolGame::parseResourceBalance(const InputMessagePtr& msg) const
 {
+    const int posBefore = msg->getReadPos();
     const auto type = static_cast<Otc::ResourceTypes_t>(msg->getU8());
     uint64_t value;
     switch (type) {
@@ -876,6 +877,12 @@ void ProtocolGame::parseResourceBalance(const InputMessagePtr& msg) const
             value = msg->getU64();
             break;
     }
+    const int posAfter = msg->getReadPos();
+    const auto nextBytes = msg->peekBytes(std::min(msg->getUnreadSize(), 8));
+    std::stringstream nextHex;
+    for (const auto b : nextBytes) nextHex << fmt::format("{:02X} ", b);
+    g_logger.warning("[DBG] parseResourceBalance: pos {} -> {}, type=0x{:02X}, value={}, read {}B, next={}",
+        posBefore, posAfter, static_cast<uint8_t>(type), value, posAfter - posBefore, nextHex.str());
     m_localPlayer->setResourceBalance(type, value);
 }
 
