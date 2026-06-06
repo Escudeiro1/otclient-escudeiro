@@ -147,6 +147,7 @@ if(DEFINED VCPKG_TARGET_TRIPLET)
   unset(ZLIB_LIBRARY_RELEASE CACHE)
 endif()
 find_package(ZLIB REQUIRED)
+find_package(PNG REQUIRED)
 find_package(phmap REQUIRED)
 find_package(absl CONFIG REQUIRED)
 if (TOGGLE_FRAMEWORK_PROTOBUF)
@@ -714,6 +715,7 @@ if(MSVC)
           ${CMAKE_THREAD_LIBS_INIT}
           ${PHYSFS_LIBRARY}
           ZLIB::ZLIB
+          PNG::PNG
           ${NLOHMANN_JSON_LIBRARY}
           ${OPENGL_LIBRARIES}
           ${DirectX_LIBRARY}
@@ -769,6 +771,7 @@ elseif(ANDROID)
           ${LUAJIT_LIBRARY}
           ${PHYSFS_LIBRARY}
           ZLIB::ZLIB
+          PNG::PNG
           ${NLOHMANN_JSON_LIBRARY}
           ${EGL_LIBRARY}
           ${OGG_LIBRARY}
@@ -835,7 +838,7 @@ elseif(WASM)
           PUBLIC
           ${LUA_LIBRARY}
           ${PHYSFS_LIBRARY}
-
+          PNG::PNG
           ${NLOHMANN_JSON_LIBRARY}
           ${GLEW_LIBRARY}
           ${OPENGL_LIBRARIES}
@@ -959,6 +962,7 @@ else() # Linux
           PUBLIC
           ${LUAJIT_LIBRARY}
           ${PHYSFS_LIBRARY}
+          PNG::PNG
           ${NLOHMANN_JSON_LIBRARY}
           ${GLEW_LIBRARY}
           ${OPENGL_LIBRARIES}
