@@ -868,9 +868,6 @@ void ProtocolGame::parseResourceBalance(const InputMessagePtr& msg) const
         // 15.13+
         case Otc::RESOURCE_BOUNTY_POINTS:
         case Otc::RESOURCE_SOULSEALS:
-        // daily reward streak/jokers sent as U32 by CanaryOT
-        case Otc::RESOURCE_DAILYREWARD_STREAK:
-        case Otc::RESOURCE_DAILYREWARD_JOKERS:
             value = msg->getU32();
             break;
         default:
