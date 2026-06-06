@@ -139,6 +139,20 @@ local function convert_timestamp(timestamp)
     return os.date("%Y-%m-%d, %H:%M:%S", timestamp)
 end
 
+local function formatTimeLeft(timeLeft)
+    if timeLeft == 0 then return "Expired" end
+    if timeLeft == 90001 then return "< 1 min" end
+    if timeLeft > 1000000000 then
+        local remaining = timeLeft - os.time()
+        if remaining <= 0 then return "Expired" end
+        if remaining < 60 then return "< 1 min" end
+        local hours = math.floor(remaining / 3600)
+        local minutes = math.floor((remaining % 3600) / 60)
+        return string.format("%02d:%02d", hours, minutes)
+    end
+    return timeLeft
+end
+
 local function getBonusStrings(bonuses)
     local result = {}
     for _, bonus in ipairs(bonuses) do
@@ -351,8 +365,7 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     bonusShrine = bonusShrines
     updateDailyRewards(dayStreakDay, wasDailyRewardTaken)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setText(dayStreakLevel)
-    rewardWallController.ui.restingAreaPanel.restingAreaInfo.timeLeft:setText(
-        (timeLeft == 0 and "Expired") or (timeLeft == 90001 and "< 1 min") or timeLeft)
+    rewardWallController.ui.restingAreaPanel.restingAreaInfo.timeLeft:setText(formatTimeLeft(timeLeft))
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold.text:setText(tokens)
     rewardWallController.ui.footerPanel.footerGold1.text:setText(tokens)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setImageSource(
