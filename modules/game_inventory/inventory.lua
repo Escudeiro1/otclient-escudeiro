@@ -339,6 +339,22 @@ function inventoryController:onGameStart()
             end
         end
     end
+
+    if showPVPMode then
+        inventoryController.ui.onPanel.expert:setChecked(true)
+        local pvpMode = g_game.getPVPMode()
+        local pvpBoxes = {
+            [PVPWhiteDove]  = inventoryController.ui.onPanel.whiteDoveBox,
+            [PVPWhiteHand]  = inventoryController.ui.onPanel.whiteHandBox,
+            [PVPYellowHand] = inventoryController.ui.onPanel.yellowHandBox,
+            [PVPRedFist]    = inventoryController.ui.onPanel.redFistBox,
+        }
+        local box = pvpBoxes[pvpMode]
+        if box then
+            pvpModeRadioGroup:selectWidget(box)
+        end
+    end
+
     inventoryController.ui.onPanel.purseButton:setVisible(g_game.getFeature(GamePurseSlot))
 
     if isPlayerMonk() and player then
@@ -387,15 +403,15 @@ function inventoryController:onTerminate()
 end
 
 function onSetSafeFight(self, checked)
-    if not checked then
-        inventoryController.ui.onPanel.pvp:setChecked(false)
-        inventoryController.ui.offPanel.pvp:setChecked(false)
-      else
-        inventoryController.ui.onPanel.pvp:setChecked(true)  
-        inventoryController.ui.offPanel.pvp:setChecked(true)  
-      end
-    g_game.setSafeFight(not checked)
-    if not checked then
+    inventoryController.ui.onPanel.pvp:setChecked(checked)
+    inventoryController.ui.offPanel.pvp:setChecked(checked)
+    if checked then
+        g_game.setPVPMode(PVPRedFist)
+        inventoryController.ui.onPanel.expert:setEnabled(false)
+        inventoryController.ui.onPanel.expert:setChecked(false)
+    else
+        g_game.setPVPMode(PVPWhiteDove)
+        inventoryController.ui.onPanel.expert:setEnabled(true)
         g_game.cancelAttack()
     end
 end
