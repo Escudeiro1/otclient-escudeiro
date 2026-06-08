@@ -2177,6 +2177,8 @@ void ProtocolGame::parseItemClasses(const InputMessagePtr& msg)
     g_lua.callGlobalField("g_game", "forgeData", forgeConfig);
 }
 
+
+
 void ProtocolGame::parseCreatureMark(const InputMessagePtr& msg)
 {
     const uint32_t creatureId = msg->getU32();

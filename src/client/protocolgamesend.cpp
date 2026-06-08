@@ -1615,7 +1615,7 @@ void ProtocolGame::sendGetRewardDaily(const uint8_t bonusShrine, const std::map<
 {
     const auto& msg = std::make_shared<OutputMessage>();
     msg->addU8(Proto::ClientGetRewardDaily);
-    msg->addU8(bonusShrine);
+    msg->addU8(bonusShrine == 1 ? 0 : 1); // server protocol: 0=shrine, 1=IRA (opposite of OpenRewardWall encoding)
     msg->addU8(items.size());
     for (const auto& [itemId, count] : items) {
         msg->addU16(itemId);
