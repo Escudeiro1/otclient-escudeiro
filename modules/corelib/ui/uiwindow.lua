@@ -53,4 +53,7 @@ function UIWindow:onDestroy()
         self.hotkeyBlock.release()
         self.hotkeyBlock = false
     end
+    if gameRootPanel then
+        gameRootPanel:focus()
+    end
 end

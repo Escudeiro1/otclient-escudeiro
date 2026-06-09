@@ -78,20 +78,6 @@ if ENABLE_SERVERS then
             useAuthenticator = false
         },
 
-        -- External server
-        ---
-        -- Configuration for external server ip.net.
-        -- @class table
-        -- @name ip_net
-        -- @field port TCP port used for connection
-        -- @field protocol Protocol identifier used by the server
-        -- @field httpLogin Indicates if the server allows HTTP login
-        --
-        ["ip.net"] = {
-            port = 7171,
-            protocol = 860,
-            httpLogin = false
-        }
     }
 end
 
