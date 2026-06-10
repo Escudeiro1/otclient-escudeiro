@@ -29,9 +29,12 @@
     "zlib",
     "bshoshany-thread-pool",
     "fmt",
+    {
+      "name": "ixwebsocket",
+      "platform": "!wasm32"
+    },
     "spdlog",
     "utfcpp",
-    "gtest",
     "freetype",
     {
       "name": "inih",
@@ -56,5 +59,13 @@
       "platform": "windows"
     }
   ],
+  "features": {
+    "tests": {
+      "description": "Dependencies required to build unit tests.",
+      "dependencies": [
+        "gtest"
+      ]
+    }
+  },
   "builtin-baseline": "f3e10653cc27d62a37a3763cd84b38bca07c6075"
 }

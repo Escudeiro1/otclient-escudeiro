@@ -55,6 +55,13 @@ else()
   add_executable(${PROJECT_NAME} "")
 endif()
 
+if(NOT OTCLIENT_BUILD_CLIENT)
+  set_target_properties(${PROJECT_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+  if(MSVC)
+    set_target_properties(${PROJECT_NAME} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD ON)
+  endif()
+endif()
+
 # *****************************************************************************
 # Options Code
 # *****************************************************************************
@@ -164,6 +171,9 @@ find_package(STDUUID CONFIG REQUIRED)
 find_package(pugixml CONFIG REQUIRED)
 find_package(httplib CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
+if(NOT WASM)
+  find_package(ixwebsocket CONFIG REQUIRED)
+endif()
 find_package(spdlog CONFIG REQUIRED)
 find_package(utf8cpp REQUIRED)
 if(DEFINED VCPKG_TARGET_TRIPLET)
@@ -684,10 +694,14 @@ if(MSVC)
         set_property(TARGET ${msvc_target} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
       endif()
     endforeach()
-    set(VCPKG_TARGET_TRIPLET "x64-windows-static" CACHE STRING "")
+    if(NOT DEFINED VCPKG_TARGET_TRIPLET)
+      set(VCPKG_TARGET_TRIPLET "x64-windows-static" CACHE STRING "")
+    endif()
   else()
     log_option_disabled("STATIC_LIBRARY")
-    set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "")
+    if(NOT DEFINED VCPKG_TARGET_TRIPLET)
+      set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "")
+    endif()
     foreach(msvc_target IN ITEMS otclient_core ${PROJECT_NAME})
       if(TARGET ${msvc_target})
         set_property(TARGET ${msvc_target} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
@@ -735,7 +749,9 @@ if(MSVC)
           LibLZMA::LibLZMA
           ${LIBARCHIVE_LIBRARY}
           winmm.lib
+          bcrypt.lib
           pugixml::pugixml
+          ixwebsocket::ixwebsocket
           ${OTCLIENT_FMT_TARGET}
           ${OTCLIENT_SPDLOG_TARGET}
           utf8cpp::utf8cpp
@@ -796,6 +812,7 @@ elseif(ANDROID)
           log
           Freetype::Freetype
           pugixml::pugixml
+          ixwebsocket::ixwebsocket
           ${OTCLIENT_FMT_TARGET}
           ${OTCLIENT_SPDLOG_TARGET}
           utf8cpp::utf8cpp
@@ -987,6 +1004,7 @@ else() # Linux
           LibLZMA::LibLZMA
           ${LIBARCHIVE_LIBRARY}
           pugixml::pugixml
+          ixwebsocket::ixwebsocket
           ZLIB::ZLIB
           OpenSSL::SSL
           OpenSSL::Crypto
