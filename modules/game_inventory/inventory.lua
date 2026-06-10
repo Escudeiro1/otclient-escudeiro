@@ -156,6 +156,13 @@ local function inventoryEvent(player, slot, item, oldItem)
     end
 end
 
+-- Register at module load time so the m_events cache in C++ callLuaField is
+-- primed with "found=true" before the first inventory packet arrives on login.
+-- If registered only in onGameStart, the initial inventory packets fire first,
+-- the handler is not found, the result is cached as false, and all subsequent
+-- inventory change events are permanently silently dropped for that session.
+connect(LocalPlayer, {onInventoryChange = inventoryEvent})
+
 local function onSoulChange(localPlayer, soul)
     local ui = getInventoryUi()
     if not localPlayer then
@@ -299,7 +306,6 @@ function inventoryController:onGameStart()
         end
     end
     inventoryController:registerEvents(LocalPlayer, {
-        onInventoryChange = inventoryEvent,
         onSoulChange = onSoulChange,
         onFreeCapacityChange = onFreeCapacityChange
     }):execute()
