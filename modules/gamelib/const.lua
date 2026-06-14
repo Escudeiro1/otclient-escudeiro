@@ -96,6 +96,7 @@ PVPWhiteDove = 0
 PVPWhiteHand = 1
 PVPYellowHand = 2
 PVPRedFist = 3
+PVPLegacyFist = 4
 
 GameProtocolChecksum = 1
 GameAccountNames = 2

@@ -412,7 +412,7 @@ function onSetSafeFight(self, checked)
     inventoryController.ui.onPanel.pvp:setChecked(checked)
     inventoryController.ui.offPanel.pvp:setChecked(checked)
     if checked then
-        g_game.setPVPMode(PVPRedFist)
+        g_game.setPVPMode(PVPLegacyFist)
         inventoryController.ui.onPanel.expert:setEnabled(false)
         inventoryController.ui.onPanel.expert:setChecked(false)
     else
