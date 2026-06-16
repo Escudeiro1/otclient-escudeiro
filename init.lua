@@ -25,7 +25,7 @@ Services = {
 
 --- Enables or disables the entire server configuration block.
 -- Set to `false` to disable all configuration below.
-local ENABLE_SERVERS = true
+local ENABLE_SERVERS = false
 
 ---
 -- @module Servers_init
