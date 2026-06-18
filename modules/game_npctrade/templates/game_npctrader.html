@@ -33,8 +33,8 @@
     /* ==============================================================================================
        MAIN WINDOW & STRUCTURE
        ============================================================================================== */
-    .modal-message { width: 400px; height: 400px; display: block; --image-source: /images/ui/window_new; --image-border: 6; --image-border-top: 27; }
-    .leftPanel {width: 395px; height: 400px; float: left;}
+    .modal-message { width: 435px; height: 400px; display: block; --image-source: /images/ui/window_new; --image-border: 6; --image-border-top: 27; }
+    .leftPanel {width: 430px; height: 400px; float: left;}
     .rightPanel { width: 195px; height: 368px; margin-top: 27px; margin-left: 10px; float: left;}
     .verticalSep { height: 340px; margin-top: 25px; float: left;  margin-left: -10px;}
     .dragHandle { height: 27px; background-color: alpha; }
@@ -119,7 +119,7 @@
 </script>
 
 <html>
-<uiwindow id="windowTrader" placement="bottom-left" *width="self.widthConsole" class="modal-message"
+<uiwindow id="windowTrader" placement="center" *width="self.widthConsole" class="modal-message"
     src="images/ui/miniwindow" onescape="self:onCloseNpcTrade()" onkeydown="self:onConsoleKeyPress(event)">
 
     <!-- Left Panel -->
