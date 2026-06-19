@@ -544,6 +544,25 @@ void SoundManager::playNumericSoundEffect(const uint16_t effectId)
     play(m_soundDirectory + fileIt->second, 0, gain, pitch);
 }
 
+void SoundManager::playAmbientById(const uint16_t ambientId)
+{
+    const auto& channel = getChannel(2); // Ambient channel
+    if (ambientId == 0) {
+        channel->stop(1.0f);
+        return;
+    }
+
+    const auto ambientIt = m_clientAmbientEffects.find(ambientId);
+    if (ambientIt == m_clientAmbientEffects.end())
+        return;
+
+    const auto fileIt = m_clientSoundFiles.find(ambientIt->second.loopedAudioFileId);
+    if (fileIt == m_clientSoundFiles.end())
+        return;
+
+    channel->play(m_soundDirectory + fileIt->second, 1.0f);
+}
+
 void SoundManager::playMusicById(const uint16_t musicId)
 {
     const auto musicIt = m_clientMusic.find(musicId);

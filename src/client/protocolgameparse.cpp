@@ -2029,8 +2029,12 @@ void ProtocolGame::parseAnthem(const InputMessagePtr& msg)
 {
     const uint8_t type = msg->getU8();
     if (type <= 2) {
-        const uint16_t anthemId = msg->getU16();
-        g_sounds.playMusicById(anthemId);
+        const uint16_t id = msg->getU16();
+        if (type == 0) {
+            g_sounds.playAmbientById(id);
+        } else {
+            g_sounds.playMusicById(id);
+        }
     }
 }
 
