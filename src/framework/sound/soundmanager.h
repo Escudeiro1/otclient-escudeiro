@@ -142,6 +142,9 @@ public:
     SoundChannelPtr getChannel(int channel);
     SoundEffectPtr createSoundEffect();
 
+    void playNumericSoundEffect(uint16_t effectId);
+    void playMusicById(uint16_t musicId);
+
     std::string resolveSoundFile(const std::string& file);
     void ensureContext() const;
 
@@ -160,6 +163,7 @@ private:
     std::unordered_map<std::string, SoundEffectPtr> m_effects;
 
     // soundbanks for protocol 13 and newer
+    std::string m_soundDirectory;
     std::map<uint32_t, std::string> m_clientSoundFiles;
     std::map<uint32_t, ClientSoundEffect> m_clientSoundEffects;
     std::map<uint32_t, ClientLocationAmbient> m_clientAmbientEffects;

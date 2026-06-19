@@ -38,6 +38,7 @@
 #include "thingtypemanager.h"
 #include "tile.h"
 #include "framework/core/eventdispatcher.h"
+#include "framework/sound/soundmanager.h"
 #include "framework/net/inputmessage.h"
 #include "paperdollmanager.h"
 #include "paperdoll.h"
@@ -1955,14 +1956,16 @@ void ProtocolGame::parseMagicEffect(const InputMessagePtr& msg)
 
                 case Otc::MAGIC_EFFECTS_CREATE_SOUND_MAIN_EFFECT: {
                     msg->getU8(); // Source
-                    msg->getU16(); // Sound ID
+                    const uint16_t soundId = msg->getU16();
+                    g_sounds.playNumericSoundEffect(soundId);
                     break;
                 }
 
                 case Otc::MAGIC_EFFECTS_CREATE_SOUND_SECONDARY_EFFECT: {
                     msg->getU8(); // ENUM
                     msg->getU8(); // Source
-                    msg->getU16(); // Sound ID
+                    const uint16_t soundId = msg->getU16();
+                    g_sounds.playNumericSoundEffect(soundId);
                     break;
                 }
                 default:
@@ -2026,7 +2029,8 @@ void ProtocolGame::parseAnthem(const InputMessagePtr& msg)
 {
     const uint8_t type = msg->getU8();
     if (type <= 2) {
-        msg->getU16(); // Anthem id
+        const uint16_t anthemId = msg->getU16();
+        g_sounds.playMusicById(anthemId);
     }
 }
 

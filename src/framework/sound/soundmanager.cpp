@@ -515,8 +515,58 @@ bool SoundManager::loadFromProtobuf(const std::string& directory, const std::str
 #endif
 }
 
+void SoundManager::playNumericSoundEffect(const uint16_t effectId)
+{
+    const auto effectIt = m_clientSoundEffects.find(effectId);
+    if (effectIt == m_clientSoundEffects.end())
+        return;
+
+    const auto& effect = effectIt->second;
+    uint32_t audioFileId = 0;
+    if (!effect.randomSoundId.empty()) {
+        audioFileId = effect.randomSoundId[std::rand() % effect.randomSoundId.size()];
+    } else if (effect.soundId != 0) {
+        audioFileId = effect.soundId;
+    }
+
+    if (audioFileId == 0)
+        return;
+
+    const auto fileIt = m_clientSoundFiles.find(audioFileId);
+    if (fileIt == m_clientSoundFiles.end())
+        return;
+
+    const float pitch = (effect.pitchMin == 0 && effect.pitchMax == 0) ? 1.0f
+        : effect.pitchMin + (effect.pitchMax - effect.pitchMin) * (std::rand() / static_cast<float>(RAND_MAX));
+    const float gain = (effect.volumeMin == 0 && effect.volumeMax == 0) ? 1.0f
+        : effect.volumeMin + (effect.volumeMax - effect.volumeMin) * (std::rand() / static_cast<float>(RAND_MAX));
+
+    play(m_soundDirectory + fileIt->second, 0, gain, pitch);
+}
+
+void SoundManager::playMusicById(const uint16_t musicId)
+{
+    const auto musicIt = m_clientMusic.find(musicId);
+    if (musicIt == m_clientMusic.end())
+        return;
+
+    const auto& music = musicIt->second;
+    const auto fileIt = m_clientSoundFiles.find(music.audioFileId);
+    if (fileIt == m_clientSoundFiles.end())
+        return;
+
+    const std::string filename = m_soundDirectory + fileIt->second;
+    const auto& channel = getChannel(1); // Music channel
+    if (music.musicType == MUSIC_TYPE_MUSIC_IMMEDIATE) {
+        channel->play(filename, 1.0f);
+    } else {
+        channel->enqueue(filename, 1.0f);
+    }
+}
+
 bool SoundManager::loadClientFiles(const std::string& directory)
 {
+    m_soundDirectory = directory;
     // find catalog from json file
     try {
         json document = json::parse(g_resources.readFileContents(g_resources.resolvePath(g_resources.guessFilePath(directory + "catalog-sound", "json"))));

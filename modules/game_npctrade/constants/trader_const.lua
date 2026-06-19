@@ -10,7 +10,7 @@ controllerNpcTrader.SELL = 2
 -- UI LAYOUT CONSTANTS
 -- ==============================================================================================
 controllerNpcTrader.DEFAULT_CONSOLE_WIDTH = 395
-controllerNpcTrader.TRADE_CONSOLE_WIDTH = 600
+controllerNpcTrader.TRADE_CONSOLE_WIDTH = 650
 
 -- ==============================================================================================
 -- VIRTUAL SCROLLING CONSTANTS
