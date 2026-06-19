@@ -2028,15 +2028,14 @@ void ProtocolGame::parseAnimatedText(const InputMessagePtr& msg)
 void ProtocolGame::parseAnthem(const InputMessagePtr& msg)
 {
     const uint8_t type = msg->getU8();
+    std::cout << "[sound-ambient] parseAnthem: received subtype=" << (int)type << std::endl;
     if (type == 0) {
-        // subtype 0: location ambient sound (looping)
         const uint16_t ambientId = msg->getU16();
-        g_logger.traceInfo("[sound-ambient] parseAnthem: ambient subtype, id={}", ambientId);
+        std::cout << "[sound-ambient] parseAnthem: ambient id=" << ambientId << std::endl;
         g_sounds.playAmbientById(ambientId);
     } else if (type <= 2) {
-        // subtype 1/2: anthem/music
         const uint16_t anthemId = msg->getU16();
-        g_logger.traceInfo("[sound-ambient] parseAnthem: music subtype={} id={}", type, anthemId);
+        std::cout << "[sound-ambient] parseAnthem: music subtype=" << (int)type << " id=" << anthemId << std::endl;
         g_sounds.playMusicById(anthemId);
     }
 }

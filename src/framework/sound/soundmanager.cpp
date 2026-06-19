@@ -546,20 +546,29 @@ void SoundManager::playNumericSoundEffect(const uint16_t effectId)
 
 void SoundManager::playAmbientById(const uint16_t ambientId)
 {
+    std::cout << "[sound-ambient] playAmbientById: id=" << ambientId
+              << " bank_size=" << m_clientAmbientEffects.size() << std::endl;
+
     const auto& channel = getChannel(2); // Ambient channel
     if (ambientId == 0) {
+        std::cout << "[sound-ambient] playAmbientById: stopping ambient channel" << std::endl;
         channel->stop(1.0f);
         return;
     }
 
     const auto ambientIt = m_clientAmbientEffects.find(ambientId);
-    if (ambientIt == m_clientAmbientEffects.end())
+    if (ambientIt == m_clientAmbientEffects.end()) {
+        std::cout << "[sound-ambient] playAmbientById: id=" << ambientId << " NOT FOUND in bank" << std::endl;
         return;
+    }
 
     const auto fileIt = m_clientSoundFiles.find(ambientIt->second.loopedAudioFileId);
-    if (fileIt == m_clientSoundFiles.end())
+    if (fileIt == m_clientSoundFiles.end()) {
+        std::cout << "[sound-ambient] playAmbientById: audio file id=" << ambientIt->second.loopedAudioFileId << " NOT FOUND" << std::endl;
         return;
+    }
 
+    std::cout << "[sound-ambient] playAmbientById: playing " << fileIt->second << std::endl;
     channel->play(m_soundDirectory + fileIt->second, 1.0f);
 }
 
@@ -581,33 +590,6 @@ void SoundManager::playMusicById(const uint16_t musicId)
     } else {
         channel->enqueue(filename, 1.0f);
     }
-}
-
-void SoundManager::playAmbientById(const uint16_t ambientId)
-{
-    g_logger.traceInfo("playAmbientById: id={}", ambientId);
-    const auto ambientIt = m_clientAmbientEffects.find(ambientId);
-    if (ambientIt == m_clientAmbientEffects.end()) {
-        g_logger.traceInfo("playAmbientById: ambient id {} not found in m_clientAmbientEffects (size={})", ambientId, m_clientAmbientEffects.size());
-        return;
-    }
-
-    const auto& ambient = ambientIt->second;
-    if (ambient.loopedAudioFileId == 0) {
-        g_logger.traceInfo("playAmbientById: ambient id {} has no loopedAudioFileId", ambientId);
-        return;
-    }
-
-    const auto fileIt = m_clientSoundFiles.find(ambient.loopedAudioFileId);
-    if (fileIt == m_clientSoundFiles.end()) {
-        g_logger.traceInfo("playAmbientById: audio file id {} not found for ambient {}", ambient.loopedAudioFileId, ambientId);
-        return;
-    }
-
-    g_logger.traceInfo("playAmbientById: playing file {} for ambient {}", fileIt->second, ambientId);
-    const std::string filename = m_soundDirectory + fileIt->second;
-    const auto& channel = getChannel(2); // Ambient channel (separate from music on channel 1)
-    channel->play(filename, 1.0f);
 }
 
 bool SoundManager::loadClientFiles(const std::string& directory)
