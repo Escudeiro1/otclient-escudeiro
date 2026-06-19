@@ -144,6 +144,7 @@ public:
 
     void playNumericSoundEffect(uint16_t effectId);
     void playMusicById(uint16_t musicId);
+    void playAmbientById(uint16_t ambientId);
 
     std::string resolveSoundFile(const std::string& file);
     void ensureContext() const;
