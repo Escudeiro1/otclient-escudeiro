@@ -326,6 +326,16 @@ function updateMultiButtonState(button)
         return
     end
 
+    -- Update icon and registration regardless of whether the displayed action changes,
+    -- so that adding a second slot always makes the multiIcon visible.
+    local filledSlots = countFilledMultiSlots(button.cache.multiActions)
+    if button.multiIcon then
+        button.multiIcon:setVisible(filledSlots >= 2)
+    end
+    if filledSlots >= 2 and cacheMultiActionButtons then
+        cacheMultiActionButtons[button] = true
+    end
+
     local action = findNextAvailableAction(button.cache.multiActions)
     if not action then
         action = button.cache.multiActions[1]
@@ -351,11 +361,17 @@ function updateMultiButtonState(button)
     removeCooldown(button)
     renderSlotOnWidget(button, action, true)
 
-    if button.multiIcon then
-        button.multiIcon:setVisible(countFilledMultiSlots(button.cache.multiActions) >= 2)
+    -- Ensure click handler is wired for buttons that were initially empty and never
+    -- went through the normal updateButton path (which sets item.onClick).
+    if button.item and not button.item.onClick then
+        button.item.onClick = function()
+            onExecuteAction(button)
+        end
     end
-    if cacheMultiActionButtons then
-        cacheMultiActionButtons[button] = true
+    if button.item and button.item.text and not button.item.text.onClick then
+        button.item.text.onClick = function()
+            onExecuteAction(button)
+        end
     end
 end
 
