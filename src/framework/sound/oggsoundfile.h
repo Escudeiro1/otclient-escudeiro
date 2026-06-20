@@ -36,6 +36,7 @@ public:
 
     int read(void* buffer, int bufferSize) override;
     void reset() override;
+    void preloadPCM(int maxBytes) override;
 
 private:
     static size_t cb_read(void* ptr, size_t size, size_t nmemb, void* source);
@@ -44,4 +45,6 @@ private:
     static long cb_tell(void* source);
 
     OggVorbis_File m_vorbisFile;
+    std::vector<char> m_preloadedPCM;
+    int m_preloadedOffset{ 0 };
 };

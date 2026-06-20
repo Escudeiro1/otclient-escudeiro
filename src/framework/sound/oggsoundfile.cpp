@@ -43,21 +43,51 @@ bool OggSoundFile::prepareOgg()
     return true;
 }
 
+void OggSoundFile::preloadPCM(int maxBytes)
+{
+    if (!m_preloadedPCM.empty())
+        return;
+
+    m_preloadedPCM.resize(maxBytes);
+    int totalRead = 0;
+    int section = 0;
+    while (totalRead < maxBytes) {
+        const long n = ov_read(&m_vorbisFile, m_preloadedPCM.data() + totalRead, maxBytes - totalRead, 0, 2, 1, &section);
+        if (n <= 0)
+            break;
+        totalRead += n;
+    }
+    m_preloadedPCM.resize(totalRead);
+    m_preloadedOffset = 0;
+    // OGG decoder is now positioned right after the preloaded data;
+    // subsequent read() calls will continue from there seamlessly.
+}
+
 int OggSoundFile::read(void* buffer, int bufferSize)
 {
     auto* bytesBuffer = reinterpret_cast<char*>(buffer);
+    int totalBytesRead = 0;
+
+    // Serve from preloaded PCM cache first (decoded on async thread).
+    if (m_preloadedOffset < static_cast<int>(m_preloadedPCM.size())) {
+        const int available = static_cast<int>(m_preloadedPCM.size()) - m_preloadedOffset;
+        const int toRead = std::min(bufferSize, available);
+        std::memcpy(bytesBuffer, m_preloadedPCM.data() + m_preloadedOffset, toRead);
+        m_preloadedOffset += toRead;
+        totalBytesRead += toRead;
+        bytesBuffer += toRead;
+        bufferSize -= toRead;
+    }
+
+    // OGG decoder picks up exactly where preloadPCM() left off.
     int section = 0;
-    size_t totalBytesRead = 0;
-
     while (bufferSize > 0) {
-        const size_t bytesToRead = bufferSize;
-        const long bytesRead = ov_read(&m_vorbisFile, bytesBuffer, bytesToRead, 0, 2, 1, &section);
-        if (bytesRead == 0)
+        const long n = ov_read(&m_vorbisFile, bytesBuffer, bufferSize, 0, 2, 1, &section);
+        if (n <= 0)
             break;
-
-        bufferSize -= bytesRead;
-        bytesBuffer += bytesRead;
-        totalBytesRead += bytesRead;
+        bufferSize -= n;
+        bytesBuffer += n;
+        totalBytesRead += n;
     }
 
     return totalBytesRead;
@@ -85,6 +115,14 @@ int OggSoundFile::cb_close(void* source) {
     return 0;
 }
 
-void OggSoundFile::reset() { ov_pcm_seek(&m_vorbisFile, 0); }
+void OggSoundFile::reset()
+{
+    // Discard the preloaded cache on loop so subsequent reads go straight to the
+    // OGG decoder, which is now rewound to position 0. The first-play stall
+    // benefit is a one-shot; looping refills are small (STREAM_FRAGMENT_SIZE each).
+    m_preloadedPCM.clear();
+    m_preloadedOffset = 0;
+    ov_pcm_seek(&m_vorbisFile, 0);
+}
 long OggSoundFile::cb_tell(void* source) { return static_cast<FileStream*>(source)->tell(); }
 size_t OggSoundFile::cb_read(void* ptr, const size_t size, const size_t nmemb, void* source) { return static_cast<FileStream*>(source)->read(ptr, size, nmemb); }

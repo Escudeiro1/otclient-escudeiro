@@ -36,7 +36,6 @@
 #include "client/game.h"
 #include "framework/core/asyncdispatcher.h"
 #include "framework/core/clock.h"
-#include "framework/core/garbagecollection.h"
 #include "framework/core/resourcemanager.h"
 #include "framework/util/stats.h"
 
@@ -105,7 +104,6 @@ void SoundManager::poll()
 {
     AutoStat s(STATS_MAIN, "PollSounds");
     static ticks_t lastUpdate = 0;
-    static uint_fast8_t soundsErased = 0;
 
     const ticks_t now = g_clock.millis();
 
@@ -149,7 +147,6 @@ void SoundManager::poll()
         source->update();
 
         if (!source->isPlaying()) {
-            ++soundsErased;
             it = m_sources.erase(it);
         } else
             ++it;
@@ -163,11 +160,6 @@ void SoundManager::poll()
         alcProcessContext(m_context);
     }
 
-    // temp fix for memory leak
-    if (soundsErased > 25) {
-        soundsErased = 0;
-        GarbageCollection::lua();
-    }
 }
 
 void SoundManager::setAudioEnabled(const bool enable)
@@ -278,6 +270,13 @@ SoundSourcePtr SoundManager::createSoundSource(const std::string& name)
             source = std::make_shared<SoundSource>();
             source->setBuffer(it->second);
         } else {
+            // Pre-decode one full streaming buffer of PCM on the async thread so the
+            // main-thread fillBufferAndQueue() calls become plain memcpy instead of
+            // Ogg/Vorbis decoding.  The value must match StreamSoundSource::STREAM_BUFFER_SIZE
+            // (private enum: 1024 * 400 = 409 600 bytes), which is 4 fragments × 100 KB
+            // and covers most short combat/spell sounds in their entirety on first play.
+            static constexpr int PCM_PREFETCH_BYTES = 1024 * 400;
+
 #if defined __linux && !defined OPENGL_ES
             // due to OpenAL implementation bug, stereo buffers are always downmixed to mono on linux systems
             // this is hack to work around the issue
@@ -292,7 +291,9 @@ SoundSourcePtr SoundManager::createSoundSource(const std::string& name)
             combinedSource->addSource(streamSource);
             m_streamFiles[streamSource] = g_asyncDispatcher->submit_task([=]() -> SoundFilePtr {
                 try {
-                    return SoundFile::loadSoundFile(filename);
+                    const auto& sound = SoundFile::loadSoundFile(filename);
+                    if (sound) sound->preloadPCM(PCM_PREFETCH_BYTES);
+                    return sound;
                 } catch (std::exception& e) {
                     g_logger.error(e.what());
                     return nullptr;
@@ -306,7 +307,9 @@ SoundSourcePtr SoundManager::createSoundSource(const std::string& name)
             combinedSource->addSource(streamSource);
             m_streamFiles[streamSource] = g_asyncDispatcher->submit_task([=]() -> SoundFilePtr {
                 try {
-                    return SoundFile::loadSoundFile(filename);
+                    const auto& sound = SoundFile::loadSoundFile(filename);
+                    if (sound) sound->preloadPCM(PCM_PREFETCH_BYTES);
+                    return sound;
                 } catch (std::exception& e) {
                     g_logger.error(e.what());
                     return nullptr;
@@ -318,7 +321,9 @@ SoundSourcePtr SoundManager::createSoundSource(const std::string& name)
             const auto& streamSource = std::make_shared<StreamSoundSource>();
             m_streamFiles[streamSource] = g_asyncDispatcher->submit_task([=]() -> SoundFilePtr {
                 try {
-                    return SoundFile::loadSoundFile(filename);
+                    const auto& sound = SoundFile::loadSoundFile(filename);
+                    if (sound) sound->preloadPCM(PCM_PREFETCH_BYTES);
+                    return sound;
                 } catch (std::exception& e) {
                     g_logger.error(e.what());
                     return nullptr;

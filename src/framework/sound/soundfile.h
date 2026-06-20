@@ -35,6 +35,7 @@ public:
 
     virtual int read(void* /*buffer*/, int /*bufferSize*/) { return -1; }
     virtual void reset() {}
+    virtual void preloadPCM(int /*maxBytes*/) {}
     bool eof() const;
 
     ALenum getSampleFormat() const;
