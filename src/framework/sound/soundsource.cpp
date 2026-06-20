@@ -27,8 +27,12 @@
 
 SoundSource::SoundSource()
 {
+    alGetError(); // clear any pending error before allocating
     alGenSources(1, &m_sourceId);
-    assert(alGetError() == AL_NO_ERROR);
+    if (alGetError() != AL_NO_ERROR) {
+        m_sourceId = 0; // source pool exhausted; all methods guard against 0
+        return;
+    }
     SoundSource::setReferenceDistance(128);
 }
 
@@ -46,12 +50,16 @@ SoundSource::~SoundSource()
 
 void SoundSource::play()
 {
+    if (m_sourceId == 0)
+        return;
     alSourcePlay(m_sourceId);
     assert(alGetError() == AL_NO_ERROR);
 }
 
 void SoundSource::stop()
 {
+    if (m_sourceId == 0)
+        return;
     alSourceStop(m_sourceId);
     assert(alGetError() == AL_NO_ERROR);
     if (m_buffer) {
@@ -63,6 +71,8 @@ void SoundSource::stop()
 
 bool SoundSource::isBuffering()
 {
+    if (m_sourceId == 0)
+        return false;
     int state = AL_PLAYING;
     alGetSourcei(m_sourceId, AL_SOURCE_STATE, &state);
     return state != AL_STOPPED;
@@ -70,6 +80,8 @@ bool SoundSource::isBuffering()
 
 void SoundSource::setBuffer(const SoundBufferPtr& buffer)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcei(m_sourceId, AL_BUFFER, buffer->getBufferId());
     assert(alGetError() == AL_NO_ERROR);
     m_buffer = buffer;
@@ -77,21 +89,29 @@ void SoundSource::setBuffer(const SoundBufferPtr& buffer)
 
 void SoundSource::setLooping(const bool looping)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcei(m_sourceId, AL_LOOPING, looping ? AL_TRUE : AL_FALSE);
 }
 
 void SoundSource::setRelative(const bool relative)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcei(m_sourceId, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
 }
 
 void SoundSource::setReferenceDistance(const float distance)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcef(m_sourceId, AL_REFERENCE_DISTANCE, distance);
 }
 
 float SoundSource::getReferenceDistance()
 {
+    if (m_sourceId == 0)
+        return 0.f;
     float distance;
     alGetSourcef(m_sourceId, AL_REFERENCE_DISTANCE, &distance);
     return distance;
@@ -99,27 +119,37 @@ float SoundSource::getReferenceDistance()
 
 void SoundSource::setGain(const float gain)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcef(m_sourceId, AL_GAIN, gain);
     m_gain = gain;
 }
 
 void SoundSource::setPitch(const float pitch)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcef(m_sourceId, AL_PITCH, pitch);
 }
 
 void SoundSource::setPosition(const Point& pos)
 {
+    if (m_sourceId == 0)
+        return;
     alSource3f(m_sourceId, AL_POSITION, pos.x, pos.y, 0);
 }
 
 void SoundSource::setRolloff(const float rolloff)
 {
+    if (m_sourceId == 0)
+        return;
     alSourcef(m_sourceId, AL_ROLLOFF_FACTOR, rolloff);
 }
 
 void SoundSource::setVelocity(const Point& velocity)
 {
+    if (m_sourceId == 0)
+        return;
     alSource3f(m_sourceId, AL_VELOCITY, velocity.x, velocity.y, 0);
 }
 
@@ -169,6 +199,8 @@ void SoundSource::update()
 
 void SoundSource::setEffect(const SoundEffectPtr soundEffect)
 {
+    if (m_sourceId == 0)
+        return;
     m_effectId = soundEffect->m_effectId;
     alSource3i(m_sourceId, AL_AUXILIARY_SEND_FILTER, static_cast<ALint>(soundEffect->m_effectId), 0, AL_FILTER_NULL);
     const ALenum err = alGetError();
@@ -181,6 +213,8 @@ void SoundSource::removeEffect()
 {
     if (m_effectId != 0) {
         m_effectId = 0;
+        if (m_sourceId == 0)
+            return;
         alSource3i(m_sourceId, AL_AUXILIARY_SEND_FILTER, AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL);
         const ALenum err = alGetError();
         if (err != AL_NO_ERROR) {

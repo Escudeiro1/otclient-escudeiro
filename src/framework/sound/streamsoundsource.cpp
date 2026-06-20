@@ -94,6 +94,8 @@ void StreamSoundSource::stop()
 
 void StreamSoundSource::queueBuffers()
 {
+    if (m_sourceId == 0)
+        return;
     int queued;
     alGetSourcei(m_sourceId, AL_BUFFERS_QUEUED, &queued);
     for (int i = 0; i < STREAM_FRAGMENTS - queued; ++i) {
@@ -104,6 +106,8 @@ void StreamSoundSource::queueBuffers()
 
 void StreamSoundSource::unqueueBuffers() const
 {
+    if (m_sourceId == 0)
+        return;
     int queued;
     alGetSourcei(m_sourceId, AL_BUFFERS_QUEUED, &queued);
     for (int i = 0; i < queued; ++i) {
@@ -114,7 +118,7 @@ void StreamSoundSource::unqueueBuffers() const
 
 void StreamSoundSource::update()
 {
-    if (m_waitingFile)
+    if (m_waitingFile || m_sourceId == 0)
         return;
 
     SoundSource::update();
@@ -143,7 +147,7 @@ void StreamSoundSource::update()
 
 bool StreamSoundSource::fillBufferAndQueue(const uint32_t buffer)
 {
-    if (m_waitingFile)
+    if (m_waitingFile || m_sourceId == 0)
         return false;
 
     // fill buffer

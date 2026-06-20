@@ -116,7 +116,16 @@ void SoundManager::poll()
 
     ensureContext();
 
+    // cap alBufferData calls per poll cycle to avoid main-thread stalls when many
+    // sounds become ready simultaneously (e.g. burst of combat sound effects)
+    constexpr int MAX_STREAM_FILES_PER_POLL = 6;
+    int streamFilesReady = 0;
+
     for (auto it = m_streamFiles.begin(); it != m_streamFiles.end();) {
+        if (streamFilesReady >= MAX_STREAM_FILES_PER_POLL) {
+            ++it;
+            continue;
+        }
         const auto& source = it->first;
         const auto& future = it->second;
 
@@ -127,6 +136,7 @@ void SoundManager::poll()
             else
                 source->stop();
 
+            ++streamFilesReady;
             it = m_streamFiles.erase(it);
         } else {
             ++it;
@@ -199,6 +209,12 @@ SoundSourcePtr SoundManager::play(const std::string& fn, const float fadetime, f
     if (!m_audioEnabled)
         return nullptr;
 
+    // prevent source pool exhaustion; channels get priority over one-shot effects
+    constexpr size_t MAX_CONCURRENT_SOUNDS = 32;
+    if (m_sources.size() >= MAX_CONCURRENT_SOUNDS) {
+        return nullptr;
+    }
+
     ensureContext();
 
     if (gain == 0)
@@ -208,7 +224,9 @@ SoundSourcePtr SoundManager::play(const std::string& fn, const float fadetime, f
         pitch = 1.0f;
 
     const std::string& filename = resolveSoundFile(fn);
+
     const auto& soundSource = createSoundSource(filename);
+
     if (!soundSource) {
         g_logger.error("Unable to play '{}'", filename);
         return nullptr;
@@ -273,7 +291,6 @@ SoundSourcePtr SoundManager::createSoundSource(const std::string& name)
             streamSource->setPosition(Point(-128, 0));
             combinedSource->addSource(streamSource);
             m_streamFiles[streamSource] = g_asyncDispatcher->submit_task([=]() -> SoundFilePtr {
-                stdext::timer a;
                 try {
                     return SoundFile::loadSoundFile(filename);
                 } catch (std::exception& e) {
@@ -546,29 +563,20 @@ void SoundManager::playNumericSoundEffect(const uint16_t effectId)
 
 void SoundManager::playAmbientById(const uint16_t ambientId)
 {
-    std::cout << "[sound-ambient] playAmbientById: id=" << ambientId
-              << " bank_size=" << m_clientAmbientEffects.size() << std::endl;
-
     const auto& channel = getChannel(2); // Ambient channel
     if (ambientId == 0) {
-        std::cout << "[sound-ambient] playAmbientById: stopping ambient channel" << std::endl;
         channel->stop(1.0f);
         return;
     }
 
     const auto ambientIt = m_clientAmbientEffects.find(ambientId);
-    if (ambientIt == m_clientAmbientEffects.end()) {
-        std::cout << "[sound-ambient] playAmbientById: id=" << ambientId << " NOT FOUND in bank" << std::endl;
+    if (ambientIt == m_clientAmbientEffects.end())
         return;
-    }
 
     const auto fileIt = m_clientSoundFiles.find(ambientIt->second.loopedAudioFileId);
-    if (fileIt == m_clientSoundFiles.end()) {
-        std::cout << "[sound-ambient] playAmbientById: audio file id=" << ambientIt->second.loopedAudioFileId << " NOT FOUND" << std::endl;
+    if (fileIt == m_clientSoundFiles.end())
         return;
-    }
 
-    std::cout << "[sound-ambient] playAmbientById: playing " << fileIt->second << std::endl;
     channel->play(m_soundDirectory + fileIt->second, 1.0f);
 }
 
@@ -604,6 +612,22 @@ bool SoundManager::loadClientFiles(const std::string& directory)
                 // dat file encoded with protobuf
                 loadFromProtobuf(directory, obj["file"]);
             }
+        }
+
+        // preload audio files used by combat sound effects into the OpenAL buffer
+        // cache so they bypass the async-streaming path during fights (eliminates
+        // the main-thread stall when many futures become ready simultaneously)
+        ensureContext();
+        for (const auto& [effectId, effect] : m_clientSoundEffects) {
+            auto preloadById = [this](uint32_t audioFileId) {
+                const auto fileIt = m_clientSoundFiles.find(audioFileId);
+                if (fileIt != m_clientSoundFiles.end())
+                    preload(m_soundDirectory + fileIt->second);
+            };
+            if (effect.soundId != 0)
+                preloadById(effect.soundId);
+            for (uint32_t id : effect.randomSoundId)
+                preloadById(id);
         }
 
         return true;
