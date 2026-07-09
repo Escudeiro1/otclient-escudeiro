@@ -185,11 +185,9 @@ function TaskBoardController:claimReward()
 end
 
 function TaskBoardController:changeDifficulty(event)
-    -- event.data = selected option data (difficulty id set when populating the combobox)
+    if self.taskBoardInitializing then return end
     local diffId = event and (tonumber(event.data) or tonumber(event.value)) or nil
-    if not diffId then
-        return
-    end
+    if not diffId then return end
     g_game.bountyTaskAction(BOUNTY_ACTION_CHANGE_DIFFICULTY, diffId)
 end
 

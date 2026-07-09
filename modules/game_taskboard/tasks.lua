@@ -14,6 +14,7 @@ TaskBoardController.activeTab             = 1
 TaskBoardController.bountyTasks           = {}
 TaskBoardController.talismans             = {}
 TaskBoardController.bountyDifficulty      = 1
+TaskBoardController.taskBoardInitializing = false
 TaskBoardController.rerollPoints          = 0
 TaskBoardController.claimDailyAvailable   = false
 TaskBoardController.claimDailyWarning     = false
@@ -215,7 +216,13 @@ end
 
 function TaskBoardController:show()
     if not self.ui then
+        self.taskBoardInitializing = true
         self:loadHtml('template/html/main_taskboard.html')
+        self.taskBoardInitializing = false
+        local combo = self:findWidget("#dailyDifficultySelect")
+        if combo then
+            combo.mouseScroll = false
+        end
     end
     self:syncResourceBalances()
     self.ui:show()
