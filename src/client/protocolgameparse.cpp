@@ -4817,7 +4817,7 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
     headerData.rerollPoints = msg->getU8();
     const auto rerollMode = static_cast<Otc::TaskBoardBountyRerollMode_t>(msg->getU8());
     headerData.claimDaily = rerollMode == Otc::TASK_BOARD_BOUNTY_REROLL_DAILY_CLAIMABLE ? 1 : 0;
-    headerData.difficulty = std::clamp<uint8_t>(msg->getU8(), 0, 3);
+    headerData.difficulty = std::clamp<uint8_t>(msg->getU8() + 1, 1, 4);
 
     talismans.reserve(TASK_BOARD_TALISMAN_PATHS);
     for (uint8_t i = 0; std::cmp_less(i, TASK_BOARD_TALISMAN_PATHS); ++i) {
