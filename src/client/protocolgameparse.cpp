@@ -4782,6 +4782,9 @@ void ProtocolGame::parseTaskBoardData(const InputMessagePtr& msg)
         case Otc::TASK_BOARD_HUNT_SHOP:
             parseTaskBoardShopData(msg);
             break;
+        case Otc::TASK_BOARD_BOUNTY_KILL_UPDATE:
+            parseTaskBoardBountyKillUpdate(msg);
+            break;
         default:
             throw stdext::exception("[ProtocolGame::parseTaskBoardData] Unknown subtype {}", static_cast<uint8_t>(subtype));
     }
@@ -4871,6 +4874,15 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
     }
 
     g_lua.callGlobalField("g_game", "onBountyPreferredData", preferredSlotData, 0, getAllMonsterRaceIds());
+}
+
+void ProtocolGame::parseTaskBoardBountyKillUpdate(const InputMessagePtr& msg)
+{
+    const uint16_t raceId = msg->getU16();
+    const uint16_t currentKills = msg->getU16();
+    const uint16_t totalKills = msg->getU16();
+    const uint8_t isCompleted = msg->getU8();
+    g_lua.callGlobalField("g_game", "onBountyKillUpdate", raceId, currentKills, totalKills, isCompleted);
 }
 
 void ProtocolGame::parseTaskBoardWeeklyData(const InputMessagePtr& msg)
