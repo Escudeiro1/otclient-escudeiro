@@ -482,6 +482,9 @@ private:
     int m_recivedPackeds = 0;
     int m_recivedPackedsSize = 0;
 
+    mutable stdext::timer m_lastActionTimer;
+    mutable std::string   m_lastActionName;
+
     std::string m_accountName;
     std::string m_accountPassword;
     std::string m_authenticatorToken;

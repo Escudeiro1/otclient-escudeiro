@@ -452,6 +452,8 @@ void ProtocolGame::sendUseItem(const Position& position, const uint16_t itemId, 
     msg->addU16(itemId);
     msg->addU8(stackpos);
     msg->addU8(index);
+    m_lastActionName = "use item (potion/item)";
+    m_lastActionTimer.restart();
     send(msg);
 }
 
@@ -465,6 +467,8 @@ void ProtocolGame::sendUseItemWith(const Position& fromPos, const uint16_t itemI
     addPosition(msg, toPos);
     msg->addU16(toThingId);
     msg->addU8(toStackPos);
+    m_lastActionName = "use item on tile (rune)";
+    m_lastActionTimer.restart();
     send(msg);
 }
 
@@ -476,6 +480,8 @@ void ProtocolGame::sendUseOnCreature(const Position& pos, const uint16_t thingId
     msg->addU16(thingId);
     msg->addU8(stackpos);
     msg->addU32(creatureId);
+    m_lastActionName = "use on creature (rune/wand)";
+    m_lastActionTimer.restart();
     send(msg);
 }
 
@@ -583,6 +589,8 @@ void ProtocolGame::sendTalk(const Otc::MessageMode mode, const uint16_t channelI
     }
 
     msg->addString(message);
+    m_lastActionName = "spell/chat";
+    m_lastActionTimer.restart();
     send(msg);
 }
 
@@ -666,6 +674,10 @@ void ProtocolGame::sendAttack(const uint32_t creatureId, const uint32_t seq)
     msg->addU32(creatureId);
     if (g_game.getFeature(Otc::GameAttackSeq))
         msg->addU32(seq);
+    if (creatureId != 0) {
+        m_lastActionName = "attack";
+        m_lastActionTimer.restart();
+    }
     send(msg);
 }
 
