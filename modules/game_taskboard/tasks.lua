@@ -13,7 +13,7 @@ TaskBoardButton = nil
 TaskBoardController.activeTab             = 1
 TaskBoardController.bountyTasks           = {}
 TaskBoardController.talismans             = {}
-TaskBoardController.bountyDifficulty      = 1
+TaskBoardController.bountyDifficulty      = 0
 TaskBoardController.taskBoardInitializing = false
 TaskBoardController.rerollPoints          = 0
 TaskBoardController.claimDailyAvailable   = false
@@ -97,7 +97,7 @@ function TaskBoardController:resetSessionState()
 
     self.bountyTasks = {}
     self.talismans = {}
-    self.bountyDifficulty = 1
+    self.bountyDifficulty = 0
     self.rerollPoints = 0
     self.claimDailyAvailable = false
     self.claimDailyWarning = false
@@ -292,15 +292,16 @@ function TaskBoardController:syncBountyDifficultySelect()
         return
     end
 
+    local d = tonumber(self.bountyDifficulty) or 0
     local optionText = ({
-        [1] = 'Beginner',
-        [2] = 'Adept',
-        [3] = 'Expert',
-        [4] = 'Master'
-    })[tonumber(self.bountyDifficulty) or 1]
+        [0] = 'Beginner',
+        [1] = 'Adept',
+        [2] = 'Expert',
+        [3] = 'Master'
+    })[d]
 
     if combo.setCurrentOptionByData then
-        combo:setCurrentOptionByData(tostring(self.bountyDifficulty), true)
+        combo:setCurrentOptionByData(tostring(d + 1), true)  -- HTML value="1..4", server is 0-based
     end
 
     if optionText and combo.setCurrentOption then

@@ -30,7 +30,7 @@ end
 function TaskBoardController:onBountyServerData(header, monsters, talisman)
     local rerollPoints = tonumber(header.rerollPoints) or 0
     local claimDaily = tonumber(header.claimDaily) or 0
-    local difficulty = tonumber(header.difficulty) or 1
+    local difficulty = tonumber(header.difficulty) or 0
 
     self.claimDailyServerAvailable = claimDaily == 1
     self.rerollPoints = rerollPoints
