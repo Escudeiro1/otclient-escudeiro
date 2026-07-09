@@ -4042,9 +4042,8 @@ ThingPtr ProtocolGame::getMappedThing(const InputMessagePtr& msg) const
             return thing;
         }
 
-        const auto& lp = g_game.getLocalPlayer();
-        const bool inView = lp ? lp->canSee(pos) : false;
-        g_logger.traceError("no thing at pos:{}, stackpos:{} canSee={}", pos, stackpos, inView);
+        const bool tileLoaded = g_map.getTile(pos) != nullptr;
+        g_logger.traceError("no thing at pos:{}, stackpos:{} tileLoaded={}", pos, stackpos, tileLoaded);
     } else {
         const uint32_t creatureId = msg->getU32();
         if (const auto& thing = g_map.getCreatureById(creatureId)) {
