@@ -4042,14 +4042,16 @@ ThingPtr ProtocolGame::getMappedThing(const InputMessagePtr& msg) const
             return thing;
         }
 
-        g_logger.traceError("no thing at pos:{}, stackpos:{}", pos, stackpos);
+        const auto& lp = g_game.getLocalPlayer();
+        const bool inView = lp ? lp->canSee(pos) : false;
+        g_logger.traceError("no thing at pos:{}, stackpos:{} canSee={}", pos, stackpos, inView);
     } else {
         const uint32_t creatureId = msg->getU32();
         if (const auto& thing = g_map.getCreatureById(creatureId)) {
             return thing;
         }
 
-        g_logger.traceError("ProtocolGame::getMappedThing: no creature with id {}", creatureId);
+        g_logger.traceError("[getMappedThing] by-ID miss: creatureId={}", creatureId);
     }
 
     return nullptr;
@@ -4861,6 +4863,7 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
     }
 
     g_lua.callGlobalField("g_game", "onBountyTaskData", toBountyHeaderMap(headerData), monsterData, talismanData);
+    std::cout << "[parseTaskBoardBountyData] done, msg remaining bytes=" << msg->getUnreadSize() << std::endl;
 
     std::vector<std::map<std::string, uint32_t>> preferredSlotData;
     preferredSlotData.reserve(preferredSlots.size());
