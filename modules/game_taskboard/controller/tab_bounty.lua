@@ -188,7 +188,9 @@ function TaskBoardController:changeDifficulty(event)
     if self.taskBoardInitializing then return end
     local diffId = event and (tonumber(event.data) or tonumber(event.value)) or nil
     if not diffId then return end
-    g_game.bountyTaskAction(BOUNTY_ACTION_CHANGE_DIFFICULTY, diffId)
+    -- diffId is the HTML dropdown data value (1..4); server BountyDifficulty_t is 0-based,
+    -- so subtract 1 here to convert. The parser's +1 is the root cause — see protocolgameparse.cpp.
+    g_game.bountyTaskAction(BOUNTY_ACTION_CHANGE_DIFFICULTY, diffId - 1)
 end
 
 function TaskBoardController:claimDaily()

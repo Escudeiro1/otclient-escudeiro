@@ -4828,13 +4828,13 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
         monster.isCompleted = bountyState == 3 ? 1 : 0;
         monsters.emplace_back(monster);
     }
-    std::cout << "[parseBounty] after " << (int)offerCount << " monsters, remaining=" << msg->getUnreadSize() << std::endl;
+    //std::cout << "[parseBounty] after " << (int)offerCount << " monsters, remaining=" << msg->getUnreadSize() << std::endl; THIS IS PART OF THE BOUNTY PARSE DEBUG.
 
     headerData.rerollPoints = msg->getU8();
     const auto rerollMode = static_cast<Otc::TaskBoardBountyRerollMode_t>(msg->getU8());
     headerData.claimDaily = rerollMode == Otc::TASK_BOARD_BOUNTY_REROLL_DAILY_CLAIMABLE ? 1 : 0;
     headerData.difficulty = std::clamp<uint8_t>(msg->getU8() + 1, 1, 4);
-    std::cout << "[parseBounty] after header, remaining=" << msg->getUnreadSize() << " rerollMode=" << (int)rerollMode << " difficulty(raw+1)=" << (int)headerData.difficulty << std::endl;
+    //std::cout << "[parseBounty] after header, remaining=" << msg->getUnreadSize() << " rerollMode=" << (int)rerollMode << " difficulty(raw+1)=" << (int)headerData.difficulty << std::endl; THIS IS PART OF THE BOUNTY PARSE DEBUG.
 
     talismans.reserve(TASK_BOARD_TALISMAN_PATHS);
     for (uint8_t i = 0; std::cmp_less(i, TASK_BOARD_TALISMAN_PATHS); ++i) {
@@ -4853,7 +4853,7 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
         }
         talismans.emplace_back(talisman);
     }
-    std::cout << "[parseBounty] after talismans, remaining=" << msg->getUnreadSize() << std::endl;
+    //std::cout << "[parseBounty] after talismans, remaining=" << msg->getUnreadSize() << std::endl; THIS IS PART OF THE BOUNTY PARSE DEBUG.
 
     const uint8_t preferredSlotCount = msg->getU8();
     preferredSlots.reserve(preferredSlotCount);
@@ -4866,7 +4866,7 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
         slot.price = 0;
         preferredSlots.emplace_back(slot);
     }
-    std::cout << "[parseBounty] after " << (int)preferredSlotCount << " preferred slots, remaining=" << msg->getUnreadSize() << std::endl;
+    //std::cout << "[parseBounty] after " << (int)preferredSlotCount << " preferred slots, remaining=" << msg->getUnreadSize() << std::endl; THIS IS PART OF THE BOUNTY PARSE DEBUG.
 
     std::vector<std::map<std::string, uint32_t>> monsterData;
     monsterData.reserve(monsters.size());

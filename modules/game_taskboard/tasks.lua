@@ -292,16 +292,18 @@ function TaskBoardController:syncBountyDifficultySelect()
         return
     end
 
-    local d = tonumber(self.bountyDifficulty) or 0
+    -- d is 1-based: protocolgameparse.cpp adds +1 to the server's 0-based BountyDifficulty_t
+    local d = tonumber(self.bountyDifficulty) or 1
     local optionText = ({
-        [0] = 'Beginner',
-        [1] = 'Adept',
-        [2] = 'Expert',
-        [3] = 'Master'
+        [1] = 'Beginner',
+        [2] = 'Adept',
+        [3] = 'Expert',
+        [4] = 'Master'
     })[d]
 
     if combo.setCurrentOptionByData then
-        combo:setCurrentOptionByData(tostring(d + 1), true)  -- HTML value="1..4", server is 0-based
+        -- d is already the HTML data value (1..4); no +1 needed
+        combo:setCurrentOptionByData(tostring(d), true)
     end
 
     if optionText and combo.setCurrentOption then
