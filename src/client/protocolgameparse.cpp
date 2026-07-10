@@ -1545,13 +1545,10 @@ void ProtocolGame::parseTileTransformThing(const InputMessagePtr& msg)
 
 void ProtocolGame::parseTileRemoveThing(const InputMessagePtr& msg) const
 {
-    if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) {
-        std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?")
-                  << " | action='" << m_lastActionName
-                  << "' | confirmed by TileRemove (creature death/despawn) after "
-                  << m_lastActionTimer.elapsed_millis() << "ms\n";
-        m_lastActionName.clear();
-    }
+    //if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) { THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?") << " | action='" << m_lastActionName << "' | confirmed by TileRemove (creature death/despawn) after " << m_lastActionTimer.elapsed_millis() << "ms\n"; THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    m_lastActionName.clear(); THIS LINE IS USED TO DEBUG ACTION RTT.
+    //} THIS LINE IS USED TO DEBUG ACTION RTT.
     const auto& thing = getMappedThing(msg);
     if (!thing) {
         g_logger.traceError("ProtocolGame::parseTileRemoveThing: no thing");
@@ -1910,13 +1907,10 @@ void ProtocolGame::parseWorldLight(const InputMessagePtr& msg)
 
 void ProtocolGame::parseMagicEffect(const InputMessagePtr& msg)
 {
-    if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) {
-        std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?")
-                  << " | action='" << m_lastActionName
-                  << "' | confirmed by MagicEffect after "
-                  << m_lastActionTimer.elapsed_millis() << "ms\n";
-        m_lastActionName.clear();
-    }
+    //if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) { THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?") << " | action='" << m_lastActionName << "' | confirmed by MagicEffect after " << m_lastActionTimer.elapsed_millis() << "ms\n"; THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    m_lastActionName.clear(); THIS LINE IS USED TO DEBUG ACTION RTT.
+    //} THIS LINE IS USED TO DEBUG ACTION RTT.
     const auto& pos = getPosition(msg);
     if (g_game.getProtocolVersion() >= 1203) {
         uint8_t effectType = msg->getU8();
@@ -2032,13 +2026,10 @@ void ProtocolGame::parseRemoveMagicEffect(const InputMessagePtr& msg)
 
 void ProtocolGame::parseAnimatedText(const InputMessagePtr& msg)
 {
-    if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) {
-        std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?")
-                  << " | action='" << m_lastActionName
-                  << "' | confirmed by AnimatedText (damage/heal) after "
-                  << m_lastActionTimer.elapsed_millis() << "ms\n";
-        m_lastActionName.clear();
-    }
+    //if (!m_lastActionName.empty() && m_lastActionTimer.elapsed_millis() < 2000) { THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    std::cout << "[Debug] Player: " << (m_localPlayer ? m_localPlayer->getName() : "?") << " | action='" << m_lastActionName << "' | confirmed by AnimatedText (damage/heal) after " << m_lastActionTimer.elapsed_millis() << "ms\n"; THIS LINE IS USED TO DEBUG ACTION RTT.
+    //    m_lastActionName.clear(); THIS LINE IS USED TO DEBUG ACTION RTT.
+    //} THIS LINE IS USED TO DEBUG ACTION RTT.
     const auto& position = getPosition(msg);
     const uint8_t color = msg->getU8();
     const auto& text = msg->getString();
