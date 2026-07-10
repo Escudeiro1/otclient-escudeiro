@@ -145,8 +145,18 @@ function TaskBoardController:rerollMonsters()
             msgBox = nil
         end
     end
-    msgBox = displayGeneralBox(tr('Reroll Tasks'),
-        tr('Do you want to reroll your bounty tasks? This will consume 1 reroll token.'), {{
+    -- Check if the player currently has an active (in-progress) task
+    local hasActiveTask = false
+    for _, task in ipairs(self.bountyTasks or {}) do
+        if task.isActive == 1 then
+            hasActiveTask = true
+            break
+        end
+    end
+    local msg = hasActiveTask
+        and tr('Your current bounty task is in progress. Rerolling will cancel it and all progress will be lost. This will consume 1 reroll token. Continue?')
+        or  tr('Do you want to reroll your bounty tasks? This will consume 1 reroll token.')
+    msgBox = displayGeneralBox(tr('Reroll Tasks'), msg, {{
             text = tr('Yes'),
             callback = yes
         }, {
