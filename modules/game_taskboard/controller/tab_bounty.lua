@@ -242,7 +242,7 @@ function TaskBoardController:claimDaily()
 end
 
 function TaskBoardController:upgradeTalisman(statType)
-    -- not yet implemented
+    g_game.bountyTalismanUpgrade(statType)
 end
 
 --  Tracker helpers 

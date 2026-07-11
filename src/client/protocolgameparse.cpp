@@ -4525,44 +4525,22 @@ namespace
 
     using TaskBoardRaceIdSet = std::unordered_set<uint16_t>;
 
-    uint8_t getTaskBoardTalismanMaxLevel(const uint8_t pathIndex)
+    constexpr uint16_t TALISMAN_MAX_LEVEL = 355;
+
+    uint16_t getTaskBoardTalismanMaxLevel(const uint8_t /*pathIndex*/)
     {
-        switch (pathIndex) {
-            case 0:
-            case 1:
-            case 2:
-                return 166;
-            case 3:
-                return 180;
-            default:
-                return 166;
-        }
+        return TALISMAN_MAX_LEVEL; // all 4 paths share the same cap
     }
 
-    uint16_t getTaskBoardTalismanBonusHundredths(const uint8_t level, const uint8_t pathIndex)
+    uint16_t getTaskBoardTalismanBonusHundredths(const uint16_t level, const uint8_t /*pathIndex*/)
     {
-        if (level == 0) {
-            return 0;
-        }
-
-        switch (pathIndex) {
-            case 0:
-            case 1:
-            case 2: {
-                if (level <= 26) {
-                    return static_cast<uint16_t>(250 + (static_cast<uint32_t>(level) - 1U) * 50U);
-                }
-                return static_cast<uint16_t>(std::min<uint32_t>(1500U + (static_cast<uint32_t>(level) - 26U) * 25U, 5000U));
-            }
-            case 3: {
-                if (level <= 20) {
-                    return static_cast<uint16_t>(static_cast<uint32_t>(level) * 100U);
-                }
-                return static_cast<uint16_t>(std::min<uint32_t>(2000U + (static_cast<uint32_t>(level) - 20U) * 50U, 10000U));
-            }
-            default:
-                return 0;
-        }
+        // All 4 paths use the same progression (applies when talisman is worn)
+        if (level == 0)  return 250;                         // 2.5% base
+        if (level <= 15) return 250 + level * 50;            // 3.0%–10.0% in 0.5% steps
+        if (level <= 55) return 1000 + (level - 15) * 25;   // 10.25%–20.0% in 0.25% steps
+        if (level <= TALISMAN_MAX_LEVEL)
+            return 2000 + (level - 55) * 10;                // 20.1%–50.0% in 0.1% steps
+        return 5000;                                         // hard cap 50%
     }
 
     uint8_t getRemainingDaysUntil(const uint32_t unixTimestamp)
@@ -4839,17 +4817,16 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
     talismans.reserve(TASK_BOARD_TALISMAN_PATHS);
     for (uint8_t i = 0; std::cmp_less(i, TASK_BOARD_TALISMAN_PATHS); ++i) {
         TaskBoardTalismanData talisman;
-        const uint8_t currentLevel = msg->getU8();
-        msg->getU8(); // multiplier2 is unused on server
+        const uint16_t currentLevel = msg->getU16(); // level is U16 (max 355)
         talisman.isActiveUpgrade = msg->getU8();
         talisman.upgradeCost = msg->getU16();
         talisman.currentValue = getTaskBoardTalismanBonusHundredths(currentLevel, i);
 
-        const uint8_t maxLevel = getTaskBoardTalismanMaxLevel(i);
+        const uint16_t maxLevel = getTaskBoardTalismanMaxLevel(i);
         if (currentLevel >= maxLevel || talisman.upgradeCost == 0) {
             talisman.nextValue = 0;
         } else {
-            talisman.nextValue = getTaskBoardTalismanBonusHundredths(static_cast<uint8_t>(currentLevel + 1), i);
+            talisman.nextValue = getTaskBoardTalismanBonusHundredths(currentLevel + 1, i);
         }
         talismans.emplace_back(talisman);
     }
