@@ -124,9 +124,12 @@ function TaskBoardController:onBountyKillUpdate(raceId, currentKills, totalKills
         end
     end
 
-    if isCompleted then
-        displayInfoBox(tr('Bounty Task Completed!'),
-            tr('Congratulations! You have completed your Bounty Task.\nVisit the Task Board to claim your reward.'))
+    if isCompleted == 1 then
+        notificationsController:show(
+            tr('Bounty Task Completed!'),
+            tr('Visit the Task Board to claim your reward.'),
+            '/game_notifications/assets/images/nodo/icon-infobanner-weeklytask',
+            3000, {})
     end
 end
 
