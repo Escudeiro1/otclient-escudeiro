@@ -125,7 +125,7 @@ function TaskBoardController:onBountyKillUpdate(raceId, currentKills, totalKills
     end
 
     if isCompleted == 1 then
-        notificationsController:show(
+        modules.game_notifications.notificationsController:show(
             tr('Bounty Task Completed!'),
             tr('Visit the Task Board to claim your reward.'),
             '/game_notifications/assets/images/nodo/icon-infobanner-weeklytask',
