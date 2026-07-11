@@ -101,7 +101,7 @@
                         <label>{{task.reroll}}</label>
                         <img class="taskRewardIcon" src="/game_taskboard/assets/images/icon-currency-taskreroll" />
                     </div>
-                    <button class="taskActionBtn" disabled="true" *visible="task.isCompleted">Completed</button>
+                    <button class="taskActionBtn" disabled="true" *visible="task.isCompleted">Reward Claimed</button>
                     <button class="taskActionBtn"
                         *visible="not task.isCompleted and not task.isActive and task.raceId ~= 0"
                         onclick="self:selectTask(task.taskIndex)">Select Task</button>
