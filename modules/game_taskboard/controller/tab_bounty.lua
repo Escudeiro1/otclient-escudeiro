@@ -100,6 +100,12 @@ function TaskBoardController:onBountyServerData(header, monsters, talisman)
     end
     self.talismans = tals
 
+    -- Sync bounty points in case the resource balance event arrived out of order
+    local player = g_game.getLocalPlayer()
+    if player then
+        self.bountyPoints = comma_value(tonumber(player:getResourceBalance(ResourceTypes.BOUNTY_POINTS)) or 0)
+    end
+
     -- Update kill tracker
     self:updateBountyTracker(monsters)
 end
