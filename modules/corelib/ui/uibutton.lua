@@ -33,26 +33,22 @@ function UIButton:onHoverChange(hovered)
     local nativeCursor = modules.client_options.getOption('nativeCursor')
     local animatedCursor = modules.client_options.getOption('showAnimatedCursor')
     
-    -- Animated cursor mode - show pointer button on hover
     if animatedCursor and not nativeCursor then
         if hovered then
-            -- Only push if we haven't already
             if not self.cursorPushed then
-                g_mouse.pushCursor('pointerbutton')
+                g_mouse.pushCursor('default')
                 self.cursorPushed = true
             end
         else
-            -- Only pop if we pushed
             if self.cursorPushed then
-                g_mouse.popCursor('pointerbutton')
+                g_mouse.popCursor('default')
                 self.cursorPushed = false
             end
         end
     elseif nativeCursor then
-        -- Native cursor mode - use hand pointer
         if hovered then
             if not self.cursorPushed then
-                g_window.setSystemCursor('hand')
+                g_window.setSystemCursor('arrow')
                 self.cursorPushed = true
             end
         else
@@ -62,7 +58,5 @@ function UIButton:onHoverChange(hovered)
             end
         end
     end
-    -- When both are disabled, use default Tibia cursors (no animation)
-    -- The cursor is already set to default, so we don't need to change it
     UIWidget.onHoverChange(self, hovered)
 end
