@@ -55,11 +55,11 @@
 }
 
 .monsterRow:nth-child(odd) {
-    background-color: #141414;
+    background-color: #484848;
 }
 
 .monsterRow:nth-child(even) {
-    background-color: #0e0e0e;
+    background-color: #414141;
 }
 
 .monsterRow:hover {
