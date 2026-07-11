@@ -123,6 +123,11 @@ function TaskBoardController:onBountyKillUpdate(raceId, currentKills, totalKills
             break
         end
     end
+
+    if isCompleted then
+        displayInfoBox(tr('Bounty Task Completed!'),
+            tr('Congratulations! You have completed your Bounty Task.\nVisit the Task Board to claim your reward.'))
+    end
 end
 
 --  Actions 
