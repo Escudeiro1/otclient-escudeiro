@@ -120,7 +120,7 @@
 
 <html>
 <uiwindow id="windowTrader" placement="center" *width="self.widthConsole" class="modal-message"
-    src="images/ui/miniwindow" onescape="self:onCloseNpcTrade()" onkeydown="self:onConsoleKeyPress(event)">
+    src="images/ui/miniwindow" onescape="self:onUserCloseNpcTrade()" onkeydown="self:onConsoleKeyPress(event)">
 
     <!-- Left Panel -->
     <div class="leftPanel" >
@@ -219,7 +219,7 @@
     <div id="dragHandle" class="dragHandle" placement="top-left" *width="self.widthConsole" focusable="false"></div>
 
     <UIButton class="bottonOptions windowBtn" placement="top-right" *visible="self.isTradeOpen" onclick="self:onOptionsClick()"></UIButton>
-    <UIButton class="closeButton windowBtn" placement="top-right" onclick="self:onCloseNpcTrade()"></UIButton>
+    <UIButton class="closeButton windowBtn" placement="top-right" onclick="self:onUserCloseNpcTrade()"></UIButton>
 
 </uiwindow>
 

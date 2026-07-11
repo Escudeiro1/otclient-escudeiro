@@ -119,6 +119,13 @@ function controllerNpcTrader:onCloseNpcTrade()
     end
 end
 
+function controllerNpcTrader:onUserCloseNpcTrade()
+    if controllerNpcTrader.isTradeOpen then
+        g_game.talk("bye")
+    end
+    self:onCloseNpcTrade()
+end
+
 function sellAll(...) -- Vbot Call
     if controllerNpcTrader:isLegacyMode() then
         sellAllLegacy(...)
