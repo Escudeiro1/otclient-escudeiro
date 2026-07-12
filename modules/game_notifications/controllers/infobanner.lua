@@ -113,10 +113,8 @@ local infoPopUp = {
         }
     },
     [eventCategory.CLIENT_EVENT_TYPE_BESTIARY] = {
-        --type(int), raceId(int), progressLevel(int)
+        --type(int), raceId(int), progressLevel(int) — title/description overridden in handler
         {
-            title = "Bestiary Progress",
-            description = "You have progressed '%s'", --progressLevel
             hasRaceId = true,
             img = "/game_notifications/assets/images/nodo/icon-infobanner-unlock"
         }
@@ -283,7 +281,22 @@ function notificationsController:onClientEvent(eventCat, ...)
             extraData.creatureId = lookType
             extraData.skinType = skinType
         end
-    elseif eventCat == eventCategory.CLIENT_EVENT_TYPE_BESTIARY or eventCat == eventCategory.CLIENT_EVENT_TYPE_BOSSTIARY then
+    elseif eventCat == eventCategory.CLIENT_EVENT_TYPE_BESTIARY then
+        local raceId = args[1]
+        local progressLevel = args[2]
+        local raceData = raceId and g_things.getRaceData(raceId) or nil
+        local creatureName = (raceData and raceData.name or "Unknown"):capitalize()
+        if progressLevel == 0 then
+            title = "Creature Discovered"
+            description = string.format("You discovered creature %s.", creatureName)
+        else
+            title = "Bestiary Progress"
+            description = string.format("New details unlocked for %s.", creatureName)
+        end
+        if popupTemplate.hasRaceId then
+            extraData.raceId = raceId
+        end
+    elseif eventCat == eventCategory.CLIENT_EVENT_TYPE_BOSSTIARY then
         local raceId = args[1]
         local progressLevel = args[2]
         description = type(description) == 'string' and description:format(progressLevel) or description
