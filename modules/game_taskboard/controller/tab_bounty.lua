@@ -266,12 +266,19 @@ function TaskBoardController:updateBountyTracker(monsters)
     end
     if not activeMonster then
         Tracker.Bounty.setInactive()
+        TaskBoardController.activeBountyRaceId = 0
+        TaskBoardController.activeBountyName   = ""
+        TaskBoardController:refreshBountyCreatureIcons()
         return
     end
     local raceId = tonumber(activeMonster.raceId) or 0
     local currentKills = tonumber(activeMonster.currentKills) or 0
     local totalKills = tonumber(activeMonster.totalKills) or 0
     local isCompleted = currentKills >= totalKills and 1 or 0
+    local raceData = g_things.getRaceData(raceId)
+    TaskBoardController.activeBountyRaceId = raceId
+    TaskBoardController.activeBountyName   = raceData and raceData.name or ""
+    TaskBoardController:refreshBountyCreatureIcons()
     self:onBountyTrackerKillUpdate(raceId, currentKills, totalKills, isCompleted)
 end
 

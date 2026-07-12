@@ -175,6 +175,8 @@ public:
     void sendTyping();
     bool getTyping() { return m_typing; }
     void setTypingIconTexture(const std::string& filename);
+    void setBountyTarget(bool val) { m_isBountyTarget = val; }
+    bool isBountyTarget() const { return m_isBountyTarget; }
     void setBounce(const uint8_t minHeight, const uint8_t height, const uint16_t speed) {
         m_bounce = { .minHeight =
 minHeight,
@@ -296,6 +298,7 @@ private:
     TexturePtr m_typeTexture;
     TexturePtr m_iconTexture;
     TexturePtr m_typingIconTexture;
+    bool m_isBountyTarget { false };
 
     EventPtr m_walkUpdateEvent;
     ScheduledEventPtr m_walkFinishAnimEvent;

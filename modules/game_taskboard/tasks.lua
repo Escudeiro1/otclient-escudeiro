@@ -42,6 +42,10 @@ TaskBoardController.weeklyDifficultyDeliverySummary = ""
 TaskBoardController.weeklyDifficultyPointsEarned = "0"
 TaskBoardController.weeklyDifficultySealsEarned = "0"
 
+-- Bounty target tracking (for in-world icon)
+TaskBoardController.activeBountyRaceId = 0
+TaskBoardController.activeBountyName   = ""
+
 -- Shop tab
 TaskBoardController.shopItems             = {}
 TaskBoardController.shopBalance           = 0
@@ -153,6 +157,24 @@ end
 
 --  Lifecycle
 
+local function onBountyCreatureAppear(creature)
+    if TaskBoardController.activeBountyName == "" then return end
+    if not creature:isLocalPlayer() and creature:getName() == TaskBoardController.activeBountyName then
+        creature:setBountyTarget(true)
+    end
+end
+
+function TaskBoardController:refreshBountyCreatureIcons()
+    local localPlayer = g_game.getLocalPlayer()
+    if not localPlayer then return end
+    local targetName = self.activeBountyName
+    for _, creature in ipairs(g_map.getSpectators(localPlayer:getPosition(), false)) do
+        if not creature:isLocalPlayer() then
+            creature:setBountyTarget(targetName ~= "" and creature:getName() == targetName)
+        end
+    end
+end
+
 function TaskBoardController:onInit()
 end
 
@@ -187,6 +209,7 @@ function TaskBoardController:onGameStart()
 
     self:initTracker()
     self:syncResourceBalances()
+    connect(Creature, { onAppear = onBountyCreatureAppear })
 end
 
 function TaskBoardController:onGameEnd()
@@ -194,6 +217,9 @@ function TaskBoardController:onGameEnd()
     if self.hideSoulseal then
         self:hideSoulseal()
     end
+    disconnect(Creature, { onAppear = onBountyCreatureAppear })
+    self.activeBountyRaceId = 0
+    self.activeBountyName   = ""
     self:resetSessionState()
 end
 

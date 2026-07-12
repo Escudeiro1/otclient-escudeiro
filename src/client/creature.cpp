@@ -347,6 +347,14 @@ void Creature::drawInformation(const MapPosInfo& mapRect, const Point& dest, con
     if (g_gameConfig.drawTyping() && getTyping() && m_typingIconTexture)
         g_drawPool.addTexturedPos(m_typingIconTexture, p.x + (nameSize.width() / 2.0) + 2, textRect.y() - 4);
 
+    if (m_isBountyTarget) {
+        static TexturePtr s_bountyIcon;
+        if (!s_bountyIcon)
+            s_bountyIcon = g_textures.getTexture("/game_taskboard/assets/images/icon-bountytasks");
+        if (s_bountyIcon)
+            g_drawPool.addTexturedPos(s_bountyIcon, p.x + (nameSize.width() / 2.0) + 2, textRect.y() - 4);
+    }
+
     if (g_game.getClientVersion() >= 1281 && m_icons && !m_icons->atlasGroups.empty()) {
         int iconOffset = 0;
         for (const auto& iconTex : m_icons->atlasGroups) {
