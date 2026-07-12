@@ -1105,6 +1105,7 @@ function onLevelChange(localPlayer, value, percent)
     if not localPlayer then
         return
     end
+    print('[DEBUG onLevelChange] raw_percent=' .. tostring(percent) .. ' getLevelPercent()=' .. tostring(localPlayer:getLevelPercent()))
     percent = percent or localPlayer:getLevelPercent()
     setSkillValue('level', comma_value(value))
     local text = tr('You have %s percent to go', 100 - percent)
