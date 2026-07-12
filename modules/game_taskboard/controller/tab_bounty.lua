@@ -259,7 +259,7 @@ function TaskBoardController:updateBountyTracker(monsters)
     end
     local activeMonster = nil
     for _, m in ipairs(monsters) do
-        if tonumber(m.isActive) == 1 then
+        if tonumber(m.isActive) == 1 and tonumber(m.isCompleted) ~= 1 then
             activeMonster = m
             break
         end
