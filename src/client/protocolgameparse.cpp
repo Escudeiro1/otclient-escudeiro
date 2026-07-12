@@ -4054,8 +4054,21 @@ ThingPtr ProtocolGame::getMappedThing(const InputMessagePtr& msg) const
             return thing;
         }
 
-        const bool tileLoaded = g_map.getTile(pos) != nullptr;
+        const auto& tile = g_map.getTile(pos);
+        const bool tileLoaded = tile != nullptr;
         g_logger.traceError("no thing at pos:{}, stackpos:{} tileLoaded={}", pos, stackpos, tileLoaded);
+        if (tileLoaded) {
+            const auto& things = tile->getThings();
+            g_logger.info("[getMappedThing] tile {} has {}/{} things:", pos, things.size(), (int)stackpos + 1);
+            for (int i = 0; i < (int)things.size(); ++i) {
+                const auto& t = things[i];
+                if (t && t->isCreature()) {
+                    g_logger.info("[getMappedThing]   [{}] creature id={} name={}", i, t->getId(), t->static_self_cast<Creature>()->getName());
+                } else if (t) {
+                    g_logger.info("[getMappedThing]   [{}] item id={}", i, t->getId());
+                }
+            }
+        }
     } else {
         const uint32_t creatureId = msg->getU32();
         if (const auto& thing = g_map.getCreatureById(creatureId)) {
