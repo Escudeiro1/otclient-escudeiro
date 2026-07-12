@@ -159,7 +159,7 @@ end
 
 local function onBountyCreatureAppear(creature)
     if TaskBoardController.activeBountyName == "" then return end
-    if not creature:isLocalPlayer() and creature:getName() == TaskBoardController.activeBountyName then
+    if not creature:isLocalPlayer() and creature:getName():lower() == TaskBoardController.activeBountyName then
         creature:setBountyTarget(true)
     end
 end
@@ -170,7 +170,7 @@ function TaskBoardController:refreshBountyCreatureIcons()
     local targetName = self.activeBountyName
     for _, creature in ipairs(g_map.getSpectators(localPlayer:getPosition(), false)) do
         if not creature:isLocalPlayer() then
-            creature:setBountyTarget(targetName ~= "" and creature:getName() == targetName)
+            creature:setBountyTarget(targetName ~= "" and creature:getName():lower() == targetName)
         end
     end
 end
