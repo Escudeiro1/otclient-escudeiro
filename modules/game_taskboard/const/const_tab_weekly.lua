@@ -23,7 +23,7 @@ WEEKLY_KILL_TASK_POINTS = {
     [1] = 25,  -- Beginner
     [2] = 50,  -- Adept
     [3] = 100, -- Expert
-    [4] = 110  -- Master
+    [4] = 200  -- Master
 }
 
 -- Points rewarded per completed delivery task (same across difficulties).

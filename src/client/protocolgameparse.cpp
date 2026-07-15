@@ -4871,6 +4871,7 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
     }
 
     g_lua.callGlobalField("g_game", "onBountyTaskData", toBountyHeaderMap(headerData), monsterData, talismanData);
+    std::cout << "[parseTaskBoardBountyData] done, msg remaining bytes=" << msg->getUnreadSize() << std::endl;
 
     std::vector<std::map<std::string, uint32_t>> preferredSlotData;
     preferredSlotData.reserve(preferredSlots.size());

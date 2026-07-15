@@ -1,17 +1,5 @@
 -- Weekly tasks tab logic — methods added to TaskBoardController
-
-local REWARD_MULTIPLIERS = {1, 2, 3, 5, 8}
-
-local function getRewardMultiplier(n)
-    for i = WEEKLY_SECTIONS, 1, -1 do
-        if n >= WEEKLY_THRESHOLDS[i] then
-            return REWARD_MULTIPLIERS[i]
-        end
-    end
-    return 1
-end
-
---  Server data handler
+--  Server data handler 
 local function getItemServerName(itemId)
     local thingType = g_things.getThingType(itemId, ThingCategoryItem)
     if thingType then
@@ -50,13 +38,11 @@ function TaskBoardController:refreshWeeklySummary()
     local killBase = completedKillTasks * killTaskPoints
     local deliveryBase = completedDeliveryTasks * deliveryTaskPoints
     local basePoints = killBase + deliveryBase
-    local rewardMultiplier = getRewardMultiplier(totalCompleted)
-    local expectedPoints = math.floor(basePoints * rewardMultiplier)
-    local displayPoints = (header.weeklyProgressFinished and pointsEarned > 0) and pointsEarned or expectedPoints
+    local rewardMultiplier = (basePoints > 0) and math.max(1, math.floor(pointsEarned / basePoints + 0.5)) or 1
 
     self.weeklyHdr.completedKillTasks = completedKillTasks
 
-    self.weeklyRewardTokens = comma_value(displayPoints)
+    self.weeklyRewardTokens = comma_value(pointsEarned)
     self.weeklyRewardSeals = comma_value(soulsealsEarned)
     self.weeklyRemainingDays = tonumber(header.remainingDays) or 0
     self.weeklyShowExtraSlotUnlock = not ((tonumber(header.extraSlot) or 0) == 1 or header.extraSlot == true)
@@ -72,7 +58,7 @@ function TaskBoardController:refreshWeeklySummary()
     self.weeklyRewardTokensTooltip = string.format(
         'Hunting Task Points:\n\n   %d * %d  (Kill Tasks)\n+ %d * %d  (Delivery Tasks)\n--------------------------------------\n= %s  base points\nx %d  reward multiplier\n= %s  Hunting Task Points',
         completedKillTasks, killTaskPoints, completedDeliveryTasks, deliveryTaskPoints,
-        comma_value(killBase + deliveryBase), rewardMultiplier, comma_value(displayPoints))
+        comma_value(killBase + deliveryBase), rewardMultiplier, comma_value(pointsEarned))
 
     self.weeklyRewardSealsTooltip = string.format(
         'You receive %d Soulseal for each completed task. Soulseals can be\nused in the Soulpit. Click the obelisk there, then your character to\nopen a menu where you can select a creature you want to\nchallenge on your own.',
