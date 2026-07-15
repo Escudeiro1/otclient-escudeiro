@@ -47,6 +47,17 @@ function TaskBoardController:refreshWeeklySummary()
     self.weeklyRemainingDays = tonumber(header.remainingDays) or 0
     self.weeklyShowExtraSlotUnlock = not ((tonumber(header.extraSlot) or 0) == 1 or header.extraSlot == true)
     self.weeklyProgressPct = self:calcProgressWidth(totalCompleted)
+
+    if self.ui then
+        local fill = self.ui:querySelector('.progressFill')
+        if fill then
+            local trackWidth = fill:getParent():getWidth()
+            if trackWidth > 0 then
+                fill:setWidth(math.floor(trackWidth * self.weeklyProgressPct / 100))
+            end
+        end
+    end
+
     self.weeklyXpText = (maxExperience > 0) and
                             tr(
             'Each kill task rewards you with %s XP and each delivery task will reward you with %s XP.',
