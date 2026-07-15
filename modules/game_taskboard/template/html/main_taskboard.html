@@ -221,9 +221,7 @@
                             <div class="VerticalSeparator VerticalSeparatorTasks" style="position: absolute;top:-41px;left: 126px;"></div>
                             <div class="VerticalSeparator VerticalSeparatorTasks" style="position: absolute;top:-41px;left: 194px;" ></div>
                         </div>
-                        <div class="progressTrack" *tooltip="self.weeklyProgressTooltip">
-                            <div class="progressFill" *style-width="tostring(self.weeklyProgressPct) .. '%'"></div>
-                        </div>
+                        <progressbar class="progressTrack" *percent="self.weeklyProgressPct" *tooltip="self.weeklyProgressTooltip"></progressbar>
 
                         <div class="thresholdRow">
                             <label class="multiplierLabel" style="position: absolute;left: 15px;">0</label> 

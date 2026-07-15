@@ -176,6 +176,7 @@ function TaskBoardController:refreshBountyCreatureIcons()
 end
 
 function TaskBoardController:onInit()
+    g_ui.importStyle("taskboard.otui")
 end
 
 function TaskBoardController:onGameStart()
