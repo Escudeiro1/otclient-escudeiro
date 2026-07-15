@@ -167,8 +167,9 @@ function TaskBoardController:rebuildPreferredSlots()
             unwName = 'Empty'
         end
 
-        local hasPreferred = preferredId > 0
-        local hasUnwanted = unwantedId > 0
+        -- Guard: treat missing outfit as no creature to avoid UICreature nil-outfit crash
+        local hasPreferred = preferredId > 0 and prefOutfit ~= nil
+        local hasUnwanted = unwantedId > 0 and unwOutfit ~= nil
         local canAssign = selectedRaceId ~= 0
 
         table.insert(result, {
@@ -183,22 +184,22 @@ function TaskBoardController:rebuildPreferredSlots()
             preferredOutfit = prefOutfit,
             showPreferredCreature = hasPreferred and 1 or 0,
             showPreferredPlaceholder = hasPreferred and 0 or 1,
-            showPreferredAssign = hasPreferred and 0 or 1,
-            showPreferredClear = hasPreferred and 1 or 0,
+            showPreferredAssign = 1,
+            showPreferredClear = 0,
             unwantedId = unwantedId,
             unwantedName = unwName,
             unwantedOutfit = unwOutfit,
             showUnwantedCreature = hasUnwanted and 1 or 0,
             showUnwantedPlaceholder = hasUnwanted and 0 or 1,
-            showUnwantedAssign = hasUnwanted and 0 or 1,
-            showUnwantedClear = hasUnwanted and 1 or 0,
+            showUnwantedAssign = 1,
+            showUnwantedClear = 0,
             actionCost = actionCost,
-            preferredButtonText = hasPreferred and 'Remove' or 'Assign',
-            unwantedButtonText = hasUnwanted and 'Remove' or 'Assign',
-            preferredAction = hasPreferred and 'clearPreferred' or 'assignPreferred',
-            unwantedAction = hasUnwanted and 'clearUnwanted' or 'assignUnwanted',
-            canPreferredAct = hasPreferred or canAssign,
-            canUnwantedAct = hasUnwanted or canAssign,
+            preferredButtonText = 'Assign',
+            unwantedButtonText = 'Assign',
+            preferredAction = 'assignPreferred',
+            unwantedAction = 'assignUnwanted',
+            canPreferredAct = canAssign,
+            canUnwantedAct = canAssign,
             clearCost = actionCost,
             canClear = balance >= actionCost
         })
