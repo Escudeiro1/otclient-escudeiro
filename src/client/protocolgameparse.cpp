@@ -4879,7 +4879,16 @@ void ProtocolGame::parseTaskBoardBountyData(const InputMessagePtr& msg)
         preferredSlotData.emplace_back(toPreferredSlotMap(slot));
     }
 
-    g_lua.callGlobalField("g_game", "onBountyPreferredData", preferredSlotData, 0, getAllMonsterRaceIds());
+    // Read the bounty pool race IDs sent by the server (union of all difficulty pools).
+    // This ensures the picker only shows creatures that can actually appear as bounty options.
+    const uint16_t poolIdCount = msg->getU16();
+    std::vector<uint16_t> bountyPoolIds;
+    bountyPoolIds.reserve(poolIdCount);
+    for (uint16_t i = 0; i < poolIdCount; ++i) {
+        bountyPoolIds.push_back(msg->getU16());
+    }
+
+    g_lua.callGlobalField("g_game", "onBountyPreferredData", preferredSlotData, 0, bountyPoolIds);
 }
 
 void ProtocolGame::parseTaskBoardBountyKillUpdate(const InputMessagePtr& msg)
