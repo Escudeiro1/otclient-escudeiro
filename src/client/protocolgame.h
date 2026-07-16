@@ -436,6 +436,7 @@ private:
     void parseTaskBoardData(const InputMessagePtr& msg);
     void parseTaskBoardBountyData(const InputMessagePtr& msg);
     void parseTaskBoardBountyKillUpdate(const InputMessagePtr& msg);
+    void parseTaskBoardWeeklyKillUpdate(const InputMessagePtr& msg);
     void parseTaskBoardWeeklyData(const InputMessagePtr& msg);
     void parseTaskBoardShopData(const InputMessagePtr& msg);
     void parseMultiOfflineTrainingDialog(const InputMessagePtr& msg);
