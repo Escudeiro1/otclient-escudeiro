@@ -1,6 +1,8 @@
 -- Global variables
 local binaryTree = {}
 local battleButtons = {}
+local m_pendingDisappear = {}
+local m_disappearPending = false
 local battleWindow, battleButton, battlePanel, mouseWidget, filterPanel, toggleFilterButton
 local lastBattleButtonSwitched, lastCreatureSelected
 local hideButtons = {}
@@ -1181,16 +1183,7 @@ function BattleListInstance:removeCreature(creature, all)
         
         local index = binarySearch(self.binaryTree, valuetoSearch, BSComparatorSortType, sortType, creatureId)
         if index ~= nil and creatureId == self.binaryTree[index].id then
-            local creatureListSize = #self.binaryTree
-            if index < creatureListSize then
-                for i = index, creatureListSize - 1 do
-                    -- Swap elements in instance binary tree
-                    local tmp = self.binaryTree[i]
-                    self.binaryTree[i] = self.binaryTree[i + 1]
-                    self.binaryTree[i + 1] = tmp
-                end
-            end
-            self.binaryTree[creatureListSize] = nil
+            table.remove(self.binaryTree, index)
             BattleButtonPool:release(battleButton)
             self.battleButtons[creatureId] = nil
             return true
@@ -2399,9 +2392,24 @@ function onCreatureAppear(creature) -- Update battleButton once a creature appea
 end
 
 function onCreatureDisappear(creature) -- Update battleButton once a creature disappear (remove/dead)
-    -- Update all battle list instances (including main instance ID 0)
-    for _, instance in pairs(BattleListManager.instances) do
-        instance:removeCreature(creature)
+    -- Batch simultaneous disappears (e.g. AoE killing 50+ monsters) so all removals
+    -- process in one deferred event and correctBattleButtons runs only once.
+    m_pendingDisappear[#m_pendingDisappear + 1] = creature
+    if not m_disappearPending then
+        m_disappearPending = true
+        scheduleEvent(function()
+            m_disappearPending = false
+            local batch = m_pendingDisappear
+            m_pendingDisappear = {}
+            for _, c in ipairs(batch) do
+                for _, instance in pairs(BattleListManager.instances) do
+                    instance:removeCreature(c)
+                end
+            end
+            for _, instance in pairs(BattleListManager.instances) do
+                instance:correctBattleButtons()
+            end
+        end, 0)
     end
 end
 
