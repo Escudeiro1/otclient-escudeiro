@@ -25,6 +25,7 @@
 #include "asyncdispatcher.h"
 #include <gitinfo.h>
 #include <chrono>
+#include <framework/util/stats.h>
 
 #define ADD_QUOTES_HELPER(s) #s
 #define ADD_QUOTES(s) ADD_QUOTES_HELPER(s)
@@ -173,6 +174,8 @@ void Application::poll()
 #ifdef __EMSCRIPTEN__
     WebConnection::poll();
 #else
+    g_stats.clear(STATS_PACKETS);
+    g_stats.clearSlow(STATS_PACKETS);
     auto tNet1 = clock::now();
     Connection::poll();
     auto tNet1End = clock::now();
@@ -204,6 +207,13 @@ void Application::poll()
         double net2Ms   = ms(tNet2End   - tNet2).count();
         g_logger.info("[PollTimer] total={:.2f}ms net1={:.2f}ms dispatch={:.2f}ms net2={:.2f}ms",
                       totalMs, net1Ms, dispMs, net2Ms);
+        if (net1Ms > 5.0) {
+            g_logger.info("[PollTimer/net1 slow opcodes]\n{}", g_stats.getSlow(STATS_PACKETS, 30, 500, true));
+            g_logger.info("[PollTimer/net1 top by time]\n{}", g_stats.get(STATS_PACKETS, 20, true));
+        }
+        if (dispMs > 5.0) {
+            g_logger.info("[PollTimer/dispatch top by time]\n{}", g_stats.get(STATS_PACKETS, 20, true));
+        }
     }
 }
 
