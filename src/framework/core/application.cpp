@@ -24,6 +24,7 @@
 
 #include "asyncdispatcher.h"
 #include <gitinfo.h>
+#include <chrono>
 
 #define ADD_QUOTES_HELPER(s) #s
 #define ADD_QUOTES(s) ADD_QUOTES_HELPER(s)
@@ -162,28 +163,48 @@ void Application::terminate()
 
 void Application::poll()
 {
+    using clock = std::chrono::steady_clock;
+    using ms = std::chrono::duration<double, std::milli>;
+    auto pollStart = clock::now();
+
     g_clock.update();
 
 #ifdef FRAMEWORK_NET
 #ifdef __EMSCRIPTEN__
     WebConnection::poll();
 #else
+    auto tNet1 = clock::now();
     Connection::poll();
+    auto tNet1End = clock::now();
 #endif
 #endif
 
+    auto tDispatch = clock::now();
     g_dispatcher.poll();
+    auto tDispatchEnd = clock::now();
 
     // poll connection again to flush pending write
 #ifdef FRAMEWORK_NET
 #ifdef __EMSCRIPTEN__
     WebConnection::poll();
 #else
+    auto tNet2 = clock::now();
     Connection::poll();
+    auto tNet2End = clock::now();
 #endif
 #endif
 
     g_clock.update();
+
+    auto pollEnd = clock::now();
+    double totalMs = ms(pollEnd - pollStart).count();
+    if (totalMs > 5.0) {
+        double net1Ms   = ms(tNet1End   - tNet1).count();
+        double dispMs   = ms(tDispatchEnd - tDispatch).count();
+        double net2Ms   = ms(tNet2End   - tNet2).count();
+        g_logger.info("[PollTimer] total={:.2f}ms net1={:.2f}ms dispatch={:.2f}ms net2={:.2f}ms",
+                      totalMs, net1Ms, dispMs, net2Ms);
+    }
 }
 
 void Application::exit()
