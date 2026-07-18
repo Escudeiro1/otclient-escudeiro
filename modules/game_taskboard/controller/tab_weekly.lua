@@ -185,7 +185,7 @@ function TaskBoardController:onWeeklyServerData(header, monsters, items)
     self:refreshWeeklySummary()
 
     -- Difficulty modal
-    self.weeklyDifficultyPending = data.difficulty == 0 or data.weeklyProgressFinished
+    self.weeklyDifficultyPending = data.difficulty == 0 and not data.weeklyProgressFinished
     self.diffModalVisible = false
 
     self:onWeeklyTabSelected()
