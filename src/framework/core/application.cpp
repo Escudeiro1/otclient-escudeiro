@@ -24,8 +24,6 @@
 
 #include "asyncdispatcher.h"
 #include <gitinfo.h>
-#include <chrono>
-#include <framework/util/stats.h>
 
 #define ADD_QUOTES_HELPER(s) #s
 #define ADD_QUOTES(s) ADD_QUOTES_HELPER(s)
@@ -164,57 +162,28 @@ void Application::terminate()
 
 void Application::poll()
 {
-    using clock = std::chrono::steady_clock;
-    using ms = std::chrono::duration<double, std::milli>;
-    auto pollStart = clock::now();
-
     g_clock.update();
 
 #ifdef FRAMEWORK_NET
 #ifdef __EMSCRIPTEN__
     WebConnection::poll();
 #else
-    g_stats.clear(STATS_PACKETS);
-    g_stats.clearSlow(STATS_PACKETS);
-    auto tNet1 = clock::now();
     Connection::poll();
-    auto tNet1End = clock::now();
 #endif
 #endif
 
-    auto tDispatch = clock::now();
     g_dispatcher.poll();
-    auto tDispatchEnd = clock::now();
 
     // poll connection again to flush pending write
 #ifdef FRAMEWORK_NET
 #ifdef __EMSCRIPTEN__
     WebConnection::poll();
 #else
-    auto tNet2 = clock::now();
     Connection::poll();
-    auto tNet2End = clock::now();
 #endif
 #endif
 
     g_clock.update();
-
-    auto pollEnd = clock::now();
-    double totalMs = ms(pollEnd - pollStart).count();
-    if (totalMs > 5.0) {
-        double net1Ms   = ms(tNet1End   - tNet1).count();
-        double dispMs   = ms(tDispatchEnd - tDispatch).count();
-        double net2Ms   = ms(tNet2End   - tNet2).count();
-        g_logger.info("[PollTimer] total={:.2f}ms net1={:.2f}ms dispatch={:.2f}ms net2={:.2f}ms",
-                      totalMs, net1Ms, dispMs, net2Ms);
-        if (net1Ms > 5.0) {
-            g_logger.info("[PollTimer/net1 slow opcodes]\n{}", g_stats.getSlow(STATS_PACKETS, 30, 500, true));
-            g_logger.info("[PollTimer/net1 top by time]\n{}", g_stats.get(STATS_PACKETS, 20, true));
-        }
-        if (dispMs > 5.0) {
-            g_logger.info("[PollTimer/dispatch top by time]\n{}", g_stats.get(STATS_PACKETS, 20, true));
-        }
-    }
 }
 
 void Application::exit()
