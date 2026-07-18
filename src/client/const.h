@@ -391,7 +391,8 @@ namespace Otc
         TASK_BOARD_WEEKLY = 1,
         TASK_BOARD_HUNT_SHOP = 2,
         TASK_BOARD_BOUNTY_KILL_UPDATE = 3,
-        TASK_BOARD_WEEKLY_KILL_UPDATE = 4
+        TASK_BOARD_WEEKLY_KILL_UPDATE = 4,
+        TASK_BOARD_SHOP_RESULT = 5
     };
 
     enum TaskBoardBountyRerollMode_t : uint8_t

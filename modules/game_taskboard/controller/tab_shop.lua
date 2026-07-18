@@ -136,7 +136,8 @@ function TaskBoardController:parseShopItem(raw)
         data.isMount = parsedMountType > 0
         data.isCreaturePreview = data.isMount
         data.previewType = data.isCreaturePreview and 'creature' or nil
-    elseif offerType == SHOP_OFFER_TYPE_ITEM or offerType == SHOP_OFFER_TYPE_ITEM_DOUBLE then
+    elseif offerType == SHOP_OFFER_TYPE_ITEM or offerType == SHOP_OFFER_TYPE_ITEM_DOUBLE
+        or offerType == SHOP_OFFER_TYPE_WEEKLY_EXPANSION then
         data.itemId = tonumber(raw.itemId) or 0
         data.lookMount = 0
         data.isItem = (data.itemId > 0)

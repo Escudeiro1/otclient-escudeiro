@@ -4791,6 +4791,9 @@ void ProtocolGame::parseTaskBoardData(const InputMessagePtr& msg)
         case Otc::TASK_BOARD_WEEKLY_KILL_UPDATE:
             parseTaskBoardWeeklyKillUpdate(msg);
             break;
+        case Otc::TASK_BOARD_SHOP_RESULT:
+            parseTaskBoardShopResult(msg);
+            break;
         default:
             throw stdext::exception("[ProtocolGame::parseTaskBoardData] Unknown subtype {}", static_cast<uint8_t>(subtype));
     }
@@ -4909,6 +4912,12 @@ void ProtocolGame::parseTaskBoardWeeklyKillUpdate(const InputMessagePtr& msg)
     const uint16_t totalKills = msg->getU16();
     const uint8_t isCompleted = msg->getU8();
     g_lua.callGlobalField("g_game", "onWeeklyKillUpdate", raceId, currentKills, totalKills, isCompleted);
+}
+
+void ProtocolGame::parseTaskBoardShopResult(const InputMessagePtr& msg)
+{
+    const uint8_t result = msg->getU8();
+    g_lua.callGlobalField("g_game", "onTaskHuntingShopResult", result);
 }
 
 void ProtocolGame::parseTaskBoardWeeklyData(const InputMessagePtr& msg)

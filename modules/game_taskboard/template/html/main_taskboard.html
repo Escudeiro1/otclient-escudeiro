@@ -317,7 +317,7 @@
                                     <hr class="shopSep" style="height: 2px;" />
                                     <div class="shopActionRow">
                                         <button class="shopBuyBtn"
-                                            *enabled="item.canAfford"
+                                            *enabled="item.canAfford and not item.bought"
                                             onclick="self:buyItem(item.id)">
                                             <img src="/images/ui/icon-yes" *visible="item.bought" style="image-offset-y: 5"/>
                                             <label class="infoPanelLabel" *text="item.bought and 'Bought' or 'Buy'"></label>
