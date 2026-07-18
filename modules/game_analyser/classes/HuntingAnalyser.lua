@@ -553,16 +553,15 @@ function HuntingAnalyser:setHealingTicks(value) HuntingAnalyser.healingTicks = v
 function HuntingAnalyser:setDamageTicks(value) HuntingAnalyser.damageTicks = value end
 
 -- updaters
-function HuntingAnalyser:addRawXPGain(value) 
-	-- Calculate the actual raw XP by removing rate modifiers
+function HuntingAnalyser:addRawXPGain(value)
 	local actualRawXP = calculateRawXP(value)
 	HuntingAnalyser.rawXPGain = HuntingAnalyser.rawXPGain + actualRawXP
-	HuntingAnalyser:updateWindow()
+	-- updateWindow is called by the event1000 cycle; no per-call refresh needed
 end
 
-function HuntingAnalyser:addXpGain(value) 
+function HuntingAnalyser:addXpGain(value)
 	HuntingAnalyser.xpGain = HuntingAnalyser.xpGain + value
-	HuntingAnalyser:updateWindow()
+	-- updateWindow is called by the event1000 cycle; no per-call refresh needed
 end
 
 function HuntingAnalyser:addLootedItems(item, name)

@@ -58,6 +58,8 @@ local function setStringColor(textTable, text, color)
     table.insert(textTable, "{" .. text .. ", " .. color .. "}")
 end
 
+local m_dropUpdatePending = false
+
 if not DropTrackerAnalyser then
 	DropTrackerAnalyser = {
 		launchTime = 0,
@@ -400,8 +402,12 @@ function DropTrackerAnalyser:checkMonsterKilled(monsterName, monsterOutfit, drop
 		DropTrackerAnalyser:sendDropedItems(consoleMessage)
 	end
 
-	if not table.empty(dropedItems) then
-		DropTrackerAnalyser:updateWindow(true)
+	if not table.empty(dropedItems) and not m_dropUpdatePending then
+		m_dropUpdatePending = true
+		scheduleEvent(function()
+			m_dropUpdatePending = false
+			DropTrackerAnalyser:updateWindow(true)
+		end, 0)
 	end
 
 	return true

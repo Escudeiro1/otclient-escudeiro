@@ -200,6 +200,7 @@ MessageTypes = {
 }
 
 messagesPanel = nil
+local labelCache = {}
 
 function init()
     for messageMode, _ in pairs(MessageTypes) do
@@ -208,6 +209,12 @@ function init()
 
     connect(g_game, 'onGameEnd', clearMessages)
     messagesPanel = g_ui.loadUI('textmessage', modules.game_interface.getRootPanel())
+
+    for _, setting in pairs(MessageSettings) do
+        if setting.screenTarget and not labelCache[setting.screenTarget] then
+            labelCache[setting.screenTarget] = messagesPanel:recursiveGetChildById(setting.screenTarget)
+        end
+    end
 end
 
 function terminate()
@@ -253,25 +260,26 @@ function displayMessage(mode, text)
         return
     end
 
+    local coloredLoot = (msgtype == MessageSettings.loot or msgtype == MessageSettings.valuableLoot)
+        and ItemsDatabase.setColorLootMessage(text) or nil
+
     if msgtype.consoleTab ~= nil and
         (msgtype.consoleOption == nil or modules.client_options.getOption(msgtype.consoleOption)) then
-        if msgtype == MessageSettings.loot or msgtype == MessageSettings.valuableLoot then
-            local lootColoredText = ItemsDatabase.setColorLootMessage(text)
+        if coloredLoot then
             local lootTabName = tr(msgtype.consoleTab)
             local targetTab = modules.game_console.getTab(lootTabName) and lootTabName or tr("Server Log")
-            modules.game_console.addText(lootColoredText, msgtype, targetTab)
+            modules.game_console.addText(coloredLoot, msgtype, targetTab)
         else
             modules.game_console.addText(text, msgtype, tr(msgtype.consoleTab))
         end
     end
 
     if msgtype.screenTarget then
-        local label = messagesPanel:recursiveGetChildById(msgtype.screenTarget)
+        local label = labelCache[msgtype.screenTarget]
         if msgtype == MessageSettings.loot and not modules.client_options.getOption('showLootMessagesOnScreen') then
             return
-        elseif msgtype == MessageSettings.loot or msgtype == MessageSettings.valuableLoot then
-            local coloredText = ItemsDatabase.setColorLootMessage(text)
-            label:setColoredText(coloredText)
+        elseif coloredLoot then
+            label:setColoredText(coloredLoot)
         else
             label:setText(text)
             label:setColor(msgtype.color)

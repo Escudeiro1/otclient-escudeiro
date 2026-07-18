@@ -70,6 +70,7 @@ function ControllerAnalyser:startEvent()
             end
             if XPAnalyser then
                 XPAnalyser:checkExpHour()
+                XPAnalyser:updateWindow()
             end
             if DropTrackerAnalyser then
                 DropTrackerAnalyser:checkTracker()

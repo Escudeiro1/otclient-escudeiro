@@ -5,6 +5,7 @@ skillsButton = nil
 skillsSettings = nil
 local ExpRating = {}
 local smallSkillsCache = {}
+local skillWidgetCache = {}
 
 -- Cache for stats data when UI elements are hidden
 local statsCache = {
@@ -569,8 +570,18 @@ function expToAdvance(currentLevel, currentExp)
     return expForLevel(currentLevel + 1) - currentExp
 end
 
+local function getSkillWidget(id)
+    local w = skillWidgetCache[id]
+    if not w then
+        w = skillsWindow:recursiveGetChildById(id)
+        skillWidgetCache[id] = w
+    end
+    return w
+end
+
 function resetSkillColor(id)
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
+    if not skill then return end
     local widget = skill:getChildById('value')
     widget:setColor('#bbbbbb')
 end
@@ -584,7 +595,7 @@ function setSkillBase(id, value, baseValue)
     if baseValue <= 0 or value < 0 then
         return
     end
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
     local widget = skill:getChildById('value')
 
     if value > baseValue then
@@ -600,7 +611,7 @@ function setSkillBase(id, value, baseValue)
 end
 
 function setSkillValue(id, value)
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
     if not skill then
         return
     end
@@ -669,7 +680,7 @@ function isSkillInGroups(skillId, groupNames)
 end
 
 function setSkillColor(id, value)
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
     if skill then
         local widget = skill:getChildById('value')
         widget:setColor(value)
@@ -677,7 +688,7 @@ function setSkillColor(id, value)
 end
 
 function setSkillTooltip(id, value)
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
     if skill then
         if value then
             skill:setTooltip(value)
@@ -688,7 +699,7 @@ function setSkillTooltip(id, value)
 end
 
 function setSkillPercent(id, percent, tooltip, color)
-    local skill = skillsWindow:recursiveGetChildById(id)
+    local skill = getSkillWidget(id)
     if skill then
         local widget = skill:getChildById('percent')
         if widget then

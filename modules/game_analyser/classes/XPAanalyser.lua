@@ -397,18 +397,15 @@ function XPAnalyser:updateNextLevel(hours, minutes)
 end
 
 -- updaters
-function XPAnalyser:addRawXPGain(value) 
-	-- Calculate the actual raw XP by removing rate modifiers
+function XPAnalyser:addRawXPGain(value)
 	local actualRawXP = calculateRawXP(value)
 	XPAnalyser.rawXPGain = XPAnalyser.rawXPGain + actualRawXP
-	XPAnalyser:updateGraphics()
-	XPAnalyser:updateWindow()
+	-- updateWindow/updateGraphics deferred to event1000 cycle; no per-call refresh needed
 end
 
-function XPAnalyser:addXpGain(value) 
+function XPAnalyser:addXpGain(value)
 	XPAnalyser.xpGain = XPAnalyser.xpGain + value
-	XPAnalyser:updateGraphics()
-	XPAnalyser:updateWindow()
+	-- updateWindow/updateGraphics deferred to event1000 cycle; no per-call refresh needed
 end
 
 function XPAnalyser:updateTooltip()
