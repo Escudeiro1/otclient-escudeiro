@@ -1,6 +1,9 @@
 -- Weapon Proficiency Module
 -- Implements the Weapon Proficiency system from Summer Update 2025
 -- credits: cipsoft
+
+local m_pendingProficiencyUpdate = false
+
 if not WeaponProficiency then
     WeaponProficiency = {}
     WeaponProficiency.__index = WeaponProficiency
@@ -508,6 +511,7 @@ function onWeaponProficiency(itemId, experience, perks, marketCategory)
 end
 
 function onWeaponProficiencyExperience(itemId, experience, hasUnusedPerk)
+    -- Update cache immediately so data is always current
     local itemCache = WeaponProficiency.cacheList[itemId]
     if not itemCache then
         WeaponProficiency.cacheList[itemId] = {
@@ -519,26 +523,25 @@ function onWeaponProficiencyExperience(itemId, experience, hasUnusedPerk)
             itemCache.exp = experience
         end
     end
-
-    -- Re-sort all categories when experience changes
-    sortWeaponProficiency(MarketCategory.WeaponsAll)
-    for _, categoryId in pairs(WeaponProficiency.ItemCategory) do
-        sortWeaponProficiency(categoryId)
-    end
-
-    -- Store the unused perk state globally
     WeaponProficiency.hasUnusedPerk = hasUnusedPerk
 
-    -- Show/hide highlight on proficiency button based on unused perks
-    updateProficiencyHighlight()
-
-    -- Refresh item list if window is visible
-    if WeaponProficiency.window and WeaponProficiency.window:isVisible() then
-        WeaponProficiency:refreshItemList()
+    -- Batch all sort and UI work into one deferred call per tick so AoE kills
+    -- (which send one packet per dead creature) don't trigger N full re-sorts.
+    if not m_pendingProficiencyUpdate then
+        m_pendingProficiencyUpdate = true
+        scheduleEvent(function()
+            m_pendingProficiencyUpdate = false
+            sortWeaponProficiency(MarketCategory.WeaponsAll)
+            for _, categoryId in pairs(WeaponProficiency.ItemCategory) do
+                sortWeaponProficiency(categoryId)
+            end
+            updateProficiencyHighlight()
+            if WeaponProficiency.window and WeaponProficiency.window:isVisible() then
+                WeaponProficiency:refreshItemList()
+            end
+            updateTopBarProficiency()
+        end, 0)
     end
-
-    -- Update top bar proficiency display
-    updateTopBarProficiency()
 end
 
 -- Update the proficiency button highlight based on unused perk state
