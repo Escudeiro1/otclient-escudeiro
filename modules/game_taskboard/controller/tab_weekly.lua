@@ -53,7 +53,7 @@ function TaskBoardController:refreshWeeklySummary()
         if fill then
             local trackWidth = fill:getParent():getWidth()
             if trackWidth > 0 then
-                fill:setWidth(math.floor(trackWidth * self.weeklyProgressPct / 100))
+                fill:setWidth(math.floor(trackWidth * totalCompleted / WEEKLY_THRESHOLDS[#WEEKLY_THRESHOLDS]))
             end
         end
     end
