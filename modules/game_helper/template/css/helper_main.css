@@ -1,33 +1,21 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
     width: 820px;
-    height: 435px;
+    height: 480px;
     display: block;
-}
-
-/* ── Reusable bordered panel ─────────────────────────────────────────────── */
-.helperPanel {
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    --image-source: /images/ui/window_new;
-    --image-border: 18;
-    padding: 18px 8px 8px 8px;
 }
 
 /* ── Tab bar ─────────────────────────────────────────────────────────────── */
 .helperTabBar {
     width: 786px;
     height: 32px;
-    margin: 6px 10px 4px 10px;
+    margin: 6px 11px 4px 11px;
     display: block;
-    --image-source: /images/ui/back-icons;
-    --image-border: 1;
 }
 
 .helperTabBtn {
     width: 120px;
-    height: 100%;
+    height: 32px;
     display: inline-block;
     vertical-align: top;
     text-align: center;
@@ -50,47 +38,55 @@
     vertical-align: middle;
 }
 
-/* ── Body: left + right side by side ────────────────────────────────────── */
+/* ── Body: STATUS panel (left) + right column — side by side via inline-block ── */
+/* Window inner width: 820 - 11 - 11 = 798px usable via margin                   */
+/* STATUS: 162px + margin-right 6px = 168px; rightCol: 630px; total: 798px       */
 .helperBody {
-    width: 786px;
-    height: 355px;
-    margin: 0 10px 0 10px;
+    width: 798px;
+    height: 368px;
+    margin: 0 11px 0 11px;
     display: block;
+    font-size: 0;
 }
 
 /* ── Left: STATUS panel ──────────────────────────────────────────────────── */
 .helperStatusPanel {
     width: 162px;
-    height: 355px;
+    height: 368px;
+    display: inline-block;
+    vertical-align: top;
     margin-right: 6px;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 8px 8px 8px;
+    font-size: 11px;
 }
 
 .helperSectionTitle {
     display: block;
     font: verdana-11px-antialised;
     color: #888888;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .statusToggleRow {
     display: block;
-    text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .statusOkBtn {
-    width: 36px;
-    height: 28px;
+    width: 40px;
+    height: 26px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 6px;
+    margin-right: 4px;
     --color: #44cc44ff;
     font: verdana-11px-antialised;
 }
 
 .statusNoBtn {
-    width: 36px;
-    height: 28px;
+    width: 40px;
+    height: 26px;
     display: inline-block;
     vertical-align: middle;
     --color: #cc4444ff;
@@ -101,22 +97,28 @@
     display: block;
     font: verdana-11px-antialised;
     color: #44cc44ff;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .helperDivider {
     display: block;
     height: 1px;
-    width: 100%;
+    width: 140px;
     margin: 6px 0;
     background-color: #444444;
 }
 
 .helperSubTitle {
-    display: block;
+    display: inline-block;
+    vertical-align: middle;
     font: verdana-11px-antialised;
     color: #aaaaaa;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+}
+
+.helperSubTitleRow {
+    display: block;
+    margin-bottom: 3px;
 }
 
 .helperCheck {
@@ -124,7 +126,8 @@
     font: verdana-11px-antialised;
     color: #c0c0c0;
     margin-bottom: 2px;
-    width: 130px;
+    width: 140px;
+    height: 16px;
 }
 
 .infoIconSm {
@@ -135,47 +138,63 @@
     margin-left: 3px;
 }
 
-/* ── Right column ────────────────────────────────────────────────────────── */
+/* ── Right column: 630px wide, full body height ──────────────────────────── */
+/* 162 + 6 + 630 = 798px = helperBody width                                   */
 .helperRightCol {
-    width: 618px;
-    height: 355px;
+    width: 630px;
+    height: 368px;
     display: inline-block;
     vertical-align: top;
+    font-size: 11px;
 }
 
-/* ── Top section: Spell + Potion + Mana ─────────────────────────────────── */
+/* ── Top section: Spell + Potion + Mana (3 panels inline-block) ─────────── */
+/* 630px = healBlock(190) + gap(4) + healBlock(190) + gap(4) + manaBlock(242) */
 .helperTopSection {
-    width: 618px;
-    height: 190px;
+    width: 630px;
+    height: 196px;
     display: block;
     margin-bottom: 6px;
+    font-size: 0;
 }
 
+/* healBlock + manaBlock share the panel border image (window_new, border 16)  */
+/* Outer widths: 190px each; no padding from CSS — inner content via children  */
 .healBlock {
-    width: 185px;
-    height: 190px;
+    width: 190px;
+    height: 196px;
+    display: inline-block;
+    vertical-align: top;
     margin-right: 4px;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 6px 6px 6px;
+    font-size: 11px;
 }
 
 .manaBlock {
-    width: 225px;
-    height: 190px;
-    margin-right: 0;
+    width: 242px;
+    height: 196px;
+    display: inline-block;
+    vertical-align: top;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 6px 6px 6px;
+    font-size: 11px;
 }
 
 .healBlockTitle {
     display: block;
     font: verdana-11px-antialised;
     color: #aaaaaa;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     text-align: center;
 }
 
 .healRow {
     display: block;
     height: 34px;
-    margin-bottom: 4px;
-    vertical-align: middle;
+    margin-bottom: 3px;
 }
 
 .spellIconBox {
@@ -183,7 +202,7 @@
     height: 32px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 4px;
+    margin-right: 2px;
     --image-source: /images/ui/2pixel_up_frame_borderimage;
     --image-border: 2;
 }
@@ -198,7 +217,7 @@
 }
 
 .spinVal {
-    width: 34px;
+    width: 32px;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
@@ -206,35 +225,69 @@
     color: #c0c0c0;
 }
 
-/* ── Mana row ────────────────────────────────────────────────────────────── */
 .manaRow {
     display: block;
-    height: 50px;
-    vertical-align: middle;
+    height: 40px;
+    margin-top: 6px;
 }
 
-/* ── Bottom section: Friend selectors + lists ────────────────────────────── */
+.manaCheck {
+    display: inline-block;
+    vertical-align: middle;
+    width: 90px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+/* ── Bottom section: 4 panels inline-block ─────────────────────────────────  */
+/* 630 = friendSelector(106) + gap(4) + friendListBlock(152) + gap(4) +        */
+/*       friendSelector(106) + gap(4) + friendListBlockWide(254)               */
+/* 106 + 4 + 152 + 4 + 106 + 4 + 254 = 630px                                  */
 .helperFriendSection {
-    width: 618px;
-    height: 155px;
+    width: 630px;
+    height: 166px;
     display: block;
+    font-size: 0;
 }
 
 .friendSelector {
-    width: 115px;
-    height: 155px;
+    width: 106px;
+    height: 166px;
+    display: inline-block;
+    vertical-align: top;
     margin-right: 4px;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 4px 4px 4px;
+    font-size: 11px;
 }
 
 .friendListBlock {
-    width: 155px;
-    height: 155px;
+    width: 152px;
+    height: 166px;
+    display: inline-block;
+    vertical-align: top;
     margin-right: 4px;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 4px 4px 4px;
+    font-size: 11px;
+}
+
+.friendListBlockWide {
+    width: 254px;
+    height: 166px;
+    display: inline-block;
+    vertical-align: top;
+    --image-source: /images/ui/window_new;
+    --image-border: 16;
+    padding: 16px 4px 4px 4px;
+    font-size: 11px;
 }
 
 .friendScrollArea {
-    width: 100%;
-    height: 105px;
+    width: 96px;
+    height: 110px;
     display: block;
     --image-source: /images/ui/2pixel_up_frame_borderimage;
     --image-border: 2;
@@ -243,12 +296,7 @@
 .friendEntry {
     display: block;
     height: 28px;
-    margin-bottom: 4px;
-    vertical-align: middle;
-}
-
-.friendEntryCheck {
-    width: 80px;
+    margin-bottom: 3px;
 }
 
 .friendAddBtn {
@@ -261,15 +309,23 @@
     font: verdana-11px-antialised;
 }
 
+.friendEntryCheck {
+    display: inline-block;
+    vertical-align: middle;
+    width: 78px;
+    height: 16px;
+    font: verdana-11px-antialised;
+}
+
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
 .helperBottomBar {
     width: 786px;
     height: 26px;
-    margin: 4px 10px 4px 10px;
+    margin: 4px 11px 6px 11px;
     display: block;
 }
 
-.helperFooterBtn {
+.helperFooterBtnLeft {
     width: 100px;
     height: 22px;
     display: inline-block;
@@ -279,6 +335,13 @@
     --text-offset: 0 2;
 }
 
-.helperFooterBtn:last-child {
-    float: right;
+.helperFooterBtnRight {
+    width: 100px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: top;
+    font: verdana-11px-antialised;
+    --padding: 0;
+    --text-offset: 0 2;
+    margin-left: 586px;
 }

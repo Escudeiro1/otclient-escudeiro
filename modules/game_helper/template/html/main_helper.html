@@ -4,170 +4,123 @@
 <window id="helperWindow" class="helperWindow" placement="center" title="Helper" onescape="self:hide()">
 
     <!-- Tab bar -->
-    <div class="helperTabBar">
-        <UIButton id="tabHealing" class="helperTabBtn helperTabActive">
-            <label class="helperTabLabel">Healing</label>
-        </UIButton>
-    </div>
+    <div class="helperTabBar"><UIButton id="tabHealing" class="helperTabBtn helperTabActive"><label class="helperTabLabel">Healing</label></UIButton></div>
 
-    <!-- Body -->
-    <div class="helperBody">
-
-        <!-- Left: STATUS panel -->
-        <div class="helperStatusPanel helperPanel">
+    <!-- Body: STATUS panel + right column — NO whitespace between them (inline-block) -->
+    <div class="helperBody"><div class="helperStatusPanel">
             <label class="helperSectionTitle">STATUS</label>
-
             <div class="statusToggleRow">
-                <button class="statusOkBtn">✓</button>
-                <button class="statusNoBtn">✗</button>
+                <button class="statusOkBtn">OK</button>
+                <button class="statusNoBtn">X</button>
             </div>
-
-            <label class="statusEnabledLabel">Helper Status: Enabled ✓</label>
-
+            <label class="statusEnabledLabel">Helper Status: Enabled</label>
             <div class="helperDivider"></div>
-
             <label class="helperSubTitle">Auto Haste</label>
             <input class="helperCheck" type="checkbox" text="Enable" />
             <input class="helperCheck" type="checkbox" text="PZ Cast" />
-
             <div class="helperDivider"></div>
-
-            <label class="helperSubTitle">Others Tools <img class="infoIconSm" src="/images/skin/show-gui-help-grey" /></label>
+            <div class="helperSubTitleRow">
+                <label class="helperSubTitle">Others Tools</label>
+                <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+            </div>
             <input class="helperCheck" type="checkbox" checked text="Auto Eat Food" />
-        </div>
+        </div><div class="helperRightCol">
 
-        <!-- Right column -->
-        <div class="helperRightCol">
-
-            <!-- Top row: Spell Healing + Potion Healing + Mana Training -->
-            <div class="helperTopSection">
-
-                <!-- Spell Healing -->
-                <div class="healBlock helperPanel">
+            <!-- Top: Spell Healing + Potion Healing + Mana Training (NO whitespace between) -->
+            <div class="helperTopSection"><div class="healBlock">
                     <label class="healBlockTitle">Spell Healing</label>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">50%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">80%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">80%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">80%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">80%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
-                </div>
-
-                <!-- Potion Healing -->
-                <div class="healBlock helperPanel">
+                </div><div class="healBlock">
                     <label class="healBlockTitle">Potion Healing</label>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">25%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">25%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">50%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="healRow">
                         <div class="spellIconBox"></div>
-                        <button class="spinBtn">◄</button>
-                        <label class="spinVal">50%</label>
-                        <button class="spinBtn">►</button>
+                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
-                </div>
-
-                <!-- Mana Training -->
-                <div class="manaBlock helperPanel">
+                </div><div class="manaBlock">
                     <label class="healBlockTitle">Mana Training</label>
                     <div class="manaRow">
                         <div class="spellIconBox"></div>
-                        <input class="helperCheck" type="checkbox" text="Enable" />
+                        <input class="helperCheck manaCheck" type="checkbox" text="Enable" />
                         <label class="spinVal">90%</label>
-                        <button class="spinBtn">▼</button>
+                        <button class="spinBtn">v</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
-                </div>
+                </div></div>
 
-            </div>
-
-            <!-- Bottom row: Friend selectors + lists -->
-            <div class="helperFriendSection">
-
-                <!-- Sio selector + list -->
-                <div class="friendSelector helperPanel">
-                    <label class="helperSubTitle">Select a Friend <img class="infoIconSm" src="/images/skin/show-gui-help-grey" /></label>
+            <!-- Bottom: Friend selectors + lists (NO whitespace between) -->
+            <div class="helperFriendSection"><div class="friendSelector">
+                    <div class="helperSubTitleRow">
+                        <label class="helperSubTitle">Select a Friend</label>
+                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                    </div>
                     <div class="friendScrollArea"></div>
-                </div>
-
-                <div class="friendListBlock helperPanel">
+                </div><div class="friendListBlock">
                     <label class="healBlockTitle">Sio Friend List</label>
                     <div class="friendEntry">
                         <button class="friendAddBtn">+</button>
-                        <input class="helperCheck friendEntryCheck" type="checkbox" text="Enable Sio" />
-                        <label class="spinVal">99%</label>
-                        <button class="spinBtn">▼</button>
+                        <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
+                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="friendEntry">
                         <button class="friendAddBtn">+</button>
-                        <input class="helperCheck friendEntryCheck" type="checkbox" text="Enable Sio" />
-                        <label class="spinVal">99%</label>
-                        <button class="spinBtn">▼</button>
+                        <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
+                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
-                </div>
-
-                <!-- Gran Sio selector + list -->
-                <div class="friendSelector helperPanel">
-                    <label class="helperSubTitle">Select a Friend <img class="infoIconSm" src="/images/skin/show-gui-help-grey" /></label>
+                </div><div class="friendSelector">
+                    <div class="helperSubTitleRow">
+                        <label class="helperSubTitle">Select a Friend</label>
+                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                    </div>
                     <div class="friendScrollArea"></div>
-                </div>
-
-                <div class="friendListBlock helperPanel">
+                </div><div class="friendListBlockWide">
                     <label class="healBlockTitle">Gran Sio Friend List</label>
                     <div class="friendEntry">
                         <button class="friendAddBtn">+</button>
-                        <input class="helperCheck friendEntryCheck" type="checkbox" text="Enable" />
-                        <label class="spinVal">99%</label>
-                        <button class="spinBtn">▼</button>
+                        <input class="friendEntryCheck" type="checkbox" text="Enable" />
+                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
                     <div class="friendEntry">
                         <button class="friendAddBtn">+</button>
-                        <input class="helperCheck friendEntryCheck" type="checkbox" text="Enable" />
-                        <label class="spinVal">99%</label>
-                        <button class="spinBtn">▼</button>
+                        <input class="friendEntryCheck" type="checkbox" text="Enable" />
+                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
                         <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                     </div>
-                </div>
+                </div></div>
 
-            </div>
-
-        </div>
-    </div>
+        </div></div>
 
     <!-- Bottom bar -->
     <div class="helperBottomBar">
-        <button class="helperFooterBtn">Set Helper Key</button>
-        <button class="helperFooterBtn" onclick="self:hide()">Close</button>
+        <button class="helperFooterBtnLeft">Set Helper Key</button>
+        <button class="helperFooterBtnRight" onclick="self:hide()">Close</button>
     </div>
 
 </window>
