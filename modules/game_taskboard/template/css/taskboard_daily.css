@@ -281,10 +281,10 @@
 
 .talismanUpgradeBtn {
     margin-left: 15px;
-    width: 53%;
+    width: 54%;
     display: inline-block;
     height: 0px;
-    vertical-align: top;
+    vertical-align: middle;
     margin-right: 4px;
     padding: 0;
 }
@@ -293,7 +293,7 @@
     display: inline-block;
     vertical-align: top;
     height: 20px;
-    width: 40%;
+    width: 35%;
     --image-source: /images/ui/infoPanel;
     --image-border: 2;
     position: relative;
