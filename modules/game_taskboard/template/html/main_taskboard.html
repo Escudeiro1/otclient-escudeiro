@@ -339,11 +339,11 @@
     <hr style="height: 2px; width: 97%; margin-left:12px ">
     <!--  Bottom bar  -->
     <div class="bottomBar">
-        <div class="infoPanel">
+        <div class="infoPanel" *tooltip="'You can spend your Bounty Points to upgrade you Bounty Talisman'">
             <img class="infoPanelIcon" src="/game_taskboard/assets/images/icon-currency-bountypoints" />
             <label class="infoPanelLabel">{{self.bountyPoints}}</label>
         </div>
-        <div class="infoPanel">
+        <div class="infoPanel" *tooltip="'You can spend your Hunting Task Points in the Shop'">
             <img class="infoPanelIcon" src="/game_taskboard/assets/images/task-tokens" />
             <label class="infoPanelLabel">{{self.taskShopPoints}}</label>
         </div>
