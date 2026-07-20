@@ -1,0 +1,12 @@
+Module
+  name: game_helper
+  description: Helper window
+  author: escudeiro
+  sandboxed: true
+  autoload: true
+  scripts: [game_helper]
+  @onLoad: HelperController:init()
+  @onUnload: HelperController:terminate()
+  dependencies:
+    - game_interface
+    - game_mainpanel

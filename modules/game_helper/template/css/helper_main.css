@@ -1,0 +1,284 @@
+/* ── Main window ─────────────────────────────────────────────────────────── */
+.helperWindow {
+    width: 820px;
+    height: 435px;
+    display: block;
+}
+
+/* ── Reusable bordered panel ─────────────────────────────────────────────── */
+.helperPanel {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    --image-source: /images/ui/window_new;
+    --image-border: 18;
+    padding: 18px 8px 8px 8px;
+}
+
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+.helperTabBar {
+    width: 786px;
+    height: 32px;
+    margin: 6px 10px 4px 10px;
+    display: block;
+    --image-source: /images/ui/back-icons;
+    --image-border: 1;
+}
+
+.helperTabBtn {
+    width: 120px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    --padding: 0;
+    font: verdana-11px-antialised;
+    --text-offset: 0 0;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
+    --color: #b9b9b9ff;
+}
+
+.helperTabActive {
+    --image-clip: 0 46 22 23;
+    --color: #ffffffff;
+}
+
+.helperTabLabel {
+    color: #c0c0c0;
+    vertical-align: middle;
+}
+
+/* ── Body: left + right side by side ────────────────────────────────────── */
+.helperBody {
+    width: 786px;
+    height: 355px;
+    margin: 0 10px 0 10px;
+    display: block;
+}
+
+/* ── Left: STATUS panel ──────────────────────────────────────────────────── */
+.helperStatusPanel {
+    width: 162px;
+    height: 355px;
+    margin-right: 6px;
+}
+
+.helperSectionTitle {
+    display: block;
+    font: verdana-11px-antialised;
+    color: #888888;
+    margin-bottom: 4px;
+}
+
+.statusToggleRow {
+    display: block;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.statusOkBtn {
+    width: 36px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    --color: #44cc44ff;
+    font: verdana-11px-antialised;
+}
+
+.statusNoBtn {
+    width: 36px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    --color: #cc4444ff;
+    font: verdana-11px-antialised;
+}
+
+.statusEnabledLabel {
+    display: block;
+    font: verdana-11px-antialised;
+    color: #44cc44ff;
+    margin-bottom: 6px;
+}
+
+.helperDivider {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 6px 0;
+    background-color: #444444;
+}
+
+.helperSubTitle {
+    display: block;
+    font: verdana-11px-antialised;
+    color: #aaaaaa;
+    margin-bottom: 4px;
+}
+
+.helperCheck {
+    display: block;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
+    margin-bottom: 2px;
+    width: 130px;
+}
+
+.infoIconSm {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 3px;
+}
+
+/* ── Right column ────────────────────────────────────────────────────────── */
+.helperRightCol {
+    width: 618px;
+    height: 355px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* ── Top section: Spell + Potion + Mana ─────────────────────────────────── */
+.helperTopSection {
+    width: 618px;
+    height: 190px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.healBlock {
+    width: 185px;
+    height: 190px;
+    margin-right: 4px;
+}
+
+.manaBlock {
+    width: 225px;
+    height: 190px;
+    margin-right: 0;
+}
+
+.healBlockTitle {
+    display: block;
+    font: verdana-11px-antialised;
+    color: #aaaaaa;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.healRow {
+    display: block;
+    height: 34px;
+    margin-bottom: 4px;
+    vertical-align: middle;
+}
+
+.spellIconBox {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+    --image-source: /images/ui/2pixel_up_frame_borderimage;
+    --image-border: 2;
+}
+
+.spinBtn {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    --padding: 0;
+    font: verdana-11px-antialised;
+}
+
+.spinVal {
+    width: 34px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
+}
+
+/* ── Mana row ────────────────────────────────────────────────────────────── */
+.manaRow {
+    display: block;
+    height: 50px;
+    vertical-align: middle;
+}
+
+/* ── Bottom section: Friend selectors + lists ────────────────────────────── */
+.helperFriendSection {
+    width: 618px;
+    height: 155px;
+    display: block;
+}
+
+.friendSelector {
+    width: 115px;
+    height: 155px;
+    margin-right: 4px;
+}
+
+.friendListBlock {
+    width: 155px;
+    height: 155px;
+    margin-right: 4px;
+}
+
+.friendScrollArea {
+    width: 100%;
+    height: 105px;
+    display: block;
+    --image-source: /images/ui/2pixel_up_frame_borderimage;
+    --image-border: 2;
+}
+
+.friendEntry {
+    display: block;
+    height: 28px;
+    margin-bottom: 4px;
+    vertical-align: middle;
+}
+
+.friendEntryCheck {
+    width: 80px;
+}
+
+.friendAddBtn {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    --padding: 0;
+    margin-right: 2px;
+    font: verdana-11px-antialised;
+}
+
+/* ── Bottom bar ──────────────────────────────────────────────────────────── */
+.helperBottomBar {
+    width: 786px;
+    height: 26px;
+    margin: 4px 10px 4px 10px;
+    display: block;
+}
+
+.helperFooterBtn {
+    width: 100px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: top;
+    font: verdana-11px-antialised;
+    --padding: 0;
+    --text-offset: 0 2;
+}
+
+.helperFooterBtn:last-child {
+    float: right;
+}
