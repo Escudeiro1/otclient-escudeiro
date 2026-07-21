@@ -4,120 +4,175 @@
 <window id="helperWindow" class="helperWindow" placement="center" title="Helper" onescape="self:hide()">
 
     <!-- Tab bar -->
-    <div class="helperTabBar"><UIButton id="tabHealing" class="helperTabBtn helperTabActive"><label class="helperTabLabel">Healing</label></UIButton></div>
+    <div class="helperTabBar">
+        <UIButton id="tabHealing" class="helperTabBtn helperTabActive">
+            <label class="helperTabLabel">Healing</label>
+        </UIButton>
+    </div>
 
-    <!-- Body: STATUS panel + right column — NO whitespace between them (inline-block) -->
-    <div class="helperBody"><div class="helperStatusPanel">
-            <label class="helperSectionTitle">STATUS</label>
-            <div class="statusToggleRow">
-                <button class="statusOkBtn">OK</button>
-                <button class="statusNoBtn">X</button>
+    <!-- Body: STATUS float:left + right col float:left -->
+    <div class="helperBody">
+
+        <!-- Left: STATUS panel (162px float:left) -->
+        <div class="helperStatusPanel">
+            <div class="helperStatusInner">
+                <label class="helperSectionTitle">STATUS</label>
+                <div class="statusToggleRow">
+                    <button class="statusOkBtn">OK</button>
+                    <button class="statusNoBtn">X</button>
+                </div>
+                <label class="statusEnabledLabel">Helper Status: Enabled</label>
+                <div class="helperDivider"></div>
+                <div class="helperSubTitleRow">
+                    <label class="helperSubTitle">Auto Haste</label>
+                </div>
+                <input class="helperCheck" type="checkbox" text="Enable" />
+                <input class="helperCheck" type="checkbox" text="PZ Cast" />
+                <div class="helperDivider"></div>
+                <div class="helperSubTitleRow">
+                    <label class="helperSubTitle">Others Tools</label>
+                    <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                </div>
+                <input class="helperCheck" type="checkbox" checked text="Auto Eat Food" />
             </div>
-            <label class="statusEnabledLabel">Helper Status: Enabled</label>
-            <div class="helperDivider"></div>
-            <label class="helperSubTitle">Auto Haste</label>
-            <input class="helperCheck" type="checkbox" text="Enable" />
-            <input class="helperCheck" type="checkbox" text="PZ Cast" />
-            <div class="helperDivider"></div>
-            <div class="helperSubTitleRow">
-                <label class="helperSubTitle">Others Tools</label>
-                <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+        </div>
+
+        <!-- Right column (626px float:left) -->
+        <div class="helperRightCol">
+
+            <!-- Top: Spell (190) + Potion (190) + Mana (238) = 626px -->
+            <div class="helperTopSection">
+                <div class="healBlock">
+                    <div class="healBlockInner">
+                        <label class="healBlockTitle">Spell Healing</label>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">50%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">80%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">80%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                    </div>
+                </div>
+                <div class="healBlock">
+                    <div class="healBlockInner">
+                        <label class="healBlockTitle">Potion Healing</label>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">25%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">50%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="healRow">
+                            <div class="spellIconBox"></div>
+                            <button class="spinBtn">&lt;</button>
+                            <label class="spinVal">50%</label>
+                            <button class="spinBtn">&gt;</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                    </div>
+                </div>
+                <div class="manaBlock">
+                    <div class="manaBlockInner">
+                        <label class="healBlockTitle">Mana Training</label>
+                        <div class="manaRow">
+                            <div class="spellIconBox"></div>
+                            <input class="manaCheck" type="checkbox" text="Enable" />
+                            <label class="spinVal">90%</label>
+                            <button class="spinBtn">v</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <input class="helperCheck" type="checkbox" checked text="Auto Eat Food" />
-        </div><div class="helperRightCol">
 
-            <!-- Top: Spell Healing + Potion Healing + Mana Training (NO whitespace between) -->
-            <div class="helperTopSection"><div class="healBlock">
-                    <label class="healBlockTitle">Spell Healing</label>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+            <!-- Bottom: sel(106)+list(152)+sel(106)+listWide(250) = 626px -->
+            <div class="helperFriendSection">
+                <div class="friendSelector">
+                    <div class="friendSelectorInner">
+                        <div class="helperSubTitleRow">
+                            <label class="helperSubTitle">Select a Friend</label>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="friendScrollArea"></div>
                     </div>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">80%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                </div>
+                <div class="friendListBlock">
+                    <div class="friendListInner">
+                        <label class="healBlockTitle">Sio Friend List</label>
+                        <div class="friendEntry">
+                            <button class="friendAddBtn">+</button>
+                            <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
+                            <label class="spinVal">99%</label>
+                            <button class="spinBtn">v</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="friendEntry">
+                            <button class="friendAddBtn">+</button>
+                            <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
+                            <label class="spinVal">99%</label>
+                            <button class="spinBtn">v</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
                     </div>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">80%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                </div>
+                <div class="friendSelector">
+                    <div class="friendSelectorInner">
+                        <div class="helperSubTitleRow">
+                            <label class="helperSubTitle">Select a Friend</label>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="friendScrollArea"></div>
                     </div>
-                </div><div class="healBlock">
-                    <label class="healBlockTitle">Potion Healing</label>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">25%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                </div>
+                <div class="friendListBlockWide">
+                    <div class="friendListInner">
+                        <label class="healBlockTitle">Gran Sio Friend List</label>
+                        <div class="friendEntry">
+                            <button class="friendAddBtn">+</button>
+                            <input class="friendEntryCheck" type="checkbox" text="Enable" />
+                            <label class="spinVal">99%</label>
+                            <button class="spinBtn">v</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
+                        <div class="friendEntry">
+                            <button class="friendAddBtn">+</button>
+                            <input class="friendEntryCheck" type="checkbox" text="Enable" />
+                            <label class="spinVal">99%</label>
+                            <button class="spinBtn">v</button>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
+                        </div>
                     </div>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                    <div class="healRow">
-                        <div class="spellIconBox"></div>
-                        <button class="spinBtn">&lt;</button><label class="spinVal">50%</label><button class="spinBtn">&gt;</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                </div><div class="manaBlock">
-                    <label class="healBlockTitle">Mana Training</label>
-                    <div class="manaRow">
-                        <div class="spellIconBox"></div>
-                        <input class="helperCheck manaCheck" type="checkbox" text="Enable" />
-                        <label class="spinVal">90%</label>
-                        <button class="spinBtn">v</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                </div></div>
+                </div>
+            </div>
 
-            <!-- Bottom: Friend selectors + lists (NO whitespace between) -->
-            <div class="helperFriendSection"><div class="friendSelector">
-                    <div class="helperSubTitleRow">
-                        <label class="helperSubTitle">Select a Friend</label>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                    <div class="friendScrollArea"></div>
-                </div><div class="friendListBlock">
-                    <label class="healBlockTitle">Sio Friend List</label>
-                    <div class="friendEntry">
-                        <button class="friendAddBtn">+</button>
-                        <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                    <div class="friendEntry">
-                        <button class="friendAddBtn">+</button>
-                        <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                </div><div class="friendSelector">
-                    <div class="helperSubTitleRow">
-                        <label class="helperSubTitle">Select a Friend</label>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                    <div class="friendScrollArea"></div>
-                </div><div class="friendListBlockWide">
-                    <label class="healBlockTitle">Gran Sio Friend List</label>
-                    <div class="friendEntry">
-                        <button class="friendAddBtn">+</button>
-                        <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                    <div class="friendEntry">
-                        <button class="friendAddBtn">+</button>
-                        <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                        <label class="spinVal">99%</label><button class="spinBtn">v</button>
-                        <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
-                    </div>
-                </div></div>
+        </div>
 
-        </div></div>
+    </div>
 
-    <!-- Bottom bar -->
+    <!-- Bottom bar: Set Helper Key (float:left) + Close (float:right) -->
     <div class="helperBottomBar">
         <button class="helperFooterBtnLeft">Set Helper Key</button>
         <button class="helperFooterBtnRight" onclick="self:hide()">Close</button>

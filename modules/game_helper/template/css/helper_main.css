@@ -1,15 +1,15 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
     width: 820px;
-    height: 480px;
+    height: 450px;
     display: block;
 }
 
 /* ── Tab bar ─────────────────────────────────────────────────────────────── */
 .helperTabBar {
-    width: 786px;
+    width: 793px;
     height: 32px;
-    margin: 6px 11px 4px 11px;
+    margin: 8px 12px 2px 12px;
     display: block;
 }
 
@@ -21,7 +21,6 @@
     text-align: center;
     --padding: 0;
     font: verdana-11px-antialised;
-    --text-offset: 0 0;
     --image-source: /images/ui/button;
     --image-clip: 0 0 22 23;
     --image-border: 3;
@@ -38,28 +37,30 @@
     vertical-align: middle;
 }
 
-/* ── Body: STATUS panel (left) + right column — side by side via inline-block ── */
-/* Window inner width: 820 - 11 - 11 = 798px usable via margin                   */
-/* STATUS: 162px + margin-right 6px = 168px; rightCol: 630px; total: 798px       */
+/* ── Body: STATUS (float:left 162px) + right col (float:left 626px) ─────── */
+/* Rule: NO css padding on any float with explicit width.                     */
+/* Padding goes on inner wrapper divs (display:block, auto width).            */
+/* 162 + 6 (gap) + 626 = 794 = body width                                    */
 .helperBody {
-    width: 798px;
-    height: 368px;
-    margin: 0 11px 0 11px;
+    width: 794px;
+    height: 372px;
+    margin: 0 12px;
     display: block;
-    font-size: 0;
+    overflow: hidden;
 }
 
 /* ── Left: STATUS panel ──────────────────────────────────────────────────── */
 .helperStatusPanel {
     width: 162px;
-    height: 368px;
-    display: inline-block;
-    vertical-align: top;
+    height: 372px;
+    float: left;
     margin-right: 6px;
     --image-source: /images/ui/window_new;
     --image-border: 16;
+}
+
+.helperStatusInner {
     padding: 16px 8px 8px 8px;
-    font-size: 11px;
 }
 
 .helperSectionTitle {
@@ -103,7 +104,6 @@
 .helperDivider {
     display: block;
     height: 1px;
-    width: 140px;
     margin: 6px 0;
     background-color: #444444;
 }
@@ -113,7 +113,6 @@
     vertical-align: middle;
     font: verdana-11px-antialised;
     color: #aaaaaa;
-    margin-bottom: 2px;
 }
 
 .helperSubTitleRow {
@@ -126,7 +125,6 @@
     font: verdana-11px-antialised;
     color: #c0c0c0;
     margin-bottom: 2px;
-    width: 140px;
     height: 16px;
 }
 
@@ -138,49 +136,47 @@
     margin-left: 3px;
 }
 
-/* ── Right column: 630px wide, full body height ──────────────────────────── */
-/* 162 + 6 + 630 = 798px = helperBody width                                   */
+/* ── Right column: float:left 626px, stacks topSection above friendSection ─ */
 .helperRightCol {
-    width: 630px;
-    height: 368px;
-    display: inline-block;
-    vertical-align: top;
-    font-size: 11px;
+    width: 626px;
+    height: 372px;
+    float: left;
+    display: block;
 }
 
-/* ── Top section: Spell + Potion + Mana (3 panels inline-block) ─────────── */
-/* 630px = healBlock(190) + gap(4) + healBlock(190) + gap(4) + manaBlock(242) */
+/* ── Top section: 3 panels float:left ─────────────────────────────────────  */
+/* 190+4 + 190+4 + 238 = 626px                                               */
 .helperTopSection {
-    width: 630px;
+    width: 626px;
     height: 196px;
     display: block;
+    overflow: hidden;
     margin-bottom: 6px;
-    font-size: 0;
 }
 
-/* healBlock + manaBlock share the panel border image (window_new, border 16)  */
-/* Outer widths: 190px each; no padding from CSS — inner content via children  */
 .healBlock {
     width: 190px;
     height: 196px;
-    display: inline-block;
-    vertical-align: top;
+    float: left;
     margin-right: 4px;
     --image-source: /images/ui/window_new;
     --image-border: 16;
+}
+
+.healBlockInner {
     padding: 16px 6px 6px 6px;
-    font-size: 11px;
 }
 
 .manaBlock {
-    width: 242px;
+    width: 238px;
     height: 196px;
-    display: inline-block;
-    vertical-align: top;
+    float: left;
     --image-source: /images/ui/window_new;
     --image-border: 16;
-    padding: 16px 6px 6px 6px;
-    font-size: 11px;
+}
+
+.manaBlockInner {
+    padding: 16px 8px 8px 8px;
 }
 
 .healBlockTitle {
@@ -234,60 +230,57 @@
 .manaCheck {
     display: inline-block;
     vertical-align: middle;
-    width: 90px;
+    width: 60px;
     height: 16px;
     margin-right: 4px;
 }
 
-/* ── Bottom section: 4 panels inline-block ─────────────────────────────────  */
-/* 630 = friendSelector(106) + gap(4) + friendListBlock(152) + gap(4) +        */
-/*       friendSelector(106) + gap(4) + friendListBlockWide(254)               */
-/* 106 + 4 + 152 + 4 + 106 + 4 + 254 = 630px                                  */
+/* ── Friend section: 4 panels float:left ──────────────────────────────────  */
+/* (106+4)*2 + 152+4 + 250 = 220+156+250 = 626px                             */
 .helperFriendSection {
-    width: 630px;
-    height: 166px;
+    width: 626px;
+    height: 170px;
     display: block;
-    font-size: 0;
+    overflow: hidden;
 }
 
 .friendSelector {
     width: 106px;
-    height: 166px;
-    display: inline-block;
-    vertical-align: top;
+    height: 170px;
+    float: left;
     margin-right: 4px;
     --image-source: /images/ui/window_new;
     --image-border: 16;
+}
+
+.friendSelectorInner {
     padding: 16px 4px 4px 4px;
-    font-size: 11px;
 }
 
 .friendListBlock {
     width: 152px;
-    height: 166px;
-    display: inline-block;
-    vertical-align: top;
+    height: 170px;
+    float: left;
     margin-right: 4px;
     --image-source: /images/ui/window_new;
     --image-border: 16;
-    padding: 16px 4px 4px 4px;
-    font-size: 11px;
 }
 
 .friendListBlockWide {
-    width: 254px;
-    height: 166px;
-    display: inline-block;
-    vertical-align: top;
+    width: 250px;
+    height: 170px;
+    float: left;
     --image-source: /images/ui/window_new;
     --image-border: 16;
+}
+
+.friendListInner {
     padding: 16px 4px 4px 4px;
-    font-size: 11px;
 }
 
 .friendScrollArea {
     width: 96px;
-    height: 110px;
+    height: 112px;
     display: block;
     --image-source: /images/ui/2pixel_up_frame_borderimage;
     --image-border: 2;
@@ -312,24 +305,24 @@
 .friendEntryCheck {
     display: inline-block;
     vertical-align: middle;
-    width: 78px;
+    width: 70px;
     height: 16px;
     font: verdana-11px-antialised;
 }
 
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
 .helperBottomBar {
-    width: 786px;
+    width: 794px;
     height: 26px;
-    margin: 4px 11px 6px 11px;
+    margin: 4px 12px 6px 12px;
     display: block;
+    overflow: hidden;
 }
 
 .helperFooterBtnLeft {
     width: 100px;
     height: 22px;
-    display: inline-block;
-    vertical-align: top;
+    float: left;
     font: verdana-11px-antialised;
     --padding: 0;
     --text-offset: 0 2;
@@ -338,10 +331,8 @@
 .helperFooterBtnRight {
     width: 100px;
     height: 22px;
-    display: inline-block;
-    vertical-align: top;
+    float: right;
     font: verdana-11px-antialised;
     --padding: 0;
     --text-offset: 0 2;
-    margin-left: 586px;
 }
