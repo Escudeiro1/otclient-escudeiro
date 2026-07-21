@@ -1,7 +1,7 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
-    width: 820px;
-    height: 450px;
+    width: 804px;
+    height: 440px;
     display: block;
 }
 
@@ -9,7 +9,7 @@
 .helperTabBar {
     width: 793px;
     height: 32px;
-    margin: 8px 12px 2px 12px;
+    margin: 0px 3px 4px 3px;
     display: block;
 }
 
@@ -30,6 +30,7 @@
 .helperTabActive {
     --image-clip: 0 46 22 23;
     --color: #ffffffff;
+    vertical-align: middle;
 }
 
 .helperTabLabel {
@@ -44,23 +45,24 @@
 .helperBody {
     width: 794px;
     height: 372px;
-    margin: 0 12px;
+    margin: 0px 3px 0px 3px;
     display: block;
     overflow: hidden;
 }
 
 /* ── Left: STATUS panel ──────────────────────────────────────────────────── */
 .helperStatusPanel {
-    width: 162px;
+    width: 22%;
     height: 372px;
     float: left;
-    margin-right: 6px;
+    margin: 0px 6px 0px 0px;
     --image-source: /images/ui/window_new;
     --image-border: 16;
 }
 
 .helperStatusInner {
-    padding: 16px 8px 8px 8px;
+    padding: 0px 8px 8px 8px;
+    color: #c0c0c0;
 }
 
 .helperSectionTitle {
@@ -138,10 +140,11 @@
 
 /* ── Right column: float:left 626px, stacks topSection above friendSection ─ */
 .helperRightCol {
-    width: 626px;
+    width: 75%;
     height: 372px;
     float: left;
     display: block;
+    margin-left: 5px;
 }
 
 /* ── Top section: 3 panels float:left ─────────────────────────────────────  */
@@ -321,18 +324,20 @@
 
 .helperFooterBtnLeft {
     width: 100px;
-    height: 22px;
+    height: 16px;
     float: left;
     font: verdana-11px-antialised;
+    vertical-align: middle;
     --padding: 0;
     --text-offset: 0 2;
 }
 
 .helperFooterBtnRight {
     width: 100px;
-    height: 22px;
+    height: 16px;
     float: right;
     font: verdana-11px-antialised;
+    vertical-align: middle;
     --padding: 0;
     --text-offset: 0 2;
 }
