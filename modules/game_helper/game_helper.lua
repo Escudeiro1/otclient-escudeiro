@@ -192,16 +192,17 @@ function HelperController:showValuePicker(currentVal, callback)
     end
 
     local function doOk()
-        self._pickerOpen = false
-        callback(bar:getValue())
+        local val = bar:getValue()
         picker:unlock()
         picker:destroy()
+        scheduleEvent(function() self._pickerOpen = false end, 0)
+        callback(val)
     end
 
     local function doCancel()
-        self._pickerOpen = false
         picker:unlock()
         picker:destroy()
+        scheduleEvent(function() self._pickerOpen = false end, 0)
     end
 
     local function onKey(_, keyCode, _mods)
@@ -372,8 +373,12 @@ function HelperController:show()
     if HelperButton then HelperButton:setOn(true) end
 end
 
-function HelperController:hide()
+function HelperController:doCloseWindow()
     if self._pickerOpen then return end
+    self:hide()
+end
+
+function HelperController:hide()
     if self.ui then self:unloadHtml() end
     if HelperButton then HelperButton:setOn(false) end
 end
