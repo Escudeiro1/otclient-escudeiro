@@ -92,7 +92,10 @@ end
 function HelperController:updateValDisplay(section, row, val)
     if not self.ui then return end
     local w = self.ui:recursiveGetChildById(section .. '_val_' .. row)
-    if w then w:setText(val .. '%') end
+    if w then
+        w:setText('')
+        w:setText(val .. '%')
+    end
 end
 
 function HelperController:updateSlotDisplay(section, row, data)
