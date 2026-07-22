@@ -157,6 +157,9 @@ function HelperController:onValueClick(section, row)
 end
 
 function HelperController:showValuePicker(currentVal, callback)
+    -- Block the helper window's escape while the picker is open.
+    if self.ui then self.ui.onEscape = function() end end
+
     local picker = g_ui.createWidget('HelperValuePicker', g_ui.getRootWidget())
     picker:lock()
 
@@ -168,12 +171,8 @@ function HelperController:showValuePicker(currentVal, callback)
     bar:setValue(currentVal)
     label:setText(currentVal .. '%')
 
-    bar.onValueChange = function(_, val)
-        label:setText(val .. '%')
-    end
+    bar.onValueChange = function(_, val) label:setText(val .. '%') end
 
-    -- Digit accumulator: each keypress appends a digit.
-    -- Typing "8","4" → 84; typing "1","0","0" → 10 then caps at 99 and resets.
     local accumulated = ''
     local function handleDigit(d)
         local tentative = accumulated .. d
@@ -190,48 +189,34 @@ function HelperController:showValuePicker(currentVal, callback)
         end
     end
 
-    local closed = false
-    local function doOk()
-        if closed then return end
-        closed = true
-        callback(bar:getValue())
+    local done
+    done = function(confirm)
+        done = function() end
+        if self.ui then self.ui.onEscape = function() self:hide() end end
         picker:unlock()
         picker:destroy()
+        if confirm then callback(bar:getValue()) end
     end
 
-    local function doCancel()
-        if closed then return end
-        closed = true
-        picker:unlock()
-        picker:destroy()
-    end
-
-    -- onEscape owns the Escape key at the window level so it never
-    -- reaches the helper window's onescape="self:hide()" handler.
-    picker.onEscape = doCancel
+    picker.onEscape = function() done(false) end
 
     local function onKey(_, keyCode, _mods)
         if keyCode >= Key0 and keyCode <= Key9 then
-            handleDigit(tostring(keyCode - Key0))
-            return true
+            handleDigit(tostring(keyCode - Key0)); return true
         elseif keyCode >= KeyNumpad0 and keyCode <= KeyNumpad9 then
-            handleDigit(tostring(keyCode - KeyNumpad0))
-            return true
+            handleDigit(tostring(keyCode - KeyNumpad0)); return true
         elseif keyCode == KeyReturn or keyCode == KeyEnter then
-            doOk()
-            return true
+            done(true); return true
         elseif keyCode == KeyEscape then
-            doCancel()
-            return true
+            done(false); return true
         end
         return false
     end
 
     picker.onKeyDown = onKey
     bar.onKeyDown    = onKey
-
-    picker:getChildById('buttonOk').onClick     = doOk
-    picker:getChildById('buttonCancel').onClick = doCancel
+    picker:getChildById('buttonOk').onClick     = function() done(true)  end
+    picker:getChildById('buttonCancel').onClick = function() done(false) end
 end
 
 -- ── Slot click — open spell selector ─────────────────────────────────────────
