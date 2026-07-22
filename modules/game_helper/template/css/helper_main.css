@@ -209,12 +209,17 @@
 }
 
 /* Left/right spinner arrows — 3-frame sprite (normal/hover/pressed, each 20px) */
+.controlGroup {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 7px;
+}
+
 .arrowBtnLeft {
     width: 20px;
     height: 20px;
     display: inline-block;
     vertical-align: middle;
-    margin-top: 7px;
     --image-source: /images/ui/arrow-left-button;
     --image-clip: 0 0 20 20;
     --image-border: 0;
@@ -228,7 +233,6 @@
     height: 20px;
     display: inline-block;
     vertical-align: middle;
-    margin-top: 7px;
     --image-source: /images/ui/arrow-right-button;
     --image-clip: 0 0 20 20;
     --image-border: 0;
@@ -264,7 +268,6 @@
     height: 20px;
     display: inline-block;
     vertical-align: middle;
-    margin-top: 7px;
     --padding: 0;
     --image-source: /images/ui/widget_border_inv;
 }
