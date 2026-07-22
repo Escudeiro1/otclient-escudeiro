@@ -157,6 +157,7 @@ function HelperController:onValueClick(section, row)
 end
 
 function HelperController:showValuePicker(currentVal, callback)
+    self._pickerOpen = true
     local picker = g_ui.createWidget('HelperValuePicker', g_ui.getRootWidget())
     picker:lock()
 
@@ -191,12 +192,14 @@ function HelperController:showValuePicker(currentVal, callback)
     end
 
     local function doOk()
+        self._pickerOpen = false
         callback(bar:getValue())
         picker:unlock()
         picker:destroy()
     end
 
     local function doCancel()
+        self._pickerOpen = false
         picker:unlock()
         picker:destroy()
     end
@@ -370,6 +373,7 @@ function HelperController:show()
 end
 
 function HelperController:hide()
+    if self._pickerOpen then return end
     if self.ui then self:unloadHtml() end
     if HelperButton then HelperButton:setOn(false) end
 end
