@@ -255,22 +255,27 @@
     color: #c0c0c0;
 }
 
-/* Clickable % value button — same image as standard UI button, small */
+/* Clickable % value button — UIButton owns click + background image.
+   Text lives in the inner .spinValLabel so setText() clears cleanly. */
 .spinValBtn {
     width: 32px;
     height: 0px;
     display: inline-block;
     vertical-align: middle;
-    text-align: center;
-    font: verdana-11px-antialised;
     --padding: 0;
     --image-source: /images/ui/button;
     --image-clip: 0 0 22 23;
     --image-border: 3;
-    --color: #c0c0c0ff;
 }
 .spinValBtn:hover { --image-clip: 0 23 22 23; }
 .spinValBtn:pressed { --image-clip: 0 46 22 23; }
+
+.spinValLabel {
+    display: block;
+    text-align: center;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
+}
 
 /* Spell icon nested inside the spellSlot UIButton */
 .spellIcon {
