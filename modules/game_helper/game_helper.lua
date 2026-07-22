@@ -356,6 +356,7 @@ function HelperController:show()
     if not self.ui then
         self:loadHtml('template/html/main_helper.html')
     end
+    self.ui.onEscape = function() self:hide() end
     self:updateAllDisplays()
     self.ui:show()
     self.ui:raise()
