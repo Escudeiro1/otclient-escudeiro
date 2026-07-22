@@ -190,16 +190,25 @@ function HelperController:showValuePicker(currentVal, callback)
         end
     end
 
+    local closed = false
     local function doOk()
+        if closed then return end
+        closed = true
         callback(bar:getValue())
         picker:unlock()
         picker:destroy()
     end
 
     local function doCancel()
+        if closed then return end
+        closed = true
         picker:unlock()
         picker:destroy()
     end
+
+    -- onEscape owns the Escape key at the window level so it never
+    -- reaches the helper window's onescape="self:hide()" handler.
+    picker.onEscape = doCancel
 
     local function onKey(_, keyCode, _mods)
         if keyCode >= Key0 and keyCode <= Key9 then
