@@ -169,6 +169,40 @@ function HelperController:showValuePicker(currentVal, callback)
         label:setText(val .. '%')
     end
 
+    -- Digit accumulator: each keypress appends a digit.
+    -- Typing "8","4" → 84; typing "1","0","0" → 10 then caps at 99 and resets.
+    local accumulated = ''
+    local function handleDigit(d)
+        local tentative = accumulated .. d
+        local num = tonumber(tentative) or 0
+        if num > 99 then
+            bar:setValue(99)
+            label:setText('99%')
+            accumulated = ''
+        else
+            accumulated = tentative
+            local clamped = math.max(1, num)
+            bar:setValue(clamped)
+            label:setText(clamped .. '%')
+        end
+    end
+
+    local function onKey(_, keyCode, _mods)
+        if keyCode >= Key0 and keyCode <= Key9 then
+            handleDigit(tostring(keyCode - Key0))
+            return true
+        elseif keyCode >= KeyNumpad0 and keyCode <= KeyNumpad9 then
+            handleDigit(tostring(keyCode - KeyNumpad0))
+            return true
+        end
+        return false
+    end
+
+    -- Attach to both the window and the scrollbar so the handler fires
+    -- regardless of which widget has focus inside the modal.
+    picker.onKeyDown = onKey
+    bar.onKeyDown    = onKey
+
     picker:getChildById('buttonOk').onClick = function()
         callback(bar:getValue())
         picker:unlock()
