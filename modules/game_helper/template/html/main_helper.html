@@ -46,24 +46,24 @@
                     <div class="healBlockInner">
                         <label class="healBlockTitle">Spell Healing</label>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">50%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="sh_slot_1" class="spellSlot" onclick="self:onSlotClick('sh', 1)"><img id="sh_icon_1" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('sh', 1, -1)"></UIButton>
+                            <UIButton id="sh_val_1" class="spinValBtn" onclick="self:onValueClick('sh', 1)">50%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('sh', 1, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">80%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="sh_slot_2" class="spellSlot" onclick="self:onSlotClick('sh', 2)"><img id="sh_icon_2" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('sh', 2, -1)"></UIButton>
+                            <UIButton id="sh_val_2" class="spinValBtn" onclick="self:onValueClick('sh', 2)">80%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('sh', 2, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">80%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="sh_slot_3" class="spellSlot" onclick="self:onSlotClick('sh', 3)"><img id="sh_icon_3" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('sh', 3, -1)"></UIButton>
+                            <UIButton id="sh_val_3" class="spinValBtn" onclick="self:onValueClick('sh', 3)">80%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('sh', 3, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
@@ -75,39 +75,39 @@
                     <div class="healBlockInner">
                         <label class="healBlockTitle">Potion Healing</label>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">25%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="ph_slot_1" class="spellSlot" onclick="self:onSlotClick('ph', 1)"><img id="ph_icon_1" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('ph', 1, -1)"></UIButton>
+                            <UIButton id="ph_val_1" class="spinValBtn" onclick="self:onValueClick('ph', 1)">25%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('ph', 1, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">50%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="ph_slot_2" class="spellSlot" onclick="self:onSlotClick('ph', 2)"><img id="ph_icon_2" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('ph', 2, -1)"></UIButton>
+                            <UIButton id="ph_val_2" class="spinValBtn" onclick="self:onValueClick('ph', 2)">50%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('ph', 2, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="healRow">
-                            <UIButton class="spellSlot"></UIButton>
-                            <UIButton class="arrowBtnLeft"></UIButton>
-                            <label class="spinVal">50%</label>
-                            <UIButton class="arrowBtnRight"></UIButton>
+                            <UIButton id="ph_slot_3" class="spellSlot" onclick="self:onSlotClick('ph', 3)"><img id="ph_icon_3" class="spellIcon" /></UIButton>
+                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('ph', 3, -1)"></UIButton>
+                            <UIButton id="ph_val_3" class="spinValBtn" onclick="self:onValueClick('ph', 3)">50%</UIButton>
+                            <UIButton class="arrowBtnRight" onclick="self:onArrowClick('ph', 3, 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
                 </div>
                 <!-- Vertical Separator -->
                 <div class="verticalSeparator"></div>
-                
+
                 <div class="manaBlock">
                     <div class="manaBlockInner">
                         <label class="healBlockTitle">Mana Training</label>
                         <div class="manaRow">
-                            <UIButton class="spellSlot"></UIButton>
+                            <UIButton id="mh_slot_1" class="spellSlot" onclick="self:onSlotClick('mh', 1)"><img id="mh_icon_1" class="spellIcon" /></UIButton>
                             <input class="manaCheck" type="checkbox" text="Enable" />
-                            <label class="spinVal">90%</label>
-                            <UIButton class="arrowBtnDown"></UIButton>
+                            <UIButton id="mh_val_1" class="spinValBtn" onclick="self:onValueClick('mh', 1)">90%</UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('mh', 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
@@ -132,15 +132,15 @@
                         <div class="friendEntry">
                             <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                            <label class="spinVal">99%</label>
-                            <UIButton class="arrowBtnDown"></UIButton>
+                            <UIButton id="sio_val_1" class="spinValBtn" onclick="self:onValueClick('sio', 1)">99%</UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('sio', 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="friendEntry">
                             <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                            <label class="spinVal">99%</label>
-                            <UIButton class="arrowBtnDown"></UIButton>
+                            <UIButton id="sio_val_2" class="spinValBtn" onclick="self:onValueClick('sio', 2)">99%</UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('sio', 2)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
@@ -160,15 +160,15 @@
                         <div class="friendEntry">
                             <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                            <label class="spinVal">99%</label>
-                            <UIButton class="arrowBtnDown"></UIButton>
+                            <UIButton id="gsio_val_1" class="spinValBtn" onclick="self:onValueClick('gsio', 1)">99%</UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('gsio', 1)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="friendEntry">
                             <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                            <label class="spinVal">99%</label>
-                            <UIButton class="arrowBtnDown"></UIButton>
+                            <UIButton id="gsio_val_2" class="spinValBtn" onclick="self:onValueClick('gsio', 2)">99%</UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('gsio', 2)"></UIButton>
                             <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>

@@ -255,6 +255,31 @@
     color: #c0c0c0;
 }
 
+/* Clickable % value button — same image as standard UI button, small */
+.spinValBtn {
+    width: 32px;
+    height: 0px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font: verdana-11px-antialised;
+    --padding: 0;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
+    --color: #c0c0c0ff;
+}
+.spinValBtn:hover { --image-clip: 0 23 22 23; }
+.spinValBtn:pressed { --image-clip: 0 46 22 23; }
+
+/* Spell icon nested inside the spellSlot UIButton */
+.spellIcon {
+    width: 26px;
+    height: 26px;
+    margin: 4px;
+    display: inline-block;
+}
+
 .manaRow {
     display: block;
     height: 40px;

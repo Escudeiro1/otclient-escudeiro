@@ -10,3 +10,4 @@ Module
   dependencies:
     - game_interface
     - game_mainpanel
+    - game_actionbar
