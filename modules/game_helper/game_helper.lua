@@ -235,6 +235,9 @@ function HelperController:onSlotClick(section, row)
     local player = g_game.getLocalPlayer()
     if not player then return end
 
+    local ActionBarController = modules.game_actionbar.ActionBarController
+    if not ActionBarController then return end
+
     -- Reuse ActionBarController's spell picker HTML so we don't duplicate the UI.
     if ActionBarController.ui then
         ActionBarController:unloadHtml()
