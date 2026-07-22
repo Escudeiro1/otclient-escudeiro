@@ -190,6 +190,17 @@ function HelperController:showValuePicker(currentVal, callback)
         end
     end
 
+    local function doOk()
+        callback(bar:getValue())
+        picker:unlock()
+        picker:destroy()
+    end
+
+    local function doCancel()
+        picker:unlock()
+        picker:destroy()
+    end
+
     local function onKey(_, keyCode, _mods)
         if keyCode >= Key0 and keyCode <= Key9 then
             handleDigit(tostring(keyCode - Key0))
@@ -197,25 +208,21 @@ function HelperController:showValuePicker(currentVal, callback)
         elseif keyCode >= KeyNumpad0 and keyCode <= KeyNumpad9 then
             handleDigit(tostring(keyCode - KeyNumpad0))
             return true
+        elseif keyCode == KeyReturn or keyCode == KeyEnter then
+            doOk()
+            return true
+        elseif keyCode == KeyEscape then
+            doCancel()
+            return true
         end
         return false
     end
 
-    -- Attach to both the window and the scrollbar so the handler fires
-    -- regardless of which widget has focus inside the modal.
     picker.onKeyDown = onKey
     bar.onKeyDown    = onKey
 
-    picker:getChildById('buttonOk').onClick = function()
-        callback(bar:getValue())
-        picker:unlock()
-        picker:destroy()
-    end
-
-    picker:getChildById('buttonCancel').onClick = function()
-        picker:unlock()
-        picker:destroy()
-    end
+    picker:getChildById('buttonOk').onClick     = doOk
+    picker:getChildById('buttonCancel').onClick = doCancel
 end
 
 -- ── Slot click — open spell selector ─────────────────────────────────────────
