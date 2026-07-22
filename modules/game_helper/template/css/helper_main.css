@@ -1,13 +1,13 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
-    width: 804px;
+    width: 780px;
     height: 440px;
     display: block;
 }
 
 /* ── Tab bar ─────────────────────────────────────────────────────────────── */
 .helperTabBar {
-    width: 793px;
+    width: 780px;
     height: 32px;
     margin: 0px 3px 4px 3px;
     display: block;
@@ -145,6 +145,8 @@
     float: left;
     display: block;
     margin-left: 5px;
+    --image-source: /images/ui/window_helper;
+    --image-border: 16;
 }
 
 /* ── Top section: 3 panels float:left ─────────────────────────────────────  */
@@ -162,8 +164,7 @@
     height: 196px;
     float: left;
     margin-right: 4px;
-    --image-source: /images/ui/window_new;
-    --image-border: 16;
+    
 }
 
 .healBlockInner {
@@ -174,8 +175,6 @@
     width: 238px;
     height: 196px;
     float: left;
-    --image-source: /images/ui/window_new;
-    --image-border: 16;
 }
 
 .manaBlockInner {
@@ -252,8 +251,6 @@
     height: 170px;
     float: left;
     margin-right: 4px;
-    --image-source: /images/ui/window_new;
-    --image-border: 16;
 }
 
 .friendSelectorInner {
@@ -265,16 +262,12 @@
     height: 170px;
     float: left;
     margin-right: 4px;
-    --image-source: /images/ui/window_new;
-    --image-border: 16;
 }
 
 .friendListBlockWide {
     width: 250px;
     height: 170px;
     float: left;
-    --image-source: /images/ui/window_new;
-    --image-border: 16;
 }
 
 .friendListInner {
@@ -315,29 +308,27 @@
 
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
 .helperBottomBar {
-    width: 794px;
-    height: 26px;
-    margin: 4px 12px 6px 12px;
+    width: 775px;
+    height: 20px;
+    margin: 6px 3px 2px 3px;
     display: block;
-    overflow: hidden;
+    background-color:red;
 }
 
 .helperFooterBtnLeft {
     width: 100px;
-    height: 16px;
+    height: 20px;
     float: left;
     font: verdana-11px-antialised;
     vertical-align: middle;
-    --padding: 0;
-    --text-offset: 0 2;
+
 }
 
 .helperFooterBtnRight {
-    width: 100px;
-    height: 16px;
+    width: 70px;
+    height: 20px;
     float: right;
     font: verdana-11px-antialised;
     vertical-align: middle;
-    --padding: 0;
-    --text-offset: 0 2;
+
 }
