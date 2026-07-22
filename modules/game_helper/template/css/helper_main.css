@@ -193,25 +193,57 @@
     display: block;
     height: 34px;
     margin-bottom: 3px;
+    text-align: center;
 }
 
-.spellIconBox {
-    width: 32px;
-    height: 32px;
+/* Action bar style slot — same image as hotbar */
+.spellSlot {
+    width: 34px;
+    height: 34px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 2px;
-    --image-source: /images/ui/2pixel_up_frame_borderimage;
-    --image-border: 2;
-}
-
-.spinBtn {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    vertical-align: middle;
+    margin-right: 4px;
+    --image-source: /images/game/actionbar/actionbarslot;
+    --image-border: 0;
     --padding: 0;
-    font: verdana-11px-antialised;
+}
+
+/* Left/right spinner arrows — 3-frame sprite (normal/hover/pressed, each 20px) */
+.arrowBtnLeft {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    --image-source: /images/ui/arrow-left-button;
+    --image-clip: 0 0 20 20;
+    --image-border: 0;
+    --padding: 0;
+}
+.arrowBtnLeft:hover { --image-clip: 0 20 20 20; }
+.arrowBtnLeft:pressed { --image-clip: 0 40 20 20; }
+
+.arrowBtnRight {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    --image-source: /images/ui/arrow-right-button;
+    --image-clip: 0 0 20 20;
+    --image-border: 0;
+    --padding: 0;
+}
+.arrowBtnRight:hover { --image-clip: 0 20 20 20; }
+.arrowBtnRight:pressed { --image-clip: 0 40 20 20; }
+
+/* Down arrow for dropdowns */
+.arrowBtnDown {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    --image-source: /images/ui/icon-arrow7x7-down;
+    --image-border: 0;
+    --padding: 0;
 }
 
 .spinVal {
@@ -274,12 +306,17 @@
     padding: 16px 4px 4px 4px;
 }
 
+/* Proper scrollable list — same pattern as game_actionbar passive list */
 .friendScrollArea {
-    width: 96px;
     height: 112px;
     display: block;
-    --image-source: /images/ui/2pixel_up_frame_borderimage;
-    --image-border: 2;
+    overflow: scroll;
+    background-color: alpha;
+    --border-width-top: 1;    --border-color-top: #000000;
+    --border-width-left: 1;   --border-color-left: #000000;
+    --border-width-bottom: 1; --border-color-bottom: #747474;
+    --border-width-right: 1;  --border-color-right: #747474;
+    --padding: 1 1 1 1;
 }
 
 .friendEntry {
@@ -301,7 +338,7 @@
 .friendEntryCheck {
     display: inline-block;
     vertical-align: middle;
-    width: 70px;
+    width: 60px;
     height: 16px;
     font: verdana-11px-antialised;
 }
