@@ -210,8 +210,8 @@
 
 /* Left/right spinner arrows — 3-frame sprite (normal/hover/pressed, each 20px) */
 .arrowBtnLeft {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     vertical-align: middle;
     --image-source: /images/ui/arrow-left-button;
@@ -223,8 +223,8 @@
 .arrowBtnLeft:pressed { --image-clip: 0 40 20 20; }
 
 .arrowBtnRight {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     vertical-align: middle;
     --image-source: /images/ui/arrow-right-button;
@@ -258,16 +258,13 @@
 /* Clickable % value button — no button skin (avoids min-height forcing it
    taller than the 14px arrows). Plain bordered box, same height as arrows. */
 .spinValBtn {
-    width: 36px;
-    height: 14px;
+    width: 42px;
+    height: 20px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
-    background-color: #1c1c1cff;
-    --border-width-top: 1;    --border-color-top: #555555;
-    --border-width-left: 1;   --border-color-left: #555555;
-    --border-width-bottom: 1; --border-color-bottom: #303030;
-    --border-width-right: 1;  --border-color-right: #303030;
+    --image-source: /images/ui/widget_border_inv;
+    
 }
 .spinValBtn:hover    { background-color: #282828ff; }
 .spinValBtn:pressed  { background-color: #0f0f0fff; }

@@ -8,7 +8,7 @@ HelperValuePicker < MainWindow
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
-    margin-top: 8
+    margin-top: 1
     height: 16
     text-align: center
     font: verdana-11px-rounded
@@ -21,7 +21,7 @@ HelperValuePicker < MainWindow
     anchors.top: prev.bottom
     margin-left: 8
     margin-right: 8
-    margin-top: 6
+    margin-top: 2
     focusable: false
 
   Button
