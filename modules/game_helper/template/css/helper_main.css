@@ -1,7 +1,7 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
     width: 780px;
-    height: 440px;
+    height: 435px;
     display: block;
 }
 
@@ -172,7 +172,7 @@
 }
 
 .manaBlock {
-    width: 238px;
+    width: 190px;
     height: 196px;
     float: left;
 }
@@ -309,26 +309,41 @@
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
 .helperBottomBar {
     width: 775px;
-    height: 20px;
+    height: 26px;
     margin: 6px 3px 2px 3px;
     display: block;
-    background-color:red;
 }
 
 .helperFooterBtnLeft {
     width: 100px;
-    height: 20px;
+    height: 2px;
     float: left;
     font: verdana-11px-antialised;
-    vertical-align: middle;
+    
 
 }
 
 .helperFooterBtnRight {
-    width: 70px;
-    height: 20px;
+    width: 50px;
+    height: 2px;
     float: right;
     font: verdana-11px-antialised;
-    vertical-align: middle;
+    
 
+}
+
+.horizontalSeparator{
+    width: 97%;
+    height: 1px;
+    margin: 0px 5px 0px 7px;
+    display: block;
+    --image-source:/images/ui/horizontal_line_bright.png;
+}
+
+.verticalSeparator{
+    width: 1px;
+    height: 196px;
+    float: left;
+    margin-top: 5px;
+    --image-source:/images/ui/vertical_line_bright.png;
 }
