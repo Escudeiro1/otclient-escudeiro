@@ -1,15 +1,15 @@
 HelperValuePicker < MainWindow
   id: helperValuePicker
   !text: tr('Set Threshold')
-  size: 200 100
+  size: 200 120
 
   Label
     id: currentValueLabel
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
-    margin-top: 32
-    height: 18
+    margin-top: 8
+    height: 16
     text-align: center
     font: verdana-11px-rounded
     color: #c0c0c0
@@ -21,7 +21,7 @@ HelperValuePicker < MainWindow
     anchors.top: prev.bottom
     margin-left: 8
     margin-right: 8
-    margin-top: 4
+    margin-top: 6
     focusable: false
 
   Button
@@ -31,7 +31,7 @@ HelperValuePicker < MainWindow
     width: 60
     anchors.bottom: parent.bottom
     anchors.right: parent.right
-    margin-bottom: 6
+    margin-bottom: 8
     margin-right: 6
     focusable: false
 
@@ -42,6 +42,6 @@ HelperValuePicker < MainWindow
     width: 60
     anchors.bottom: parent.bottom
     anchors.right: buttonOk.left
-    margin-bottom: 6
+    margin-bottom: 8
     margin-right: 4
     focusable: false
