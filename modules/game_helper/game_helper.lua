@@ -196,13 +196,13 @@ function HelperController:_onPotionItemPicked(pos)
             if tile then item = tile:getTopMoveThing() end
         end
     end
-    if not item or not item:isItem() or not item:isFluidContainer() then return end
+    if not item or not item:isItem() or not item:isStackable() then return end
 
     local d = getSectionData(self._pendingPotionSection, self._pendingPotionRow)
     if not d then return end
     d.itemId   = item:getId()
     d.itemName = item:getName() or ''
-    d.isMana   = item:getSubType() == 2
+    d.isMana   = (item:getName() or ''):lower():find('mana') ~= nil
     saveData()
     self:updatePotionDisplay(self._pendingPotionSection, self._pendingPotionRow, d)
     self:rebuildPotionCache()
@@ -210,8 +210,15 @@ end
 
 function HelperController:updatePotionDisplay(section, row, data)
     if not self.ui or not data then return end
-    local icon = self.ui:recursiveGetChildById(section .. '_item_' .. row)
-    if not icon then return end
+    local slot = self.ui:recursiveGetChildById(section .. '_slot_' .. row)
+    if not slot then return end
+    local icon = slot:getChildById('_potionItem')
+    if not icon then
+        icon = g_ui.createWidget('UIItem', slot)
+        icon:setId('_potionItem')
+        icon:setVirtual(true)
+        icon:fill('parent')
+    end
     if data.itemId and data.itemId > 0 then
         icon:setItemId(data.itemId)
         icon:show()
