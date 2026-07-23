@@ -18,10 +18,10 @@
             <div class="helperStatusInner"> Status
                 <label class="helperSectionTitle"></label>
                 <div class="statusToggleRow">
-                    <button class="statusOkBtn">OK</button>
-                    <button class="statusNoBtn">X</button>
+                    <button class="statusOkBtn" onclick="self:onEnableHelper()">OK</button>
+                    <button class="statusNoBtn" onclick="self:onDisableHelper()">X</button>
                 </div>
-                <label class="statusEnabledLabel">Helper Status: Enabled</label>
+                <label id="statusEnabledLabel" class="statusEnabledLabel">Helper Status: Enabled</label>
                 <div class="helperDivider"></div>
                 <div class="helperSubTitleRow">
                     <label class="helperSubTitle">Auto Haste</label>

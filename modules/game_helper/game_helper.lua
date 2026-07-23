@@ -132,6 +132,65 @@ function HelperController:updateAllDisplays()
         self:updateValDisplay('mh', 1, helperData.manaTraining.threshold or 90)
         self:updateSlotDisplay('mh', 1, helperData.manaTraining)
     end
+    self:updateStatusDisplay()
+end
+
+-- ── Heal spell cache — sorted by threshold asc, rebuilt on data change ───────
+
+function HelperController:rebuildHealCache()
+    local spells = {}
+    for _, s in ipairs(helperData.spellHealing or {}) do
+        if s.spellWords and s.spellWords ~= '' then
+            table.insert(spells, s)
+        end
+    end
+    table.sort(spells, function(a, b) return a.threshold < b.threshold end)
+    self._sortedHealSpells = spells
+end
+
+-- ── Status toggle ─────────────────────────────────────────────────────────────
+
+function HelperController:onEnableHelper()
+    helperData.statusEnabled = true
+    saveData()
+    self:updateStatusDisplay()
+end
+
+function HelperController:onDisableHelper()
+    helperData.statusEnabled = false
+    saveData()
+    self:updateStatusDisplay()
+end
+
+function HelperController:updateStatusDisplay()
+    if not self.ui then return end
+    local label = self.ui:recursiveGetChildById('statusEnabledLabel')
+    if not label then return end
+    if helperData.statusEnabled then
+        label:setText('Helper Status: Enabled')
+        label:setColor('#44cc44ff')
+    else
+        label:setText('Helper Status: Disabled')
+        label:setColor('#888888ff')
+    end
+end
+
+-- ── Auto-heal handler — fires on every HP drop, no polling loop ───────────────
+
+function HelperController:onHealthChange(player, health, maxHealth, oldHealth, oldMaxHealth)
+    if not helperData.statusEnabled then return end
+    if health >= oldHealth then return end
+    if not self._sortedHealSpells or #self._sortedHealSpells == 0 then return end
+    local cooldowns = modules.game_cooldown
+    if cooldowns and cooldowns.isGroupCooldownIconActive(2) then return end
+
+    local hpPct = math.floor(health / maxHealth * 100)
+    for _, spell in ipairs(self._sortedHealSpells) do
+        if spell.threshold >= hpPct then
+            g_game.talk(spell.spellWords)
+            return
+        end
+    end
 end
 
 -- ── Arrow click — adjust threshold ±1 ────────────────────────────────────────
@@ -268,7 +327,9 @@ function HelperController:onSlotClick(section, row)
     local showAll        = (playerVocation == 0)
 
     for spellName, spellData in pairs(spells) do
-        if showAll or table.contains(spellData.vocations, playerVocation) then
+        local vocMatch      = showAll or table.contains(spellData.vocations, playerVocation)
+        local groupOk       = section ~= 'sh' or Spells.getPrimaryGroup(spellData) == 2
+        if vocMatch and groupOk then
             local widget = g_ui.createWidget('SpellPreview', spellList)
             local spellId = spellData.clientId
             local clip    = Spells.getImageClip(spellId)
@@ -320,6 +381,7 @@ function HelperController:onSlotClick(section, row)
                 d.spellClip   = selected.clip   or ''
                 saveData()
                 self:updateSlotDisplay(section, row, d)
+                if section == 'sh' then self:rebuildHealCache() end
             end
         end
         ActionBarController:unloadHtml()
@@ -348,6 +410,11 @@ function HelperController:onGameStart()
             false,
             2000)
     end
+    self:registerEvents(LocalPlayer, {
+        onHealthChange = function(player, health, maxHealth, oldHealth, oldMaxHealth)
+            self:onHealthChange(player, health, maxHealth, oldHealth, oldMaxHealth)
+        end
+    })
 end
 
 function HelperController:onGameEnd()
@@ -366,6 +433,7 @@ end
 
 function HelperController:show()
     loadData()
+    self:rebuildHealCache()
     if not self.ui then
         self:loadHtml('template/html/main_helper.html')
     end

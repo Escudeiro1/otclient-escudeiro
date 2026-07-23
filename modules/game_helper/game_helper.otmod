@@ -11,3 +11,4 @@ Module
     - game_interface
     - game_mainpanel
     - game_actionbar
+    - game_cooldown
