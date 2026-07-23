@@ -283,8 +283,8 @@
 
 /* Spell icon nested inside the spellSlot UIButton */
 .spellIcon {
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     margin: 4px;
     display: inline-block;
 }
