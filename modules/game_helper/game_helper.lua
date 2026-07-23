@@ -189,54 +189,45 @@ function HelperController:_onPotionItemPicked(pos)
     local item = nil
     if w then
         local cls = w:getClassName()
-        print('[HELPER] picker: widget=' .. cls .. ' virtual=' .. tostring(w:isVirtual()))
         if cls == 'UIItem' and not w:isVirtual() then
             item = w:getItem()
         elseif cls == 'UIGameMap' then
             local tile = w:getTile(pos)
             if tile then item = tile:getTopMoveThing() end
         end
-    else
-        print('[HELPER] picker: no widget at pos')
     end
-    if not item then print('[HELPER] picker: no item resolved') return end
+    if not item or not item:isItem() or not item:isStackable() then return end
+
     local itemId = item:getId()
     local thingType = g_things.getThingType(itemId, ThingCategoryItem)
     local itemName = (thingType and thingType:getName()) or ''
-    print('[HELPER] picker: id=' .. itemId .. ' name=' .. itemName .. ' isItem=' .. tostring(item:isItem()) .. ' isStackable=' .. tostring(item:isStackable()))
-    if not item:isItem() or not item:isStackable() then print('[HELPER] picker: rejected (not item or not stackable)') return end
 
     local d = getSectionData(self._pendingPotionSection, self._pendingPotionRow)
-    if not d then print('[HELPER] picker: no section data') return end
+    if not d then return end
     d.itemId   = itemId
     d.itemName = itemName
     d.isMana   = itemName:lower():find('mana') ~= nil
-    print('[HELPER] picker: saved id=' .. d.itemId .. ' name=' .. d.itemName .. ' isMana=' .. tostring(d.isMana))
     saveData()
     self:updatePotionDisplay(self._pendingPotionSection, self._pendingPotionRow, d)
     self:rebuildPotionCache()
-    print('[HELPER] cache rebuilt hp=' .. #(self._sortedHpPotions or {}) .. ' mp=' .. #(self._sortedManaPotions or {}))
 end
 
 function HelperController:updatePotionDisplay(section, row, data)
     if not self.ui or not data then return end
     local slot = self.ui:recursiveGetChildById(section .. '_slot_' .. row)
-    if not slot then print('[HELPER] display: slot ' .. section .. '_slot_' .. row .. ' not found') return end
+    if not slot then return end
     local icon = slot:getChildById('_potionItem')
     if not icon then
         icon = g_ui.createWidget('UIItem', slot)
         icon:setId('_potionItem')
         icon:setVirtual(true)
         icon:fill('parent')
-        print('[HELPER] display: created UIItem for ' .. section .. '_slot_' .. row)
     end
     if data.itemId and data.itemId > 0 then
         icon:setItemId(data.itemId)
         icon:show()
-        print('[HELPER] display: setItemId=' .. data.itemId .. ' on ' .. section .. '_slot_' .. row)
     else
         icon:hide()
-        print('[HELPER] display: hiding icon (itemId=0)')
     end
 end
 
@@ -254,10 +245,8 @@ function HelperController:_schedulePotionRecheck(isHp)
             local maxHealth = player:getMaxHealth()
             if maxHealth == 0 then return end
             local hpPct = math.floor(health / maxHealth * 100)
-            print('[HELPER] recheck HP: ' .. hpPct .. '%')
             for _, pot in ipairs(self._sortedHpPotions) do
                 if pot.threshold >= hpPct then
-                    print('[HELPER] recheck HP: USING id=' .. pot.itemId)
                     g_game.useInventoryItemWith(pot.itemId, player)
                     self._lastPotionTime = g_clock.millis()
                     self:_schedulePotionRecheck(true)
@@ -270,10 +259,8 @@ function HelperController:_schedulePotionRecheck(isHp)
             local maxMana = player:getMaxMana()
             if maxMana == 0 then return end
             local manaPct = math.floor(mana / maxMana * 100)
-            print('[HELPER] recheck MP: ' .. manaPct .. '%')
             for _, pot in ipairs(self._sortedManaPotions) do
                 if pot.threshold >= manaPct then
-                    print('[HELPER] recheck MP: USING id=' .. pot.itemId)
                     g_game.useInventoryItemWith(pot.itemId, player)
                     self._lastPotionTime = g_clock.millis()
                     self:_schedulePotionRecheck(false)
@@ -290,14 +277,11 @@ function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMan
     if not helperData.statusEnabled then return end
     if mana >= oldMana then return end
     local manaPct = math.floor(mana / maxMana * 100)
-    print('[HELPER] onManaChange: mana=' .. mana .. '/' .. maxMana .. ' (' .. manaPct .. '%) potions=' .. #(self._sortedManaPotions or {}))
     if not self._sortedManaPotions or #self._sortedManaPotions == 0 then return end
-    if g_clock.millis() - (self._lastPotionTime or 0) < 1000 then print('[HELPER] onManaChange: cooldown active') return end
+    if g_clock.millis() - (self._lastPotionTime or 0) < 1000 then return end
 
     for _, pot in ipairs(self._sortedManaPotions) do
-        print('[HELPER] onManaChange: checking pot id=' .. pot.itemId .. ' threshold=' .. pot.threshold .. ' vs manaPct=' .. manaPct)
         if pot.threshold >= manaPct then
-            print('[HELPER] onManaChange: USING id=' .. pot.itemId)
             g_game.useInventoryItemWith(pot.itemId, player)
             self._lastPotionTime = g_clock.millis()
             self:_schedulePotionRecheck(false)
@@ -355,13 +339,10 @@ function HelperController:onHealthChange(player, health, maxHealth, oldHealth, o
     end
 
     -- HP potions if no spell fired or spell was on cooldown
-    print('[HELPER] onHealthChange: hp=' .. health .. '/' .. maxHealth .. ' (' .. hpPct .. '%) hpPotions=' .. #(self._sortedHpPotions or {}))
     if self._sortedHpPotions and #self._sortedHpPotions > 0
     and g_clock.millis() - (self._lastPotionTime or 0) >= 1000 then
         for _, pot in ipairs(self._sortedHpPotions) do
-            print('[HELPER] onHealthChange: checking pot id=' .. pot.itemId .. ' threshold=' .. pot.threshold .. ' vs hpPct=' .. hpPct)
             if pot.threshold >= hpPct then
-                print('[HELPER] onHealthChange: USING id=' .. pot.itemId)
                 g_game.useInventoryItemWith(pot.itemId, player)
                 self._lastPotionTime = g_clock.millis()
                 self:_schedulePotionRecheck(true)
