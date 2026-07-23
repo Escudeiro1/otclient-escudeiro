@@ -16,9 +16,9 @@ local DATA_DEFAULT = {
         { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 80 },
     },
     potionHealing = {
-        { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 25 },
-        { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 50 },
-        { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 50 },
+        { itemId = 0, itemName = '', isMana = false, threshold = 25 },
+        { itemId = 0, itemName = '', isMana = false, threshold = 50 },
+        { itemId = 0, itemName = '', isMana = false, threshold = 50 },
     },
     manaTraining  = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 90 },
     sioFriends    = {
@@ -113,13 +113,12 @@ end
 
 function HelperController:updateAllDisplays()
     if not self.ui then return end
-    local sections = {
-        { prefix = 'sh',  list = helperData.spellHealing,   count = 3 },
-        { prefix = 'ph',  list = helperData.potionHealing,  count = 3 },
-        { prefix = 'sio', list = helperData.sioFriends,     count = 2 },
-        { prefix = 'gsio',list = helperData.granSioFriends, count = 2 },
+    local spellSections = {
+        { prefix = 'sh',  list = helperData.spellHealing,  count = 3 },
+        { prefix = 'sio', list = helperData.sioFriends,    count = 2 },
+        { prefix = 'gsio',list = helperData.granSioFriends,count = 2 },
     }
-    for _, sec in ipairs(sections) do
+    for _, sec in ipairs(spellSections) do
         for row = 1, sec.count do
             local d = sec.list and sec.list[row]
             if d then
@@ -131,6 +130,13 @@ function HelperController:updateAllDisplays()
     if helperData.manaTraining then
         self:updateValDisplay('mh', 1, helperData.manaTraining.threshold or 90)
         self:updateSlotDisplay('mh', 1, helperData.manaTraining)
+    end
+    for row = 1, 3 do
+        local d = helperData.potionHealing and helperData.potionHealing[row]
+        if d then
+            self:updateValDisplay('ph', row, d.threshold or 25)
+            self:updatePotionDisplay('ph', row, d)
+        end
     end
     self:updateStatusDisplay()
 end
@@ -146,6 +152,90 @@ function HelperController:rebuildHealCache()
     end
     table.sort(spells, function(a, b) return a.threshold < b.threshold end)
     self._sortedHealSpells = spells
+end
+
+-- ── Potion cache — sorted hp/mana lists, rebuilt on data change ──────────────
+
+function HelperController:rebuildPotionCache()
+    local hp, mp = {}, {}
+    for _, s in ipairs(helperData.potionHealing or {}) do
+        if s.itemId and s.itemId > 0 then
+            table.insert(s.isMana and mp or hp, s)
+        end
+    end
+    table.sort(hp, function(a, b) return a.threshold < b.threshold end)
+    table.sort(mp, function(a, b) return a.threshold < b.threshold end)
+    self._sortedHpPotions   = hp
+    self._sortedManaPotions = mp
+end
+
+-- ── Potion slot item picker — mouseGrabber pattern ────────────────────────────
+
+function HelperController:onPotionSlotClick(section, row)
+    self._pendingPotionSection = section
+    self._pendingPotionRow     = row
+    self._mouseGrabber.onMouseRelease = function(_, pos, _btn)
+        self._mouseGrabber:ungrabMouse()
+        g_mouse.popCursor('target')
+        self:_onPotionItemPicked(pos)
+    end
+    self._mouseGrabber:grabMouse()
+    g_mouse.pushCursor('target')
+end
+
+function HelperController:_onPotionItemPicked(pos)
+    local root = modules.game_interface.getRootPanel()
+    local w = root:recursiveGetChildByPos(pos, false)
+    local item = nil
+    if w then
+        local cls = w:getClassName()
+        if cls == 'UIItem' and not w:isVirtual() then
+            item = w:getItem()
+        elseif cls == 'UIGameMap' then
+            local tile = w:getTile(pos)
+            if tile then item = tile:getTopMoveThing() end
+        end
+    end
+    if not item or not item:isItem() or not item:isFluidContainer() then return end
+
+    local d = getSectionData(self._pendingPotionSection, self._pendingPotionRow)
+    if not d then return end
+    d.itemId   = item:getId()
+    d.itemName = item:getName() or ''
+    d.isMana   = item:getSubType() == 2
+    saveData()
+    self:updatePotionDisplay(self._pendingPotionSection, self._pendingPotionRow, d)
+    self:rebuildPotionCache()
+end
+
+function HelperController:updatePotionDisplay(section, row, data)
+    if not self.ui or not data then return end
+    local icon = self.ui:recursiveGetChildById(section .. '_item_' .. row)
+    if not icon then return end
+    if data.itemId and data.itemId > 0 then
+        icon:setItemId(data.itemId)
+        icon:show()
+    else
+        icon:hide()
+    end
+end
+
+-- ── Mana change — fire mana potions ──────────────────────────────────────────
+
+function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMana)
+    if not helperData.statusEnabled then return end
+    if mana >= oldMana then return end
+    if not self._sortedManaPotions or #self._sortedManaPotions == 0 then return end
+    if g_clock.millis() - (self._lastPotionTime or 0) < 1000 then return end
+
+    local manaPct = math.floor(mana / maxMana * 100)
+    for _, pot in ipairs(self._sortedManaPotions) do
+        if pot.threshold >= manaPct then
+            g_game.useInventoryItemWith(pot.itemId, player)
+            self._lastPotionTime = g_clock.millis()
+            return
+        end
+    end
 end
 
 -- ── Status toggle ─────────────────────────────────────────────────────────────
@@ -180,15 +270,31 @@ end
 function HelperController:onHealthChange(player, health, maxHealth, oldHealth, oldMaxHealth)
     if not helperData.statusEnabled then return end
     if health >= oldHealth then return end
-    if not self._sortedHealSpells or #self._sortedHealSpells == 0 then return end
-    local cooldowns = modules.game_cooldown
-    if cooldowns and cooldowns.isGroupCooldownIconActive(2) then return end
 
     local hpPct = math.floor(health / maxHealth * 100)
-    for _, spell in ipairs(self._sortedHealSpells) do
-        if spell.threshold >= hpPct then
-            g_game.talk(spell.spellWords)
-            return
+
+    -- healing spells first
+    if self._sortedHealSpells and #self._sortedHealSpells > 0 then
+        local cooldowns = modules.game_cooldown
+        if not (cooldowns and cooldowns.isGroupCooldownIconActive(2)) then
+            for _, spell in ipairs(self._sortedHealSpells) do
+                if spell.threshold >= hpPct then
+                    g_game.talk(spell.spellWords)
+                    return
+                end
+            end
+        end
+    end
+
+    -- HP potions if no spell fired or spell was on cooldown
+    if self._sortedHpPotions and #self._sortedHpPotions > 0
+    and g_clock.millis() - (self._lastPotionTime or 0) >= 1000 then
+        for _, pot in ipairs(self._sortedHpPotions) do
+            if pot.threshold >= hpPct then
+                g_game.useInventoryItemWith(pot.itemId, player)
+                self._lastPotionTime = g_clock.millis()
+                return
+            end
         end
     end
 end
@@ -398,6 +504,9 @@ end
 
 function HelperController:onInit()
     g_ui.importStyle('/modules/game_helper/HelperValuePicker.otui')
+    self._mouseGrabber = g_ui.createWidget('UIWidget', g_ui.getRootWidget())
+    self._mouseGrabber:setVisible(false)
+    self._mouseGrabber:setFocusable(false)
 end
 
 function HelperController:onGameStart()
@@ -413,7 +522,10 @@ function HelperController:onGameStart()
     self:registerEvents(LocalPlayer, {
         onHealthChange = function(player, health, maxHealth, oldHealth, oldMaxHealth)
             self:onHealthChange(player, health, maxHealth, oldHealth, oldMaxHealth)
-        end
+        end,
+        onManaChange = function(player, mana, maxMana, oldMana, oldMaxMana)
+            self:onManaChange(player, mana, maxMana, oldMana, oldMaxMana)
+        end,
     })
 end
 
@@ -434,6 +546,7 @@ end
 function HelperController:show()
     loadData()
     self:rebuildHealCache()
+    self:rebuildPotionCache()
     if not self.ui then
         self:loadHtml('template/html/main_helper.html')
     end

@@ -281,6 +281,15 @@
     color: #c0c0c0;
 }
 
+/* Potion icon (UIItem) nested inside the spellSlot UIButton */
+.potionIcon {
+    width: 32px;
+    height: 32px;
+    margin: 1px;
+    display: inline-block;
+    virtual: true;
+}
+
 /* Spell icon nested inside the spellSlot UIButton */
 .spellIcon {
     width: 32px;
