@@ -240,6 +240,50 @@ function HelperController:updatePotionDisplay(section, row, data)
     end
 end
 
+-- ── Potion re-check — fires 1.1s after a use, repeats until above threshold ──
+
+function HelperController:_schedulePotionRecheck(isHp)
+    scheduleEvent(function()
+        local player = g_game.getLocalPlayer()
+        if not player or not g_game.isOnline() then return end
+        if not helperData.statusEnabled then return end
+        if g_clock.millis() - (self._lastPotionTime or 0) < 1000 then return end
+        if isHp then
+            if not self._sortedHpPotions or #self._sortedHpPotions == 0 then return end
+            local health = player:getHealth()
+            local maxHealth = player:getMaxHealth()
+            if maxHealth == 0 then return end
+            local hpPct = math.floor(health / maxHealth * 100)
+            print('[HELPER] recheck HP: ' .. hpPct .. '%')
+            for _, pot in ipairs(self._sortedHpPotions) do
+                if pot.threshold >= hpPct then
+                    print('[HELPER] recheck HP: USING id=' .. pot.itemId)
+                    g_game.useInventoryItemWith(pot.itemId, player)
+                    self._lastPotionTime = g_clock.millis()
+                    self:_schedulePotionRecheck(true)
+                    return
+                end
+            end
+        else
+            if not self._sortedManaPotions or #self._sortedManaPotions == 0 then return end
+            local mana = player:getMana()
+            local maxMana = player:getMaxMana()
+            if maxMana == 0 then return end
+            local manaPct = math.floor(mana / maxMana * 100)
+            print('[HELPER] recheck MP: ' .. manaPct .. '%')
+            for _, pot in ipairs(self._sortedManaPotions) do
+                if pot.threshold >= manaPct then
+                    print('[HELPER] recheck MP: USING id=' .. pot.itemId)
+                    g_game.useInventoryItemWith(pot.itemId, player)
+                    self._lastPotionTime = g_clock.millis()
+                    self:_schedulePotionRecheck(false)
+                    return
+                end
+            end
+        end
+    end, 1100)
+end
+
 -- ── Mana change — fire mana potions ──────────────────────────────────────────
 
 function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMana)
@@ -256,6 +300,7 @@ function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMan
             print('[HELPER] onManaChange: USING id=' .. pot.itemId)
             g_game.useInventoryItemWith(pot.itemId, player)
             self._lastPotionTime = g_clock.millis()
+            self:_schedulePotionRecheck(false)
             return
         end
     end
@@ -319,6 +364,7 @@ function HelperController:onHealthChange(player, health, maxHealth, oldHealth, o
                 print('[HELPER] onHealthChange: USING id=' .. pot.itemId)
                 g_game.useInventoryItemWith(pot.itemId, player)
                 self._lastPotionTime = g_clock.millis()
+                self:_schedulePotionRecheck(true)
                 return
             end
         end
