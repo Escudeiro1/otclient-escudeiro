@@ -200,14 +200,17 @@ function HelperController:_onPotionItemPicked(pos)
         print('[HELPER] picker: no widget at pos')
     end
     if not item then print('[HELPER] picker: no item resolved') return end
-    print('[HELPER] picker: id=' .. item:getId() .. ' name=' .. tostring(item:getName()) .. ' isItem=' .. tostring(item:isItem()) .. ' isStackable=' .. tostring(item:isStackable()))
+    local itemId = item:getId()
+    local thingType = g_things.getThingType(itemId, ThingCategoryItem)
+    local itemName = (thingType and thingType:getName()) or ''
+    print('[HELPER] picker: id=' .. itemId .. ' name=' .. itemName .. ' isItem=' .. tostring(item:isItem()) .. ' isStackable=' .. tostring(item:isStackable()))
     if not item:isItem() or not item:isStackable() then print('[HELPER] picker: rejected (not item or not stackable)') return end
 
     local d = getSectionData(self._pendingPotionSection, self._pendingPotionRow)
     if not d then print('[HELPER] picker: no section data') return end
-    d.itemId   = item:getId()
-    d.itemName = item:getName() or ''
-    d.isMana   = (item:getName() or ''):lower():find('mana') ~= nil
+    d.itemId   = itemId
+    d.itemName = itemName
+    d.isMana   = itemName:lower():find('mana') ~= nil
     print('[HELPER] picker: saved id=' .. d.itemId .. ' name=' .. d.itemName .. ' isMana=' .. tostring(d.isMana))
     saveData()
     self:updatePotionDisplay(self._pendingPotionSection, self._pendingPotionRow, d)
