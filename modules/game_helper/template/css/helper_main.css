@@ -79,8 +79,8 @@
 }
 
 .helperYesBtn {
-    width: 56px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 6px;
@@ -94,8 +94,8 @@
 .helperYesBtn:pressed { --image-clip: 0 46 22 23; }
 
 .helperNoBtn {
-    width: 56px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
