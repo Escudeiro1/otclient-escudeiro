@@ -135,6 +135,7 @@
 
 .helperCheck {
     display: block;
+    width: 130px;
     font: verdana-11px-antialised;
     color: #c0c0c0;
     margin-bottom: 2px;
