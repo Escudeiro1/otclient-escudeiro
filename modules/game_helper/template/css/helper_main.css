@@ -75,25 +75,28 @@
 .statusToggleRow {
     display: block;
     margin-bottom: 4px;
+    text-align: center;
 }
 
-.statusOkBtn {
-    width: 40px;
-    height: 26px;
+.helperYesBtn {
+    width: 19px;
+    height: 19px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 4px;
-    --color: #44cc44ff;
-    font: verdana-11px-antialised;
+    --padding: 0;
+    --image-source: /game_npctrade/assets/images/icons-npcdialog;
+    --image-clip: 224 0 32 32;
 }
 
-.statusNoBtn {
-    width: 40px;
-    height: 26px;
+.helperNoBtn {
+    width: 19px;
+    height: 19px;
     display: inline-block;
     vertical-align: middle;
-    --color: #cc4444ff;
-    font: verdana-11px-antialised;
+    --padding: 0;
+    --image-source: /game_npctrade/assets/images/icons-npcdialog;
+    --image-clip: 256 0 32 32;
 }
 
 .statusEnabledLabel {
