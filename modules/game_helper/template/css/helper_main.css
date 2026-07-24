@@ -79,8 +79,8 @@
 }
 
 .helperYesBtn {
-    width: 26px;
-    height: 26px;
+    width: 56px;
+    height: 32px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 6px;
@@ -90,8 +90,8 @@
 }
 
 .helperNoBtn {
-    width: 26px;
-    height: 26px;
+    width: 56px;
+    height: 3226px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
