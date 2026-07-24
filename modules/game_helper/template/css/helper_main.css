@@ -79,24 +79,24 @@
 }
 
 .helperYesBtn {
-    width: 19px;
-    height: 19px;
+    width: 26px;
+    height: 26px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 4px;
+    margin-right: 6px;
     --padding: 0;
-    --image-source: /game_npctrade/assets/images/icons-npcdialog;
-    --image-clip: 224 0 32 32;
+    --icon-source: /game_npctrade/assets/images/icons-npcdialog;
+    --icon-clip: 224 0 32 32;
 }
 
 .helperNoBtn {
-    width: 19px;
-    height: 19px;
+    width: 26px;
+    height: 26px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
-    --image-source: /game_npctrade/assets/images/icons-npcdialog;
-    --image-clip: 256 0 32 32;
+    --icon-source: /game_npctrade/assets/images/icons-npcdialog;
+    --icon-clip: 256 0 32 32;
 }
 
 .statusEnabledLabel {
