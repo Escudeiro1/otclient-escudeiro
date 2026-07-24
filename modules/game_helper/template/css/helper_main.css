@@ -73,7 +73,6 @@
 }
 
 .statusToggleRow {
-    width: 22%;
     display: block;
     margin-bottom: 4px;
     text-align: center;
@@ -86,9 +85,13 @@
     vertical-align: middle;
     margin-right: 6px;
     --padding: 0;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
     --icon-source: /game_npctrade/assets/images/icons-npcdialog;
     --icon-clip: 224 0 32 32;
 }
+.helperYesBtn:pressed { --image-clip: 0 46 22 23; }
 
 .helperNoBtn {
     width: 56px;
@@ -96,9 +99,13 @@
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
     --icon-source: /game_npctrade/assets/images/icons-npcdialog;
     --icon-clip: 256 0 32 32;
 }
+.helperNoBtn:pressed { --image-clip: 0 46 22 23; }
 
 .statusEnabledLabel {
     display: block;
