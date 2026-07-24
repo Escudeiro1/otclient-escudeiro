@@ -73,7 +73,7 @@
 }
 
 .statusToggleRow {
-    display: block;
+    display: inline-block;
     margin-bottom: 4px;
     text-align: center;
 }
@@ -91,7 +91,7 @@
 
 .helperNoBtn {
     width: 56px;
-    height: 3226px;
+    height: 32px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
