@@ -73,7 +73,8 @@
 }
 
 .statusToggleRow {
-    display: inline-block;
+    width: 22%;
+    display: block;
     margin-bottom: 4px;
     text-align: center;
 }
