@@ -332,13 +332,15 @@
 
 .hasteCheckStack {
     display: inline-block;
-    vertical-align: middle;
     margin-left: 2px;
+    padding: 0px;
+    width:115px;
+    height:40px;
 }
 
 .hasteCheck {
     display: block;
-    width: 55px;
+    width:80px;
     height: 16px;
     font: verdana-11px-antialised;
     color: #c0c0c0;
