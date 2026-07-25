@@ -451,9 +451,8 @@ function HelperController:_findFood()
             local id = item:getId()
             local tt = g_things.getThingType(id, ThingCategoryItem)
             local lh = tt and tt:getLensHelp() or -1
-            local isFood = tt and tt:isFood() or false
-            print('[Helper] _findFood: itemId=' .. id .. ' lensHelp=' .. lh .. ' isFood=' .. tostring(isFood))
-            if lh > 0 or isFood then
+            print('[Helper] _findFood: itemId=' .. id .. ' lensHelp=' .. lh)
+            if lh > 0 then
                 return item
             end
         end
