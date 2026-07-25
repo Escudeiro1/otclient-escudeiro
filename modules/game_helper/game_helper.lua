@@ -261,18 +261,48 @@ function HelperController:clearSlot(section, row)
     saveData()
 end
 
-function HelperController:onSlotRightClick(section, row)
-    local menu = UIPopupMenu.create()
+function HelperController:onSlotRightClick(section, row, pos)
+    local menu = g_ui.createWidget('PopupMenu')
     menu:addOption('Select Spell', function() self:onSlotClick(section, row) end)
     menu:addOption('Clear', function() self:clearSlot(section, row) end)
-    menu:display(g_window.getMousePosition())
+    menu:display(pos)
 end
 
-function HelperController:onPotionSlotRightClick(section, row)
-    local menu = UIPopupMenu.create()
+function HelperController:onPotionSlotRightClick(section, row, pos)
+    local menu = g_ui.createWidget('PopupMenu')
     menu:addOption('Select Potion', function() self:onPotionSlotClick(section, row) end)
     menu:addOption('Clear', function() self:clearSlot(section, row) end)
-    menu:display(g_window.getMousePosition())
+    menu:display(pos)
+end
+
+function HelperController:_wireSlotRightClicks()
+    for row = 1, 3 do
+        local r = row
+        local slot = self.ui:recursiveGetChildById('sh_slot_' .. row)
+        if slot then
+            slot.onMouseRelease = function(w, pos, btn)
+                if btn == MouseRightButton then self:onSlotRightClick('sh', r, pos) end
+            end
+        end
+        local pslot = self.ui:recursiveGetChildById('ph_slot_' .. row)
+        if pslot then
+            pslot.onMouseRelease = function(w, pos, btn)
+                if btn == MouseRightButton then self:onPotionSlotRightClick('ph', r, pos) end
+            end
+        end
+    end
+    local mhSlot = self.ui:recursiveGetChildById('mh_slot_1')
+    if mhSlot then
+        mhSlot.onMouseRelease = function(w, pos, btn)
+            if btn == MouseRightButton then self:onSlotRightClick('mh', 1, pos) end
+        end
+    end
+    local ahSlot = self.ui:recursiveGetChildById('ah_slot_1')
+    if ahSlot then
+        ahSlot.onMouseRelease = function(w, pos, btn)
+            if btn == MouseRightButton then self:onSlotRightClick('ah', 1, pos) end
+        end
+    end
 end
 
 -- ── Potion re-check — fires 1.1s after a use, repeats until above threshold ──
@@ -646,6 +676,7 @@ function HelperController:show()
     self:rebuildPotionCache()
     if not self.ui then
         self:loadHtml('template/html/main_helper.html')
+        self:_wireSlotRightClicks()
     end
     self:updateAllDisplays()
     self.ui:show()

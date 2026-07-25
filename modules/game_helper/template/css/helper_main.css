@@ -308,11 +308,28 @@
 }
 
 .manaCheck {
+    display: block;
+    width: 80px;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
+    height: 16px;
+    margin-top: 4px;
+}
+
+.hasteRow {
+    display: block;
+    height: 34px;
+    margin-bottom: 2px;
+}
+
+.hasteCheck {
     display: inline-block;
     vertical-align: middle;
-    width: 60px;
+    width: 55px;
     height: 16px;
-    margin-right: 4px;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
+    margin-left: 2px;
 }
 
 /* ── Friend section: 4 panels float:left ──────────────────────────────────  */
