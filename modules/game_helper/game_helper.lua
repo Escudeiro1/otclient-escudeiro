@@ -391,26 +391,29 @@ function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMan
     end
 end
 
--- ── States change — auto haste + auto eat food ───────────────────────────────
+-- ── States change — auto haste ────────────────────────────────────────────────
 
 function HelperController:onStatesChange(player, now, old)
     local ok, err = pcall(function()
-        print('[Helper] onStatesChange now=' .. tostring(now) .. ' old=' .. tostring(old))
         local hadHaste = player:hasState(PlayerStates.Haste, old)
         local hasHaste = player:hasState(PlayerStates.Haste, now)
-        print('[Helper] hadHaste=' .. tostring(hadHaste) .. ' hasHaste=' .. tostring(hasHaste))
         if hadHaste and not hasHaste then
             self:_tryAutoHaste(player)
         end
+    end)
+    if not ok then print('[Helper] onStatesChange ERROR: ' .. tostring(err)) end
+end
 
-        local wasHungry = player:hasState(PlayerStates.Hungry, old)
-        local isHungry  = player:hasState(PlayerStates.Hungry, now)
-        print('[Helper] wasHungry=' .. tostring(wasHungry) .. ' isHungry=' .. tostring(isHungry))
-        if not wasHungry and isHungry then
+-- ── Regeneration change — auto eat food ────────────────────────────────────────
+
+function HelperController:onRegenerationChange(player)
+    local ok, err = pcall(function()
+        local regenTime = player:getRegenerationTime()
+        if regenTime == 0 then
             self:_tryAutoEat()
         end
     end)
-    if not ok then print('[Helper] onStatesChange ERROR: ' .. tostring(err)) end
+    if not ok then print('[Helper] onRegenerationChange ERROR: ' .. tostring(err)) end
 end
 
 function HelperController:_tryAutoHaste(player)
@@ -463,7 +466,7 @@ function HelperController:_tryAutoEat()
     scheduleEvent(function()
         if not helperData.autoEatFood then return end
         local lp = g_game.getLocalPlayer()
-        if lp and lp:hasState(PlayerStates.Hungry) then
+        if lp and lp:getRegenerationTime() == 0 then
             self:_tryAutoEat()
         end
     end, 30000)
@@ -766,16 +769,16 @@ function HelperController:onGameStart()
         onStatesChange = function(player, now, old)
             self:onStatesChange(player, now, old)
         end,
+        onRegenerationChange = function(player)
+            self:onRegenerationChange(player)
+        end,
     })
     -- check haste and hunger on login
     scheduleEvent(function()
         local lp = g_game.getLocalPlayer()
-        local hungry = lp and lp:hasState(PlayerStates.Hungry)
-        print('[Helper] login hunger check: hungry=' .. tostring(hungry) .. ' autoEatFood=' .. tostring(helperData.autoEatFood))
-        if hungry then self:_tryAutoEat() end
-        if lp and not lp:hasState(PlayerStates.Haste) then
-            self:_tryAutoHaste(lp)
-        end
+        if not lp then return end
+        if lp:getRegenerationTime() == 0 then self:_tryAutoEat() end
+        if not lp:hasState(PlayerStates.Haste) then self:_tryAutoHaste(lp) end
     end, 2000)
 end
 
