@@ -27,9 +27,8 @@
                     <label class="helperSubTitle">Auto Haste</label>
                 </div>
                 <div class="hasteRow">
-                    <UIButton id="ah_slot_1" class="spellSlot" onclick="self:onSlotClick('ah', 1)"><img id="ah_icon_1" class="spellIcon" /></UIButton><input class="hasteCheck" type="checkbox" text="Enable" />
+                    <UIButton id="ah_slot_1" class="spellSlot" onclick="self:onSlotClick('ah', 1)"><img id="ah_icon_1" class="spellIcon" /></UIButton><input class="hasteCheck" type="checkbox" text="Enable" /><input class="hasteCheck" type="checkbox" text="PZ Cast" />
                 </div>
-                <input class="helperCheck" type="checkbox" text="PZ Cast" />
                 <div class="helperDivider"></div>
                 <div class="helperSubTitleRow">
                     <label class="helperSubTitle">Others Tools</label>
@@ -105,14 +104,18 @@
                     <div class="friendListInner">
                         <label class="healBlockTitle">Sio Friend List</label>
                         <div class="friendEntry">
-                            <UIButton class="friendAddBtn"></UIButton>
+                            <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('sio', 1, -1)"></UIButton><label id="sio_val_1" class="sioValLabel"></label><UIButton class="arrowBtnRight" onclick="self:onArrowClick('sio', 1, 1)"></UIButton>
+                            <UIButton class="spinValBtn" onclick="self:onValueClick('sio', 1)"><label id="sio_val_1" class="spinValLabel"></label></UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('sio', 1)"></UIButton>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="friendEntry">
-                            <UIButton class="friendAddBtn"></UIButton>
+                            <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable Sio" />
-                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('sio', 2, -1)"></UIButton><label id="sio_val_2" class="sioValLabel"></label><UIButton class="arrowBtnRight" onclick="self:onArrowClick('sio', 2, 1)"></UIButton>
+                            <UIButton class="spinValBtn" onclick="self:onValueClick('sio', 2)"><label id="sio_val_2" class="spinValLabel"></label></UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('sio', 2)"></UIButton>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
                 </div>
@@ -129,14 +132,18 @@
                     <div class="friendListInner">
                         <label class="healBlockTitle">Gran Sio Friend List</label>
                         <div class="friendEntry">
-                            <UIButton class="friendAddBtn"></UIButton>
+                            <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('gsio', 1, -1)"></UIButton><label id="gsio_val_1" class="sioValLabel"></label><UIButton class="arrowBtnRight" onclick="self:onArrowClick('gsio', 1, 1)"></UIButton>
+                            <UIButton class="spinValBtn" onclick="self:onValueClick('gsio', 1)"><label id="gsio_val_1" class="spinValLabel"></label></UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('gsio', 1)"></UIButton>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                         <div class="friendEntry">
-                            <UIButton class="friendAddBtn"></UIButton>
+                            <button class="friendAddBtn">+</button>
                             <input class="friendEntryCheck" type="checkbox" text="Enable" />
-                            <UIButton class="arrowBtnLeft" onclick="self:onArrowClick('gsio', 2, -1)"></UIButton><label id="gsio_val_2" class="sioValLabel"></label><UIButton class="arrowBtnRight" onclick="self:onArrowClick('gsio', 2, 1)"></UIButton>
+                            <UIButton class="spinValBtn" onclick="self:onValueClick('gsio', 2)"><label id="gsio_val_2" class="spinValLabel"></label></UIButton>
+                            <UIButton class="arrowBtnDown" onclick="self:onValueClick('gsio', 2)"></UIButton>
+                            <img class="infoIconSm" src="/images/skin/show-gui-help-grey" />
                         </div>
                     </div>
                 </div>
