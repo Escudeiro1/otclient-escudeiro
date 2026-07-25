@@ -442,10 +442,18 @@ function HelperController:_tryAutoHaste(player)
 end
 
 function HelperController:_findFood()
-    for _, container in pairs(g_game.getContainers()) do
-        for _, item in ipairs(container:getItems()) do
-            local tt = g_things.getThingType(item:getId(), ThingCategoryItem)
-            if tt and tt:getLensHelp() > 0 then
+    local containers = g_game.getContainers()
+    print('[Helper] _findFood: container count=' .. tostring(#containers))
+    for _, container in pairs(containers) do
+        local items = container:getItems()
+        print('[Helper] _findFood: container has ' .. tostring(#items) .. ' items')
+        for _, item in ipairs(items) do
+            local id = item:getId()
+            local tt = g_things.getThingType(id, ThingCategoryItem)
+            local lh = tt and tt:getLensHelp() or -1
+            local isFood = tt and tt:isFood() or false
+            print('[Helper] _findFood: itemId=' .. id .. ' lensHelp=' .. lh .. ' isFood=' .. tostring(isFood))
+            if lh > 0 or isFood then
                 return item
             end
         end
