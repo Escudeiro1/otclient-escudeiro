@@ -382,7 +382,9 @@
 /* Proper scrollable list — same pattern as game_actionbar passive list */
 .friendScrollArea {
     height: 22px;
-    display: block;
+    width: 120px;
+    display: inline-block;
+    vertical-align: middle;
     overflow: scroll;
     background-color: alpha;
     --border-width-top: 1;    --border-color-top: #000000;
