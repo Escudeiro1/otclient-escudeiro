@@ -39,6 +39,16 @@ local function deepCopy(t)
     return c
 end
 
+local function deepMerge(base, overlay)
+    for k, v in pairs(overlay) do
+        if type(v) == 'table' and type(base[k]) == 'table' then
+            deepMerge(base[k], v)
+        else
+            base[k] = v
+        end
+    end
+end
+
 local function dataPath()
     local player = g_game.getLocalPlayer()
     if not player then return nil end
@@ -59,7 +69,7 @@ local function loadData()
         return json.decode(g_resources.readFileContents(path))
     end)
     if ok and type(decoded) == 'table' then
-        helperData = decoded
+        deepMerge(helperData, decoded)
     end
 end
 
@@ -732,6 +742,7 @@ function HelperController:onInit()
 end
 
 function HelperController:onGameStart()
+    loadData()
     if not HelperButton then
         HelperButton = modules.game_mainpanel.addToggleButton(
             'helperButton',
