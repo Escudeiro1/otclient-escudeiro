@@ -330,14 +330,18 @@
     margin-bottom: 2px;
 }
 
-.hasteCheck {
+.hasteCheckStack {
     display: inline-block;
     vertical-align: middle;
+    margin-left: 2px;
+}
+
+.hasteCheck {
+    display: block;
     width: 55px;
     height: 16px;
     font: verdana-11px-antialised;
     color: #c0c0c0;
-    margin-left: 2px;
 }
 
 /* ── Friend section: 4 panels float:left ──────────────────────────────────  */
