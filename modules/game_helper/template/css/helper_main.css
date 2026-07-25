@@ -461,3 +461,13 @@
     display: block;
 
 }
+
+.sioBlock {
+    width: 310px;
+    height: 170px;
+    float: left;
+}
+
+.sioBlockInner {
+    padding: 8px 6px 4px 6px;
+}
