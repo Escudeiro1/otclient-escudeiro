@@ -809,7 +809,10 @@ function HelperController:_wireCheckboxes()
                            if v then self:_tryAutoHaste(g_game.getLocalPlayer()) end
                        end)
     wire('ah_pzcast',  function() return helperData.autoHaste and helperData.autoHaste.pzCast or false end,
-                       function(v) if helperData.autoHaste then helperData.autoHaste.pzCast = v end end)
+                       function(v)
+                           if helperData.autoHaste then helperData.autoHaste.pzCast = v end
+                           if v then self:_tryAutoHaste(g_game.getLocalPlayer()) end
+                       end)
     wire('eat_enable', function() return helperData.autoEatFood or false end,
                        function(v) helperData.autoEatFood = v end)
 end
