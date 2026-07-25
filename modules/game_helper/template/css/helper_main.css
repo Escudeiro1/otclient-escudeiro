@@ -345,7 +345,7 @@
     width: 106px;
     height: 170px;
     float: left;
-    margin-right: 4px;
+    margin: 0px 14px 0px 14px;
 }
 
 .friendSelectorInner {
