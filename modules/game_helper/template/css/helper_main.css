@@ -384,20 +384,24 @@
 
 .friendEntry {
     display: block;
-    height: 36px;
+    height: 28px;
     margin-bottom: 3px;
 }
 
 .friendAddBtn {
-    width: 32px;
-    height: 32px;
+    width: 14px;
+    height: 14px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
     margin-right: 2px;
-    --image-source: /images/ui/icon_add;
-    --image-border: 0;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
+    --icon-source: /images/ui/icon_add;
+    --icon-clip: 0 0 300 300;
 }
+.friendAddBtn:pressed { --image-clip: 0 46 22 23; }
 
 .friendEntryCheck {
     display: inline-block;
