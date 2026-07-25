@@ -1,6 +1,6 @@
 /* ── Main window ─────────────────────────────────────────────────────────── */
 .helperWindow {
-    width: 780px;
+    width: 765px;
     height: 395px;
     display: block;
 }
@@ -152,7 +152,7 @@
 
 /* ── Right column: float:left 626px, stacks topSection above friendSection ─ */
 .helperRightCol {
-    width: 75%;
+    width: 73%;
     height: 332px;
     float: left;
     display: block;
@@ -199,6 +199,15 @@
     color: #aaaaaa;
     margin-bottom: 4px;
     text-align: center;
+}
+
+.healBlockTitleSio{
+    display: block;
+    font: verdana-11px-antialised;
+    color: #aaaaaa;
+    margin: 8px;
+    text-align: left;
+    background-color: red;
 }
 
 .healRow {
@@ -346,6 +355,7 @@
     height: 170px;
     float: left;
     margin: 0px 14px 0px 14px;
+    background-color: green;
 }
 
 .friendSelectorInner {
@@ -353,14 +363,14 @@
 }
 
 .friendListBlock {
-    width: 152px;
+    width: 175px;
     height: 170px;
     float: left;
     margin-right: 4px;
 }
 
 .friendListBlockWide {
-    width: 250px;
+    width: 175px;
     height: 170px;
     float: left;
 }
@@ -394,11 +404,12 @@
     width: 60px;
     height: 16px;
     font: verdana-11px-antialised;
+    margin-left:6px;
 }
 
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
 .helperBottomBar {
-    width: 775px;
+    width: 761px;
     height: 26px;
     margin: 6px 3px 2px 3px;
     display: block;
@@ -436,4 +447,17 @@
     float: left;
     margin-top: 5px;
     --image-source:/images/ui/vertical_line_bright.png;
+}
+
+.ttip{
+    background-color:red;
+    float:right;
+    display:inline-block;
+}
+
+.containerSio{
+
+    background-color:blue;
+    display: block;
+
 }
