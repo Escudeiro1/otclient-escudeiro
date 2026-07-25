@@ -20,7 +20,7 @@ local DATA_DEFAULT = {
         { itemId = 0, itemName = '', isMana = false, threshold = 50 },
         { itemId = 0, itemName = '', isMana = false, threshold = 50 },
     },
-    manaTraining  = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 90 },
+    manaTraining  = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 90, enabled = false },
     autoHasteSpell = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '' },
     sioFriends    = {
         { name = '', enabled = false, threshold = 99 },
@@ -345,11 +345,28 @@ function HelperController:_schedulePotionRecheck(isHp)
     end, 1100)
 end
 
--- ── Mana change — fire mana potions ──────────────────────────────────────────
+-- ── Mana change — mana training (rise) + mana potions (drop) ────────────────
 
 function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMana)
     if not helperData.statusEnabled then return end
-    if mana >= oldMana then return end
+    if maxMana == 0 then return end
+
+    -- mana rose: check mana training
+    if mana > oldMana then
+        local d = helperData.manaTraining
+        if d and d.enabled and d.spellWords ~= '' then
+            local manaPct = math.floor(mana / maxMana * 100)
+            if manaPct >= d.threshold then
+                local cooldowns = modules.game_cooldown
+                if not (cooldowns and cooldowns.isGroupCooldownIconActive(1)) then
+                    g_game.talk(d.spellWords)
+                end
+            end
+        end
+        return
+    end
+
+    -- mana dropped: fire mana potions
     local manaPct = math.floor(mana / maxMana * 100)
     if not self._sortedManaPotions or #self._sortedManaPotions == 0 then return end
     if g_clock.millis() - (self._lastPotionTime or 0) < 1000 then return end
@@ -362,6 +379,73 @@ function HelperController:onManaChange(player, mana, maxMana, oldMana, oldMaxMan
             return
         end
     end
+end
+
+-- ── States change — auto haste + auto eat food ───────────────────────────────
+
+function HelperController:onStatesChange(player, now, old)
+    local hadHaste = Player.isStateActive(old, PlayerStates.Haste)
+    local hasHaste = Player.isStateActive(now, PlayerStates.Haste)
+    if hadHaste and not hasHaste then
+        self:_tryAutoHaste(player)
+    end
+
+    local wasHungry = Player.isStateActive(old, PlayerStates.Hungry)
+    local isHungry  = Player.isStateActive(now, PlayerStates.Hungry)
+    if not wasHungry and isHungry then
+        self:_tryAutoEat()
+    end
+end
+
+function HelperController:_tryAutoHaste(player)
+    if not helperData.statusEnabled then return end
+    local ah = helperData.autoHaste
+    if not ah or not ah.enabled then return end
+    local d = helperData.autoHasteSpell
+    if not d or d.spellWords == '' then return end
+
+    local p = player or g_game.getLocalPlayer()
+    if p and p:hasState(PlayerStates.Pz) and not ah.pzCast then return end
+
+    g_game.talk(d.spellWords)
+
+    scheduleEvent(function()
+        local lp = g_game.getLocalPlayer()
+        if not lp or not g_game.isOnline() then return end
+        if not helperData.statusEnabled then return end
+        if not helperData.autoHaste.enabled then return end
+        if not lp:hasState(PlayerStates.Haste) then
+            self:_tryAutoHaste(lp)
+        end
+    end, 30000)
+end
+
+function HelperController:_findFood()
+    for _, container in pairs(g_game.getContainers()) do
+        for _, item in ipairs(container:getItems()) do
+            local tt = g_things.getThingType(item:getId(), ThingCategoryItem)
+            if tt and tt:getLensHelp() > 0 then
+                return item
+            end
+        end
+    end
+    return nil
+end
+
+function HelperController:_tryAutoEat()
+    if not helperData.autoEatFood then return end
+    local food = self:_findFood()
+    if food then
+        g_game.use(food)
+        return
+    end
+    scheduleEvent(function()
+        if not helperData.autoEatFood then return end
+        local lp = g_game.getLocalPlayer()
+        if lp and lp:hasState(PlayerStates.Hungry) then
+            self:_tryAutoEat()
+        end
+    end, 30000)
 end
 
 -- ── Status toggle ─────────────────────────────────────────────────────────────
@@ -653,7 +737,17 @@ function HelperController:onGameStart()
         onManaChange = function(player, mana, maxMana, oldMana, oldMaxMana)
             self:onManaChange(player, mana, maxMana, oldMana, oldMaxMana)
         end,
+        onStatesChange = function(player, now, old)
+            self:onStatesChange(player, now, old)
+        end,
     })
+    -- check hunger on login in case player is already hungry
+    scheduleEvent(function()
+        local lp = g_game.getLocalPlayer()
+        if lp and lp:hasState(PlayerStates.Hungry) then
+            self:_tryAutoEat()
+        end
+    end, 2000)
 end
 
 function HelperController:onGameEnd()
@@ -670,6 +764,23 @@ function HelperController:onTerminate()
     end
 end
 
+function HelperController:_wireCheckboxes()
+    local function wire(id, getter, setter)
+        local w = self.ui:recursiveGetChildById(id)
+        if not w then return end
+        w:setChecked(getter())
+        w.onCheckChange = function(_, checked) setter(checked); saveData() end
+    end
+    wire('mh_enable',  function() return helperData.manaTraining and helperData.manaTraining.enabled or false end,
+                       function(v) if helperData.manaTraining then helperData.manaTraining.enabled = v end end)
+    wire('ah_enable',  function() return helperData.autoHaste and helperData.autoHaste.enabled or false end,
+                       function(v) if helperData.autoHaste then helperData.autoHaste.enabled = v end end)
+    wire('ah_pzcast',  function() return helperData.autoHaste and helperData.autoHaste.pzCast or false end,
+                       function(v) if helperData.autoHaste then helperData.autoHaste.pzCast = v end end)
+    wire('eat_enable', function() return helperData.autoEatFood or false end,
+                       function(v) helperData.autoEatFood = v end)
+end
+
 function HelperController:show()
     loadData()
     self:rebuildHealCache()
@@ -677,6 +788,7 @@ function HelperController:show()
     if not self.ui then
         self:loadHtml('template/html/main_helper.html')
         self:_wireSlotRightClicks()
+        self:_wireCheckboxes()
     end
     self:updateAllDisplays()
     self.ui:show()

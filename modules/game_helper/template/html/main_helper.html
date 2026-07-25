@@ -27,13 +27,13 @@
                     <label class="helperSubTitle">Auto Haste</label>
                 </div>
                 <div class="hasteRow">
-                    <UIButton id="ah_slot_1" class="spellSlot" onclick="self:onSlotClick('ah', 1)"><img id="ah_icon_1" class="spellIcon" /></UIButton><div class="hasteCheckStack"><input class="hasteCheck" type="checkbox" text="Enable" /><input class="hasteCheck" type="checkbox" text="PZ Cast" /></div>
+                    <UIButton id="ah_slot_1" class="spellSlot" onclick="self:onSlotClick('ah', 1)"><img id="ah_icon_1" class="spellIcon" /></UIButton><div class="hasteCheckStack"><input id="ah_enable" class="hasteCheck" type="checkbox" text="Enable" /><input id="ah_pzcast" class="hasteCheck" type="checkbox" text="PZ Cast" /></div>
                 </div>
                 <div class="helperDivider"></div>
                 <div class="helperSubTitleRow">
                     <label class="helperSubTitle">Additional Tool</label>
                 </div>
-                <input class="helperCheck" type="checkbox" checked text="Auto Eat Food" />
+                <input id="eat_enable" class="helperCheck" type="checkbox" text="Auto Eat Food" />
             </div>
         </div>
 
@@ -82,7 +82,7 @@
                         <div class="healRow">
                             <UIButton id="mh_slot_1" class="spellSlot" onclick="self:onSlotClick('mh', 1)"><img id="mh_icon_1" class="spellIcon" /></UIButton><div class="controlGroup"><UIButton class="arrowBtnLeft" onclick="self:onArrowClick('mh', 1, -1)"></UIButton><UIButton class="spinValBtn" onclick="self:onValueClick('mh', 1)"><label id="mh_val_1" class="spinValLabel"></label></UIButton><UIButton class="arrowBtnRight" onclick="self:onArrowClick('mh', 1, 1)"></UIButton><img class="infoIconSm" src="/images/skin/show-gui-help-grey" *tooltip="'Cast a spell when your mana reaches the defined percentage to prevent regeneration waste.'" /></div>
                         </div>
-                        <input class="manaCheck" type="checkbox" text="Enable" />
+                        <input id="mh_enable" class="manaCheck" type="checkbox" text="Enable" />
                     </div>
                 </div>
             </div>
