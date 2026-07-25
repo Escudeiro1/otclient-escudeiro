@@ -2,6 +2,28 @@ HelperController = Controller:new()
 
 HelperButton = nil
 
+-- ── Food item IDs from Canary items.xml (primarytype=food) ───────────────────
+local FOOD_IDS = {}
+for _, id in ipairs({
+    169,836,841,901,
+    3577,3578,3579,3580,3581,3582,3583,3584,3585,3586,3587,3588,3589,3590,
+    3591,3592,3593,3594,3595,3596,3597,3598,3599,3600,3601,3602,3603,3606,3607,
+    3723,3724,3725,3726,3727,3728,3729,3730,3731,3732,
+    5096,5678,6277,6278,6393,6500,6569,6984,6985,7158,7159,7885,
+    8010,8011,8012,8013,8014,8015,8016,8017,8019,8177,
+    9079,9080,9081,9082,9084,9085,9086,9087,9088,
+    10219,10245,10246,10329,10453,
+    11459,11460,11461,11462,11584,11587,11681,11682,11683,11685,
+    12147,12148,12149,12150,12151,12152,12153,12154,12155,
+    13992,14084,14085,14681,15634,15636,15637,15638,16103,
+    17457,17820,17821,20310,21143,21146,22185,22187,23535,23545,
+    24382,24383,24396,24492,24966,25077,25087,25692,
+    28484,28485,28486,29408,29409,29410,29411,29412,29413,29414,29415,29416,
+    29995,30198,30202,31961,32009,32043,32044,32045,32066,32067,32068,32069,32070,32073,32198,
+    33930,37531,37533,
+    48116,48251,48252,48253,48254,48255,48256,48273,48508,48509,48510,48511,48516,48544,
+}) do FOOD_IDS[id] = true end
+
 -- ── Per-character data ────────────────────────────────────────────────────────
 
 local helperData = {}
@@ -442,17 +464,9 @@ function HelperController:_tryAutoHaste(player)
 end
 
 function HelperController:_findFood()
-    local containers = g_game.getContainers()
-    print('[Helper] _findFood: container count=' .. tostring(#containers))
-    for _, container in pairs(containers) do
-        local items = container:getItems()
-        print('[Helper] _findFood: container has ' .. tostring(#items) .. ' items')
-        for _, item in ipairs(items) do
-            local id = item:getId()
-            local tt = g_things.getThingType(id, ThingCategoryItem)
-            local lh = tt and tt:getLensHelp() or -1
-            print('[Helper] _findFood: itemId=' .. id .. ' lensHelp=' .. lh)
-            if lh > 0 then
+    for _, container in pairs(g_game.getContainers()) do
+        for _, item in ipairs(container:getItems()) do
+            if FOOD_IDS[item:getId()] then
                 return item
             end
         end
@@ -461,15 +475,12 @@ function HelperController:_findFood()
 end
 
 function HelperController:_tryAutoEat()
-    print('[Helper] _tryAutoEat called autoEatFood=' .. tostring(helperData.autoEatFood))
     if not helperData.autoEatFood then return end
     local food = self:_findFood()
-    print('[Helper] _tryAutoEat: food found=' .. tostring(food ~= nil))
     if food then
         g_game.use(food)
         return
     end
-    print('[Helper] _tryAutoEat: no food, scheduling 30s retry')
     scheduleEvent(function()
         if not helperData.autoEatFood then return end
         local lp = g_game.getLocalPlayer()
