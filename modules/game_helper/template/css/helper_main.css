@@ -388,16 +388,6 @@
     margin-bottom: 3px;
 }
 
-.friendAddBtn {
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    vertical-align: middle;
-    --padding: 0;
-    margin-right: 2px;
-    font: verdana-11px-antialised;
-}
-
 .friendEntryCheck {
     display: inline-block;
     vertical-align: middle;
