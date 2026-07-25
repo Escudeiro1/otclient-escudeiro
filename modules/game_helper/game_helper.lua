@@ -384,29 +384,34 @@ end
 -- ── States change — auto haste + auto eat food ───────────────────────────────
 
 function HelperController:onStatesChange(player, now, old)
-    local hadHaste = Player.isStateActive(old, PlayerStates.Haste)
-    local hasHaste = Player.isStateActive(now, PlayerStates.Haste)
+    print('[Helper] onStatesChange now=' .. tostring(now) .. ' old=' .. tostring(old))
+    local hadHaste = bit32.band(old, PlayerStates.Haste) ~= 0
+    local hasHaste = bit32.band(now, PlayerStates.Haste) ~= 0
+    print('[Helper] hadHaste=' .. tostring(hadHaste) .. ' hasHaste=' .. tostring(hasHaste))
     if hadHaste and not hasHaste then
         self:_tryAutoHaste(player)
     end
 
-    local wasHungry = Player.isStateActive(old, PlayerStates.Hungry)
-    local isHungry  = Player.isStateActive(now, PlayerStates.Hungry)
+    local wasHungry = bit32.band(old, PlayerStates.Hungry) ~= 0
+    local isHungry  = bit32.band(now, PlayerStates.Hungry) ~= 0
+    print('[Helper] wasHungry=' .. tostring(wasHungry) .. ' isHungry=' .. tostring(isHungry))
     if not wasHungry and isHungry then
         self:_tryAutoEat()
     end
 end
 
 function HelperController:_tryAutoHaste(player)
-    if not helperData.statusEnabled then return end
+    print('[Helper] _tryAutoHaste called')
+    if not helperData.statusEnabled then print('[Helper] _tryAutoHaste: master disabled'); return end
     local ah = helperData.autoHaste
-    if not ah or not ah.enabled then return end
+    if not ah or not ah.enabled then print('[Helper] _tryAutoHaste: subsection disabled ah=' .. tostring(ah and ah.enabled)); return end
     local d = helperData.autoHasteSpell
-    if not d or d.spellWords == '' then return end
+    if not d or d.spellWords == '' then print('[Helper] _tryAutoHaste: no spell set words=' .. tostring(d and d.spellWords)); return end
 
     local p = player or g_game.getLocalPlayer()
-    if p and p:hasState(PlayerStates.Pz) and not ah.pzCast then return end
+    if p and p:hasState(PlayerStates.Pz) and not ah.pzCast then print('[Helper] _tryAutoHaste: in PZ, pzCast=false, skipping'); return end
 
+    print('[Helper] _tryAutoHaste: casting ' .. d.spellWords)
     g_game.talk(d.spellWords)
 
     scheduleEvent(function()
@@ -433,12 +438,15 @@ function HelperController:_findFood()
 end
 
 function HelperController:_tryAutoEat()
+    print('[Helper] _tryAutoEat called autoEatFood=' .. tostring(helperData.autoEatFood))
     if not helperData.autoEatFood then return end
     local food = self:_findFood()
+    print('[Helper] _tryAutoEat: food found=' .. tostring(food ~= nil))
     if food then
         g_game.use(food)
         return
     end
+    print('[Helper] _tryAutoEat: no food, scheduling 30s retry')
     scheduleEvent(function()
         if not helperData.autoEatFood then return end
         local lp = g_game.getLocalPlayer()
@@ -688,14 +696,17 @@ function HelperController:onSlotClick(section, row)
 
     local function confirmSpell()
         local selected = radio:getSelectedWidget()
+        print('[Helper] confirmSpell section=' .. tostring(section) .. ' row=' .. tostring(row) .. ' selected=' .. tostring(selected ~= nil))
         if selected then
             local d = getSectionData(section, row)
+            print('[Helper] getSectionData returned d=' .. tostring(d ~= nil))
             if d then
                 d.spellName   = string.match(selected:getText(), '^(.+)\n') or ''
                 d.spellWords  = string.match(selected:getText(), '\n(.*)') or ''
                 d.spellId     = tonumber(selected:getId()) or 0
                 d.spellSource = selected.source or ''
                 d.spellClip   = selected.clip   or ''
+                print('[Helper] saving spell: name=' .. d.spellName .. ' words=' .. d.spellWords .. ' source=' .. tostring(d.spellSource))
                 saveData()
                 self:updateSlotDisplay(section, row, d)
                 if section == 'sh' then self:rebuildHealCache() end
@@ -744,7 +755,9 @@ function HelperController:onGameStart()
     -- check hunger on login in case player is already hungry
     scheduleEvent(function()
         local lp = g_game.getLocalPlayer()
-        if lp and lp:hasState(PlayerStates.Hungry) then
+        local hungry = lp and lp:hasState(PlayerStates.Hungry)
+        print('[Helper] login hunger check: hungry=' .. tostring(hungry) .. ' autoEatFood=' .. tostring(helperData.autoEatFood))
+        if hungry then
             self:_tryAutoEat()
         end
     end, 2000)
@@ -767,6 +780,7 @@ end
 function HelperController:_wireCheckboxes()
     local function wire(id, getter, setter)
         local w = self.ui:recursiveGetChildById(id)
+        print('[Helper] _wireCheckboxes: id=' .. id .. ' found=' .. tostring(w ~= nil))
         if not w then return end
         w:setChecked(getter())
         w.onCheckChange = function(_, checked) setter(checked); saveData() end
