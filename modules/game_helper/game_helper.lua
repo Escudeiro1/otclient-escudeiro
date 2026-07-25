@@ -767,13 +767,14 @@ function HelperController:onGameStart()
             self:onStatesChange(player, now, old)
         end,
     })
-    -- check hunger on login in case player is already hungry
+    -- check haste and hunger on login
     scheduleEvent(function()
         local lp = g_game.getLocalPlayer()
         local hungry = lp and lp:hasState(PlayerStates.Hungry)
         print('[Helper] login hunger check: hungry=' .. tostring(hungry) .. ' autoEatFood=' .. tostring(helperData.autoEatFood))
-        if hungry then
-            self:_tryAutoEat()
+        if hungry then self:_tryAutoEat() end
+        if lp and not lp:hasState(PlayerStates.Haste) then
+            self:_tryAutoHaste(lp)
         end
     end, 2000)
 end
@@ -803,7 +804,10 @@ function HelperController:_wireCheckboxes()
     wire('mh_enable',  function() return helperData.manaTraining and helperData.manaTraining.enabled or false end,
                        function(v) if helperData.manaTraining then helperData.manaTraining.enabled = v end end)
     wire('ah_enable',  function() return helperData.autoHaste and helperData.autoHaste.enabled or false end,
-                       function(v) if helperData.autoHaste then helperData.autoHaste.enabled = v end end)
+                       function(v)
+                           if helperData.autoHaste then helperData.autoHaste.enabled = v end
+                           if v then self:_tryAutoHaste(g_game.getLocalPlayer()) end
+                       end)
     wire('ah_pzcast',  function() return helperData.autoHaste and helperData.autoHaste.pzCast or false end,
                        function(v) if helperData.autoHaste then helperData.autoHaste.pzCast = v end end)
     wire('eat_enable', function() return helperData.autoEatFood or false end,
