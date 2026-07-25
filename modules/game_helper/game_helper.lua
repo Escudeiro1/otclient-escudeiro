@@ -394,20 +394,23 @@ end
 -- ── States change — auto haste + auto eat food ───────────────────────────────
 
 function HelperController:onStatesChange(player, now, old)
-    print('[Helper] onStatesChange now=' .. tostring(now) .. ' old=' .. tostring(old))
-    local hadHaste = bit32.band(old, PlayerStates.Haste) ~= 0
-    local hasHaste = bit32.band(now, PlayerStates.Haste) ~= 0
-    print('[Helper] hadHaste=' .. tostring(hadHaste) .. ' hasHaste=' .. tostring(hasHaste))
-    if hadHaste and not hasHaste then
-        self:_tryAutoHaste(player)
-    end
+    local ok, err = pcall(function()
+        print('[Helper] onStatesChange now=' .. tostring(now) .. ' old=' .. tostring(old))
+        local hadHaste = player:hasState(PlayerStates.Haste, old)
+        local hasHaste = player:hasState(PlayerStates.Haste, now)
+        print('[Helper] hadHaste=' .. tostring(hadHaste) .. ' hasHaste=' .. tostring(hasHaste))
+        if hadHaste and not hasHaste then
+            self:_tryAutoHaste(player)
+        end
 
-    local wasHungry = bit32.band(old, PlayerStates.Hungry) ~= 0
-    local isHungry  = bit32.band(now, PlayerStates.Hungry) ~= 0
-    print('[Helper] wasHungry=' .. tostring(wasHungry) .. ' isHungry=' .. tostring(isHungry))
-    if not wasHungry and isHungry then
-        self:_tryAutoEat()
-    end
+        local wasHungry = player:hasState(PlayerStates.Hungry, old)
+        local isHungry  = player:hasState(PlayerStates.Hungry, now)
+        print('[Helper] wasHungry=' .. tostring(wasHungry) .. ' isHungry=' .. tostring(isHungry))
+        if not wasHungry and isHungry then
+            self:_tryAutoEat()
+        end
+    end)
+    if not ok then print('[Helper] onStatesChange ERROR: ' .. tostring(err)) end
 end
 
 function HelperController:_tryAutoHaste(player)
@@ -743,6 +746,7 @@ end
 
 function HelperController:onGameStart()
     loadData()
+    print('[Helper] onGameStart: PlayerStates.Haste=' .. tostring(PlayerStates and PlayerStates.Haste) .. ' Hungry=' .. tostring(PlayerStates and PlayerStates.Hungry))
     if not HelperButton then
         HelperButton = modules.game_mainpanel.addToggleButton(
             'helperButton',
