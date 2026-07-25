@@ -389,21 +389,35 @@
 }
 
 .friendAddBtn {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     display: inline-block;
     vertical-align: middle;
     --padding: 0;
     margin-right: 2px;
-    font: verdana-11px-antialised;
+    --image-source: /images/ui/button;
+    --image-clip: 0 0 22 23;
+    --image-border: 3;
+    --icon-source: /images/ui/icon_add;
+    --icon-clip: 0 0 300 300;
 }
+.friendAddBtn:pressed { --image-clip: 0 46 22 23; }
 
 .friendEntryCheck {
     display: inline-block;
     vertical-align: middle;
-    width: 60px;
+    width: 46px;
     height: 16px;
     font: verdana-11px-antialised;
+}
+
+.sioValLabel {
+    display: inline-block;
+    vertical-align: middle;
+    width: 28px;
+    text-align: center;
+    font: verdana-11px-antialised;
+    color: #c0c0c0;
 }
 
 /* ── Bottom bar ──────────────────────────────────────────────────────────── */
