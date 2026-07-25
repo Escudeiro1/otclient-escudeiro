@@ -21,6 +21,7 @@ local DATA_DEFAULT = {
         { itemId = 0, itemName = '', isMana = false, threshold = 50 },
     },
     manaTraining  = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '', threshold = 90 },
+    autoHasteSpell = { spellWords = '', spellName = '', spellId = 0, spellSource = '', spellClip = '' },
     sioFriends    = {
         { name = '', enabled = false, threshold = 99 },
         { name = '', enabled = false, threshold = 99 },
@@ -82,6 +83,7 @@ local function getSectionData(section, row)
     if section == 'sh'   then return helperData.spellHealing   and helperData.spellHealing[row]
     elseif section == 'ph'   then return helperData.potionHealing  and helperData.potionHealing[row]
     elseif section == 'mh'   then return helperData.manaTraining
+    elseif section == 'ah'   then return helperData.autoHasteSpell
     elseif section == 'sio'  then return helperData.sioFriends     and helperData.sioFriends[row]
     elseif section == 'gsio' then return helperData.granSioFriends and helperData.granSioFriends[row]
     end
@@ -130,6 +132,9 @@ function HelperController:updateAllDisplays()
     if helperData.manaTraining then
         self:updateValDisplay('mh', 1, helperData.manaTraining.threshold or 90)
         self:updateSlotDisplay('mh', 1, helperData.manaTraining)
+    end
+    if helperData.autoHasteSpell then
+        self:updateSlotDisplay('ah', 1, helperData.autoHasteSpell)
     end
     for row = 1, 3 do
         local d = helperData.potionHealing and helperData.potionHealing[row]
@@ -229,6 +234,45 @@ function HelperController:updatePotionDisplay(section, row, data)
     else
         icon:hide()
     end
+end
+
+-- ── Potion re-check — fires 1.1s after a use, repeats until above threshold ──
+
+-- ── Right-click context menus ─────────────────────────────────────────────────
+
+function HelperController:clearSlot(section, row)
+    local d = getSectionData(section, row)
+    if not d then return end
+    if section == 'ph' then
+        d.itemId   = 0
+        d.itemName = ''
+        d.isMana   = false
+        self:updatePotionDisplay(section, row, d)
+        self:rebuildPotionCache()
+    else
+        d.spellWords  = ''
+        d.spellName   = ''
+        d.spellId     = 0
+        d.spellSource = ''
+        d.spellClip   = ''
+        self:updateSlotDisplay(section, row, d)
+        if section == 'sh' then self:rebuildHealCache() end
+    end
+    saveData()
+end
+
+function HelperController:onSlotRightClick(section, row)
+    local menu = UIPopupMenu.create()
+    menu:addOption('Select Spell', function() self:onSlotClick(section, row) end)
+    menu:addOption('Clear', function() self:clearSlot(section, row) end)
+    menu:display(g_window.getMousePosition())
+end
+
+function HelperController:onPotionSlotRightClick(section, row)
+    local menu = UIPopupMenu.create()
+    menu:addOption('Select Potion', function() self:onPotionSlotClick(section, row) end)
+    menu:addOption('Clear', function() self:clearSlot(section, row) end)
+    menu:display(g_window.getMousePosition())
 end
 
 -- ── Potion re-check — fires 1.1s after a use, repeats until above threshold ──
