@@ -775,14 +775,8 @@ function HelperController:_renderFriendEntry(listWidget, dataKey, row)
         label.onMouseRelease = function(w, pos, btn)
             if btn == MouseRightButton then
                 local menu = g_ui.createWidget('PopupMenu')
-                menu:addOption('Assign player name', function()
-                    local lp = g_game.getLocalPlayer()
-                    local pname = lp and lp:getName() or ''
-                    if pname ~= '' and d then
-                        d.name = pname
-                        saveData()
-                        self:_renderFriendEntry(listWidget, dataKey, row)
-                    end
+                menu:addOption('Assign character name', function()
+                    self:_openNameInput(listWidget, dataKey, row)
                 end)
                 menu:addOption('Clear', function()
                     if d then
