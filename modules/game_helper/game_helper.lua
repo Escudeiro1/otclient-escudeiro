@@ -751,6 +751,93 @@ function HelperController:onSlotClick(section, row)
     end
 end
 
+-- ── Friend list — name input, render, right-click ────────────────────────────
+
+function HelperController:_renderFriendEntry(listWidget, dataKey, row)
+    while listWidget:getChildCount() > 0 do
+        listWidget:getFirstChild():destroy()
+    end
+
+    local friends = helperData[dataKey]
+    local d = friends and friends[row]
+    local name = d and d.name ~= '' and d.name or nil
+
+    local label = g_ui.createWidget('UILabel', listWidget)
+    label:fill('parent')
+    label:setFont('verdana-11px-antialised')
+    label:setTextAlign(AlignLeft)
+    label:setTextOffset({ x = 2, y = 0 })
+
+    if name then
+        label:setText(name)
+        label:setColor('#e0e0e0')
+        label:setBackgroundColor('#1a3a5c')
+        label.onMouseRelease = function(w, pos, btn)
+            if btn == MouseRightButton then
+                local menu = g_ui.createWidget('PopupMenu')
+                menu:addOption('Assign player name', function()
+                    local lp = g_game.getLocalPlayer()
+                    local pname = lp and lp:getName() or ''
+                    if pname ~= '' and d then
+                        d.name = pname
+                        saveData()
+                        self:_renderFriendEntry(listWidget, dataKey, row)
+                    end
+                end)
+                menu:addOption('Clear', function()
+                    if d then
+                        d.name = ''
+                        saveData()
+                        self:_renderFriendEntry(listWidget, dataKey, row)
+                    end
+                end)
+                menu:display(pos)
+            end
+        end
+    else
+        label:setText('Noname')
+        label:setColor('#555555')
+    end
+end
+
+function HelperController:_openNameInput(listWidget, dataKey, row)
+    displayInputBox(
+        'Add Character',
+        'Type the name of the character',
+        function(name)
+            name = name and name:match('^%s*(.-)%s*$') or ''
+            if name == '' then return end
+            local friends = helperData[dataKey]
+            if friends and friends[row] then
+                friends[row].name = name
+                saveData()
+                self:_renderFriendEntry(listWidget, dataKey, row)
+            end
+        end
+    )
+end
+
+function HelperController:_wireFriendLists()
+    local defs = {
+        { id = 'sio_list_1',  key = 'sioFriends',    row = 1 },
+        { id = 'sio_list_2',  key = 'sioFriends',    row = 2 },
+        { id = 'gsio_list_1', key = 'granSioFriends', row = 1 },
+        { id = 'gsio_list_2', key = 'granSioFriends', row = 2 },
+    }
+    for _, def in ipairs(defs) do
+        local lw = self.ui:recursiveGetChildById(def.id)
+        if lw then
+            local key, row = def.key, def.row
+            self:_renderFriendEntry(lw, key, row)
+            lw.onMouseRelease = function(w, pos, btn)
+                if btn == MouseLeftButton then
+                    self:_openNameInput(lw, key, row)
+                end
+            end
+        end
+    end
+end
+
 -- ── Controller lifecycle ──────────────────────────────────────────────────────
 
 function HelperController:onInit()
@@ -839,6 +926,7 @@ function HelperController:show()
         self:loadHtml('template/html/main_helper.html')
         self:_wireSlotRightClicks()
         self:_wireCheckboxes()
+        self:_wireFriendLists()
     end
     self:updateAllDisplays()
     self.ui:show()
