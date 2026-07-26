@@ -515,6 +515,9 @@ function HelperController:_trySioHeal(spellType, name, creature)
     if self._sioRetrying[key] then return end
     local words = (spellType == 'gsio') and ('exura gran sio "' .. name .. '"') or ('exura sio "' .. name .. '"')
     g_game.talk(words)
+    if spellType == 'gsio' then
+        g_game.talk('exura sio "' .. name .. '"')
+    end
     self._sioRetrying[key] = true
     self:_scheduleReheal(spellType, name, 1000)
 end
@@ -543,6 +546,9 @@ function HelperController:_scheduleReheal(spellType, name, delay)
         if creature:getHealthPercent() > threshold then self._sioRetrying[key] = nil; return end
         local words = (spellType == 'gsio') and ('exura gran sio "' .. name .. '"') or ('exura sio "' .. name .. '"')
         g_game.talk(words)
+        if spellType == 'gsio' then
+            g_game.talk('exura sio "' .. name .. '"')
+        end
         self:_scheduleReheal(spellType, name, 1000)
     end, delay)
 end
