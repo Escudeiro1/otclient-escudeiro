@@ -488,6 +488,65 @@ function HelperController:_tryAutoEat()
     end, 30000)
 end
 
+-- ── Friend healing — sio / gran sio ──────────────────────────────────────────
+
+function HelperController:onFriendHealthChange(creature, pct, oldPct)
+    if not helperData.statusEnabled then return end
+    local name = creature:getName()
+    -- gran sio first
+    for _, d in ipairs(helperData.granSioFriends or {}) do
+        if d.enabled and d.name ~= '' and d.name == name and pct <= d.threshold then
+            self:_trySioHeal('gsio', name, creature)
+            return
+        end
+    end
+    -- then sio
+    for _, d in ipairs(helperData.sioFriends or {}) do
+        if d.enabled and d.name ~= '' and d.name == name and pct <= d.threshold then
+            self:_trySioHeal('sio', name, creature)
+            return
+        end
+    end
+end
+
+function HelperController:_trySioHeal(spellType, name, creature)
+    if not creature:canBeSeen() then return end
+    local key = spellType .. name
+    if self._sioRetrying[key] then return end
+    local words = (spellType == 'gsio') and ('exura gran sio "' .. name .. '"') or ('exura sio "' .. name .. '"')
+    g_game.talk(words)
+    self._sioRetrying[key] = true
+    self:_scheduleReheal(spellType, name, 1000)
+end
+
+function HelperController:_scheduleReheal(spellType, name, delay)
+    local key = spellType .. name
+    scheduleEvent(function()
+        if not helperData.statusEnabled or not g_game.isOnline() then
+            self._sioRetrying[key] = nil; return
+        end
+        local lp = g_game.getLocalPlayer()
+        if not lp then self._sioRetrying[key] = nil; return end
+        local creature = nil
+        for _, c in ipairs(g_map.getSpectators(lp:getPosition(), false)) do
+            if c:getName() == name then creature = c; break end
+        end
+        if not creature or not creature:canBeSeen() then
+            self._sioRetrying[key] = nil; return
+        end
+        local friends = (spellType == 'gsio') and helperData.granSioFriends or helperData.sioFriends
+        local threshold, enabled = nil, false
+        for _, d in ipairs(friends) do
+            if d.name == name then threshold = d.threshold; enabled = d.enabled; break end
+        end
+        if not threshold or not enabled then self._sioRetrying[key] = nil; return end
+        if creature:getHealthPercent() > threshold then self._sioRetrying[key] = nil; return end
+        local words = (spellType == 'gsio') and ('exura gran sio "' .. name .. '"') or ('exura sio "' .. name .. '"')
+        g_game.talk(words)
+        self:_scheduleReheal(spellType, name, 1000)
+    end, delay)
+end
+
 -- ── Status toggle ─────────────────────────────────────────────────────────────
 
 function HelperController:onEnableHelper()
@@ -840,6 +899,7 @@ function HelperController:onInit()
     self._mouseGrabber = g_ui.createWidget('UIWidget', g_ui.getRootWidget())
     self._mouseGrabber:setVisible(false)
     self._mouseGrabber:setFocusable(false)
+    self._sioRetrying = {}
 end
 
 function HelperController:onGameStart()
@@ -867,6 +927,11 @@ function HelperController:onGameStart()
             self:onRegenerationChange(player)
         end,
     })
+    self:registerEvents(Creature, {
+        onHealthPercentChange = function(creature, pct, oldPct)
+            self:onFriendHealthChange(creature, pct, oldPct)
+        end,
+    })
     -- check haste and hunger on login
     scheduleEvent(function()
         local lp = g_game.getLocalPlayer()
@@ -878,6 +943,7 @@ end
 
 function HelperController:onGameEnd()
     self:hide()
+    self._sioRetrying = {}
 end
 
 function HelperController:onTerminate()
@@ -911,6 +977,14 @@ function HelperController:_wireCheckboxes()
                        end)
     wire('eat_enable', function() return helperData.autoEatFood or false end,
                        function(v) helperData.autoEatFood = v end)
+    wire('sio_en_1',  function() return helperData.sioFriends and helperData.sioFriends[1] and helperData.sioFriends[1].enabled or false end,
+                      function(v) if helperData.sioFriends and helperData.sioFriends[1] then helperData.sioFriends[1].enabled = v end end)
+    wire('sio_en_2',  function() return helperData.sioFriends and helperData.sioFriends[2] and helperData.sioFriends[2].enabled or false end,
+                      function(v) if helperData.sioFriends and helperData.sioFriends[2] then helperData.sioFriends[2].enabled = v end end)
+    wire('gsio_en_1', function() return helperData.granSioFriends and helperData.granSioFriends[1] and helperData.granSioFriends[1].enabled or false end,
+                      function(v) if helperData.granSioFriends and helperData.granSioFriends[1] then helperData.granSioFriends[1].enabled = v end end)
+    wire('gsio_en_2', function() return helperData.granSioFriends and helperData.granSioFriends[2] and helperData.granSioFriends[2].enabled or false end,
+                      function(v) if helperData.granSioFriends and helperData.granSioFriends[2] then helperData.granSioFriends[2].enabled = v end end)
 end
 
 function HelperController:show()
