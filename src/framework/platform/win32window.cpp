@@ -280,14 +280,14 @@ void WIN32Window::internalCreateWindow()
 {
     m_defaultCursor = LoadCursor(nullptr, IDC_ARROW);
     WNDCLASSA wc;
-    wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+    wc.style = CS_OWNDC;
     wc.lpfnWndProc = static_cast<WNDPROC>(WindowProcProxy::call);
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.hInstance = m_instance;
     wc.hIcon = LoadIcon(nullptr, IDI_WINLOGO);
     wc.hCursor = m_defaultCursor;
-    wc.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
+    wc.hbrBackground = nullptr;
     wc.lpszMenuName = nullptr;
     wc.lpszClassName = WINDOW_NAME;
 
@@ -850,6 +850,15 @@ LRESULT WIN32Window::windowProc(const HWND hWnd, const uint32_t uMsg, const WPAR
             }
 
             break;
+        }
+        case WM_ERASEBKGND:
+            return 1;
+        case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            BeginPaint(hWnd, &ps);
+            EndPaint(hWnd, &ps);
+            return 0;
         }
         default:
             return DefWindowProc(hWnd, uMsg, wParam, lParam);
