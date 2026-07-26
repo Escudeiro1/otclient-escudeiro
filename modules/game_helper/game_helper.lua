@@ -763,7 +763,8 @@ function HelperController:_renderFriendEntry(listWidget, dataKey, row)
     local name = d and d.name ~= '' and d.name or nil
 
     local label = g_ui.createWidget('UILabel', listWidget)
-    label:fill('parent')
+    label:setWidth(110)
+    label:setHeight(18)
     label:setFont('verdana-11px-antialised')
     label:setTextAlign(AlignLeft)
     label:setTextOffset({ x = 2, y = 0 })
