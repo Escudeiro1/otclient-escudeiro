@@ -27,9 +27,11 @@ for _, id in ipairs({
 -- ── Per-character data ────────────────────────────────────────────────────────
 
 local helperData = {}
+local helperKeyBound = nil
 
 local DATA_DEFAULT = {
     statusEnabled = true,
+    helperKey     = '',
     autoHaste     = { enabled = false, pzCast = false },
     autoEatFood   = true,
     spellHealing  = {
@@ -106,6 +108,37 @@ local function saveData()
     if ok then
         g_resources.writeFileContents(path, encoded)
     end
+end
+
+local function bindHelperKey(combo)
+    local gameRootPanel = modules.game_interface.getRootPanel()
+    if helperKeyBound then
+        g_keyboard.unbindKeyDown(helperKeyBound, nil, gameRootPanel)
+        helperKeyBound = nil
+    end
+    if combo and combo ~= '' and gameRootPanel then
+        g_keyboard.bindKeyDown(combo, function()
+            HelperController:toggleHelperStatus()
+        end, gameRootPanel)
+        helperKeyBound = combo
+    end
+end
+
+local function updateHelperButtonVisual()
+    if not HelperButton then return end
+    local active = helperData and helperData.statusEnabled or false
+    local highlight = HelperButton:getChildById('highlight')
+    local bright    = HelperButton:getChildById('brightButton')
+    if highlight then highlight:setVisible(active) end
+    if bright    then bright:setVisible(active)    end
+end
+
+local function updateSetKeyButtonLabel()
+    if not HelperController.ui then return end
+    local btn = HelperController.ui:recursiveGetChildById('setHelperKeyBtn')
+    if not btn then return end
+    local key = helperData and helperData.helperKey or ''
+    btn:setText(key ~= '' and ('Key: ' .. key) or 'Set Helper Key')
 end
 
 -- Returns the data table for a given section + row.
@@ -559,12 +592,14 @@ function HelperController:onEnableHelper()
     helperData.statusEnabled = true
     saveData()
     self:updateStatusDisplay()
+    updateHelperButtonVisual()
 end
 
 function HelperController:onDisableHelper()
     helperData.statusEnabled = false
     saveData()
     self:updateStatusDisplay()
+    updateHelperButtonVisual()
 end
 
 function HelperController:updateStatusDisplay()
@@ -578,6 +613,66 @@ function HelperController:updateStatusDisplay()
         label:setText('Helper Status: Disabled')
         label:setColor('#888888ff')
     end
+end
+
+function HelperController:toggleHelperStatus()
+    if helperData.statusEnabled then
+        self:onDisableHelper()
+    else
+        self:onEnableHelper()
+    end
+end
+
+function HelperController:openHotkeyPicker()
+    local dialog = g_ui.createWidget('HelperHotkeyPicker', g_ui.getRootWidget())
+    dialog:grabKeyboard()
+
+    local captured = helperData.helperKey or ''
+    local keyDisplay = dialog:getChildById('keyDisplay')
+    if keyDisplay then
+        keyDisplay:setText(captured ~= '' and captured or '(none)')
+    end
+
+    dialog.onKeyDown = function(self_widget, keyCode, keyboardModifiers)
+        if keyCode == KeyEscape then
+            self_widget:destroy()
+            return true
+        end
+        if keyCode == KeyCtrl or keyCode == KeyAlt or keyCode == KeyShift then
+            return true
+        end
+        local combo = g_keyboard.getKeyComboDesc(keyCode, keyboardModifiers)
+        if combo and combo ~= '' then
+            captured = combo
+            local disp = self_widget:getChildById('keyDisplay')
+            if disp then disp:setText(captured) end
+        end
+        return true
+    end
+
+    local function doOk()
+        helperData.helperKey = captured
+        saveData()
+        bindHelperKey(captured)
+        updateSetKeyButtonLabel()
+        dialog:destroy()
+    end
+
+    local function doClear()
+        helperData.helperKey = ''
+        saveData()
+        bindHelperKey('')
+        updateSetKeyButtonLabel()
+        dialog:destroy()
+    end
+
+    local function doCancel()
+        dialog:destroy()
+    end
+
+    dialog:getChildById('buttonOk').onClick     = doOk
+    dialog:getChildById('buttonClear').onClick  = doClear
+    dialog:getChildById('buttonCancel').onClick = doCancel
 end
 
 -- ── Auto-heal handler — fires on every HP drop, no polling loop ───────────────
@@ -902,6 +997,7 @@ end
 
 function HelperController:onInit()
     g_ui.importStyle('/modules/game_helper/HelperValuePicker.otui')
+    g_ui.importStyle('/modules/game_helper/HelperHotkeyPicker.otui')
     self._mouseGrabber = g_ui.createWidget('UIWidget', g_ui.getRootWidget())
     self._mouseGrabber:setVisible(false)
     self._mouseGrabber:setFocusable(false)
@@ -945,11 +1041,22 @@ function HelperController:onGameStart()
         if lp:getRegenerationTime() == 0 then self:_tryAutoEat() end
         if not lp:hasState(PlayerStates.Haste) then self:_tryAutoHaste(lp) end
     end, 2000)
+    scheduleEvent(function()
+        bindHelperKey(helperData.helperKey)
+        updateHelperButtonVisual()
+    end, 100)
 end
 
 function HelperController:onGameEnd()
     self:hide()
     self._sioRetrying = {}
+    if helperKeyBound then
+        local gameRootPanel = modules.game_interface.getRootPanel()
+        if gameRootPanel then
+            g_keyboard.unbindKeyDown(helperKeyBound, nil, gameRootPanel)
+        end
+        helperKeyBound = nil
+    end
 end
 
 function HelperController:onTerminate()
@@ -960,6 +1067,7 @@ function HelperController:onTerminate()
     if self.ui then
         self:unloadHtml()
     end
+    helperKeyBound = nil
 end
 
 function HelperController:_wireCheckboxes()
@@ -993,6 +1101,13 @@ function HelperController:_wireCheckboxes()
                       function(v) if helperData.granSioFriends and helperData.granSioFriends[2] then helperData.granSioFriends[2].enabled = v end end)
 end
 
+function HelperController:_wireBottomBar()
+    local btn = self.ui:recursiveGetChildById('setHelperKeyBtn')
+    if btn then
+        btn.onClick = function() self:openHotkeyPicker() end
+    end
+end
+
 function HelperController:show()
     loadData()
     self:rebuildHealCache()
@@ -1002,12 +1117,15 @@ function HelperController:show()
         self:_wireSlotRightClicks()
         self:_wireCheckboxes()
         self:_wireFriendLists()
+        self:_wireBottomBar()
     end
     self:updateAllDisplays()
+    updateSetKeyButtonLabel()
     self.ui:show()
     self.ui:raise()
     self.ui:focus()
     if HelperButton then HelperButton:setOn(true) end
+    updateHelperButtonVisual()
 end
 
 function HelperController:doCloseWindow()
@@ -1018,6 +1136,7 @@ end
 function HelperController:hide()
     if self.ui then self:unloadHtml() end
     if HelperButton then HelperButton:setOn(false) end
+    updateHelperButtonVisual()
 end
 
 function HelperController:toggle()

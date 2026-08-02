@@ -1,0 +1,58 @@
+HelperHotkeyPicker < MainWindow
+  !text: tr('Set Helper Key')
+  size: 250 130
+
+  Label
+    id: hintLabel
+    !text: tr('Press any key to assign...')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 28
+    text-align: center
+    font: verdana-11px-rounded
+    color: #c0c0c0
+
+  Label
+    id: keyDisplay
+    !text: tr('(none)')
+    anchors.top: hintLabel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffcc44ff
+
+  Button
+    id: buttonOk
+    !text: tr('OK')
+    height: 20
+    width: 56
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 8
+    margin-right: 6
+    focusable: false
+
+  Button
+    id: buttonClear
+    !text: tr('Clear')
+    height: 20
+    width: 56
+    anchors.bottom: parent.bottom
+    anchors.right: buttonOk.left
+    margin-bottom: 8
+    margin-right: 4
+    focusable: false
+
+  Button
+    id: buttonCancel
+    !text: tr('Cancel')
+    height: 20
+    width: 56
+    anchors.bottom: parent.bottom
+    anchors.right: buttonClear.left
+    margin-bottom: 8
+    margin-right: 4
+    focusable: false
