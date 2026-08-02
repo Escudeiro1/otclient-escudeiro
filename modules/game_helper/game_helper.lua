@@ -641,7 +641,7 @@ function HelperController:openHotkeyPicker()
         if keyCode == KeyCtrl or keyCode == KeyAlt or keyCode == KeyShift then
             return true
         end
-        local combo = g_keyboard.getKeyComboDesc(keyCode, keyboardModifiers)
+        local combo = determineKeyComboDesc(keyCode, keyboardModifiers)
         if combo and combo ~= '' then
             captured = combo
             local disp = self_widget:getChildById('keyDisplay')
