@@ -186,6 +186,7 @@ PhantomMiniWindow
 
     TopToggleButton
       id: attack
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 40 20 20
       anchors.right: standPosture.left
@@ -448,6 +449,7 @@ PhantomMiniWindow
 
     TopToggleButton
       id: attack
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 40 20 20
       anchors.left: soulAndCapacity.right
