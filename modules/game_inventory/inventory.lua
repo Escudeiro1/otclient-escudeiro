@@ -103,13 +103,7 @@ local function combatEvent()
         selectPosture('stand', true)
     end
     
-    if g_game.getFightMode() == FightOffensive then
-        selectCombat('attack', true)
-    elseif g_game.getFightMode() == FightBalanced then
-        selectCombat('balanced', true)
-    elseif g_game.getFightMode() == FightDefensive then
-        selectCombat('defense', true)
-    end
+    selectCombat('attack', true)
 end
 
 local function inventoryEvent(player, slot, item, oldItem)
@@ -296,7 +290,7 @@ function inventoryController:onGameStart()
         local lastCombatControls = g_settings.getNode('LastCombatControls')
         if not table.empty(lastCombatControls) then
             if lastCombatControls[char] then
-                g_game.setFightMode(lastCombatControls[char].fightMode)
+                g_game.setFightMode(FightOffensive)
                 g_game.setChaseMode(lastCombatControls[char].chaseMode)
                 g_game.setSafeFight(lastCombatControls[char].safeFight)
                 if lastCombatControls[char].pvpMode then
@@ -382,7 +376,7 @@ function inventoryController:onGameEnd()
     if player then
         local char = g_game.getCharacterName()
         lastCombatControls[char] = {
-            fightMode = g_game.getFightMode(),
+            fightMode = FightOffensive,
             chaseMode = g_game.getChaseMode(),
             safeFight = g_game.isSafeFight()
         }
@@ -441,27 +435,9 @@ end
 
 function selectCombat(combat, ignoreUpdate)
     local ui = getInventoryUi()
-    if combat == 'attack' then
-        ui.attack:setEnabled(false)
-        ui.balanced:setEnabled(true)
-        ui.defense:setEnabled(true)
-        if not ignoreUpdate then
-            g_game.setFightMode(FightOffensive)
-        end
-    elseif combat == 'balanced' then
-        ui.attack:setEnabled(true)
-        ui.balanced:setEnabled(false)
-        ui.defense:setEnabled(true)
-        if not ignoreUpdate then
-            g_game.setFightMode(FightBalanced)
-        end
-    elseif combat == 'defense' then
-        ui.attack:setEnabled(true)
-        ui.balanced:setEnabled(true)
-        ui.defense:setEnabled(false)
-        if not ignoreUpdate then
-            g_game.setFightMode(FightDefensive)
-        end
+    ui.attack:setEnabled(false)
+    if not ignoreUpdate then
+        g_game.setFightMode(FightOffensive)
     end
 end
 

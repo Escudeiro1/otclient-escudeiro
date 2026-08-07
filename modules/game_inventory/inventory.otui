@@ -203,37 +203,23 @@ PhantomMiniWindow
 
     TopToggleButton
       id: balanced
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 80 20 20
       anchors.right: attack.right
       anchors.top: attack.bottom
       margin-top: 4
       size: 20 20
-      @onClick: |
-        selectCombat('balanced')
-
-      $pressed !disabled:
-        image-clip: 20 80 20 20
-
-      $disabled:
-        image-clip: 20 80 20 20
 
     TopToggleButton
       id: defense
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 60 20 20
       anchors.right: attack.right
       anchors.top: balanced.bottom
       margin-top: 4
       size: 20 20
-      @onClick: |
-        selectCombat('defense')
-
-      $pressed !disabled:
-        image-clip: 20 60 20 20
-
-      $disabled:
-        image-clip: 20 60 20 20
 
     TopToggleButton
       id: stop
@@ -479,37 +465,23 @@ PhantomMiniWindow
 
     TopToggleButton
       id: defense
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 60 20 20
       anchors.left: attack.right
       anchors.top: changeSize.top
       margin-left: 1
       size: 20 20
-      @onClick: |
-        selectCombat('defense')
-
-      $pressed !disabled:
-        image-clip: 20 60 20 20
-
-      $disabled:
-        image-clip: 20 60 20 20
 
     TopToggleButton
       id: balanced
+      visible: false
       image-source: /images/inventory/buttons_general
       image-clip: 0 80 20 20
       anchors.left: defense.right
       anchors.top: changeSize.top
       margin-left: 1
       size: 20 20
-      @onClick: |
-        selectCombat('balanced')
-
-      $pressed !disabled:
-        image-clip: 20 80 20 20
-
-      $disabled:
-        image-clip: 20 80 20 20
 
     TopToggleButton
       id: standPosture
