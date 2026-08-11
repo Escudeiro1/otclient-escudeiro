@@ -70,7 +70,8 @@ void printHelp(const std::string& executableName)
     std::cout << "Usage: " << executableName << " [options]\n\n"
                  "General options:\n"
                  "  --help, -h, /?              Show this help message and exit\n"
-                 "  --encrypt <password>        Encrypt assets (requires ENABLE_ENCRYPTION == 1 && ENABLE_ENCRYPTION_BUILDER == 1 build)\n\n"
+                 "  --encrypt <password>        Encrypt assets (requires ENABLE_ENCRYPTION == 1 && ENABLE_ENCRYPTION_BUILDER == 1 build)\n"
+                 "  --user-dir=<path>           Override the user directory (configs, profiles) so multiple isolated instances can run side by side\n\n"
                  "DAT debugging:\n"
                  "  --dump-dat-to-json=<path|ver> Dump the specified Tibia DAT file or version as JSON (requires FRAMEWORK_EDITOR build)\n"
                  "    --dump-dat-output=<path>    Write JSON to file instead of stdout\n"
@@ -117,6 +118,14 @@ int main(const int argc, const char* argv[])
 #else
     g_resources.init(args[0].data());
 #endif
+
+    for (const auto& arg : args) {
+        constexpr std::string_view prefix = "--user-dir=";
+        if (arg.starts_with(prefix)) {
+            g_resources.setUserDirOverride(arg.substr(prefix.size()));
+            break;
+        }
+    }
 
 #if ENABLE_ENCRYPTION == 1 && ENABLE_ENCRYPTION_BUILDER == 1
     if (std::find(args.begin(), args.end(), "--encrypt") != args.end()) {

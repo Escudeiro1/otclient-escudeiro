@@ -104,12 +104,17 @@ public:
 
     std::string getBinaryPath() { return m_binaryPath.string(); }
 
+    // Overrides the OS-default user dir (configs, profiles) so multiple
+    // isolated client instances can run side by side. Set from --user-dir=.
+    void setUserDirOverride(const std::string& dir) { m_userDirOverride = dir; }
+
 protected:
     std::vector<std::string> discoverPath(const std::filesystem::path& path, bool filenameOnly, bool recursive);
 
 private:
     std::string m_workDir;
     std::string m_writeDir;
+    std::string m_userDirOverride;
     std::filesystem::path m_binaryPath;
     std::deque<std::string> m_searchPaths;
 };

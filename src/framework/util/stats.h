@@ -107,7 +107,12 @@ public:
     inline void addCreature() { createdCreatures += 1; }
     inline void removeCreature() { destroyedCreatures += 1; }
 
+    inline void pause() { m_paused = true; }
+    inline void resume() { m_paused = false; }
+
 private:
+    std::atomic_bool m_paused{ false };
+
     struct
     {
         StatsMap data;

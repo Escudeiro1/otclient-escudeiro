@@ -300,6 +300,8 @@ void Application::registerLuaFunctions()
     g_lua.bindSingletonFunction("g_stats", "getSleepTime", &Stats::getSleepTime, &g_stats);
     g_lua.bindSingletonFunction("g_stats", "resetSleepTime", &Stats::resetSleepTime, &g_stats);
     g_lua.bindSingletonFunction("g_stats", "getWidgetsInfo", &Stats::getWidgetsInfo, &g_stats);
+    g_lua.bindSingletonFunction("g_stats", "pause", &Stats::pause, &g_stats);
+    g_lua.bindSingletonFunction("g_stats", "resume", &Stats::resume, &g_stats);
 
     // OTCv8 proxy system
     g_lua.registerSingletonClass("g_proxy");

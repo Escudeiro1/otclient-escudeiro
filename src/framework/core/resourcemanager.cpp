@@ -726,6 +726,9 @@ std::string ResourceManager::getBaseDir()
 
 std::string ResourceManager::getUserDir()
 {
+    if (!m_userDirOverride.empty())
+        return m_userDirOverride;
+
 #ifdef ANDROID
     return getBaseDir() + "/";
 #elif defined(__EMSCRIPTEN__)
