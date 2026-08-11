@@ -518,19 +518,17 @@ local function findReleaseArchive(release)
     return nil
   end
 
-  local fallback
   for _, asset in ipairs(release.assets) do
     local name = tostring(asset.name or ''):lower()
     local url = asset.browser_download_url
-    if url and isArchivePath(name) then
-      fallback = fallback or url
-      if not name:find('mac', 1, true) and not name:find('.app.zip', 1, true) then
-        return url
-      end
+    if url and isArchivePath(name) and not name:find('mac', 1, true) and not name:find('.app.zip', 1, true) then
+      return url
     end
   end
 
-  return fallback
+  -- No non-macOS archive matched: let the caller fall back to the standard
+  -- source zip (codeloadZipUrl) instead of downloading a macOS-only archive.
+  return nil
 end
 
 local function codeloadZipUrl(repository, tag)
