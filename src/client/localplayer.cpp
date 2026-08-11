@@ -470,7 +470,9 @@ void LocalPlayer::setInventoryItem(const Otc::InventorySlot inventory, const Ite
 
     if (item && g_game.getFeature(Otc::GameThingClock) && item->getDurationTime() > 0
             && item->getClothSlot() == static_cast<int>(inventory)){
-        item->setDecaying(true);
+        // Items with only expirestop (no expire/clockexpire) are server-paused
+        // (e.g. a toggled-off magic light wand) and shouldn't tick down locally.
+        item->setDecaying(item->hasExpire() || item->hasClockExpire());
     }
 
     callLuaField("onInventoryChange", inventory, item, oldItem);

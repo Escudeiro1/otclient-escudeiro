@@ -1219,6 +1219,13 @@ uint16_t Creature::getCurrentAnimationPhase(const bool mount)
     }
 
     if (thingType->isAnimateAlways()) {
+        // A thing can have isAnimateAlways() set while still carrying a real Animator
+        // (variable per-frame durations, random groups, etc.). Defer to it instead of
+        // the uniform-duration fallback below, which flattens all phases to equal length.
+        if (const auto animator = thingType->getAnimator()) {
+            return static_cast<uint16_t>(thingType->getIdleAnimationPhases() + animator->getPhase());
+        }
+
         const int animationPhases = thingType->getAnimationPhases();
         if (animationPhases <= 0) return 0;
 
