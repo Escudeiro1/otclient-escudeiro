@@ -643,9 +643,11 @@ ThingPtr Tile::getTopMultiUseThing()
             return thing;
     }
 
+    // Ground-border items (stairs, holes, certain walls) are valid use-with
+    // targets -- e.g. using a rope on a hole -- so they're not excluded here.
     for (int8_t i = -1, s = m_things.size(); ++i < s;) {
         const auto& thing = m_things[i];
-        if (!thing->isGround() && !thing->isGroundBorder() && !thing->isOnBottom() && !thing->isOnTop()) {
+        if (!thing->isGround() && !thing->isOnBottom() && !thing->isOnTop()) {
             if (i > 0 && thing->isSplash())
                 return m_things[i - 1];
 
@@ -654,7 +656,7 @@ ThingPtr Tile::getTopMultiUseThing()
     }
 
     for (const auto& thing : m_things) {
-        if (!thing->isGround() && !thing->isGroundBorder() && !thing->isOnTop())
+        if (!thing->isGround() && !thing->isOnTop())
             return thing;
     }
 
