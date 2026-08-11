@@ -172,8 +172,14 @@ void UITextEdit::drawSelf(const DrawPoolType drawPane)
                     }
                 }
 
-                if (width > 0)
-                    m_glyphsSelectBgRectCache.emplace_back(Rect(pos.x, pos.y, width, lineHeight));
+                if (width > 0) {
+                    // Clip to the widget's visible area: a scrolled/wrapped glyph's
+                    // computed background rect can otherwise extend past the edit
+                    // box bounds, bleeding the selection highlight outside it.
+                    const Rect bgRect = Rect(pos.x, pos.y, width, lineHeight).intersection(m_drawArea);
+                    if (!bgRect.isEmpty())
+                        m_glyphsSelectBgRectCache.emplace_back(bgRect);
+                }
             }
         }
 
