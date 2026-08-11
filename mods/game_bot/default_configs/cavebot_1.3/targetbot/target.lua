@@ -3,6 +3,13 @@ local config = nil
 local lastAction = 0
 local cavebotAllowance = 0
 local lureEnabled = true
+local currentDangerLevel = 0
+
+-- Current danger level from the last targetbot cycle, readable by cave scripts
+-- that need to hold off on risky actions (e.g. exploring) while it's high.
+TargetBot.Danger = function()
+  return currentDangerLevel
+end
 
 -- ui
 local configWidget = UI.Config()
@@ -67,6 +74,7 @@ targetbotMacro = macro(100, function()
   local looting = TargetBot.Looting.process(targets, dangerLevel)
   local lootingStatus = TargetBot.Looting.getStatus()
 
+  currentDangerLevel = dangerLevel
   ui.danger.right:setText(dangerLevel)
   if highestPriorityParams and not isInPz() then
     ui.target.right:setText(highestPriorityParams.creature:getName())

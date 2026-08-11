@@ -107,6 +107,7 @@ local function walk(dir)
 
     nextWalkDir = nil
     lastWalkDir = dir
+    modules.game_interface.lastManualWalk = os.time()
 
     if g_game.getFeature(GameAllowPreWalk) then
         local toPos = Position.translatedToDirection(player:getPosition(), dir)

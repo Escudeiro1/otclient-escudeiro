@@ -35,6 +35,9 @@ gameLeftLockPanel = nil
 
 hookedMenuOptions = {}
 focusReason = {}
+-- Timestamp of the last manual (keyboard-driven) walk, read by game_bot to
+-- avoid fighting the player's own movement. Set from game_walk/walk.lua.
+lastManualWalk = 0
 local lastStopAction = 0
 local mobileConfig = {
     mobileWidthJoystick = 0,
