@@ -724,6 +724,12 @@ function WheelOfDestiny.onDestinyWheel(playerId, canView, changeState, vocationI
     if GemAtelier.setupVesselPanel then
       GemAtelier.setupVesselPanel()
     end
+    -- Re-draw the gem list from the freshly assigned WheelOfDestiny.atelierGems
+    -- above so lock/destroy/reveal actions reflect the server's real state
+    -- instead of whatever was drawn before this refresh arrived.
+    if GemAtelier.showGems then
+      GemAtelier.showGems(false)
+    end
   end
 
   wheelPanel.onMouseRelease = WheelOfDestiny.onMouseRelease

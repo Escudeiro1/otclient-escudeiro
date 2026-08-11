@@ -240,7 +240,9 @@ function GemAtelier.showGems(selectFirst, lastIndex)
 			gemList:focusChild(gemList:getFirstChild())
 		elseif lastIndex then
 			gemList:focusChild(children[lastIndex])
-		elseif lastSelectedGem and lastSelectedGem:isVisible() and lastSelectedGem.gemID then
+		elseif lastSelectedGem and lastSelectedGem.gemID then
+			-- Don't call methods on lastSelectedGem here: gemList:destroyChildren()
+			-- above may have already destroyed the widget it points to.
 			local targetIndex = 0
 			for i, widget in ipairs(children) do
 				if widget.gemID == lastSelectedGem.gemID then
@@ -929,26 +931,10 @@ function sendgemAction(actionType, param, pos)
 	g_logger.debug(string.format("[GemAtelier] Sending action -> type=%d param=%d pos=%d", actionType, param, pos))
 	g_game.gemAction(actionType, param, pos)
 
-	if actionType == 3 then
-		scheduleEvent(function()
-			local gem = GemAtelier.getGemDataById(param)
-			if not gem then
-				g_logger.debug(string.format("[GemAtelier] Failed to toggle lock: gem id=%d not found.", param))
-				return
-			end
-
-			gem.locked = gem.locked == 1 and 0 or 1
-			g_logger.debug(string.format("[GemAtelier] Toggled local lock of gem id=%d -> %s", 
-				param, gem.locked == 1 and "locked" or "unlocked"))
-
-			if lastSelectedGem and lastSelectedGem.locker then
-				lastSelectedGem.locker:setChecked(gem.locked == 1)
-			end
-
-			local lastIndex = lastSelectedGem and lastSelectedGem.gemIndex or 1
-			GemAtelier.showGems(false, lastIndex)
-		end, 300)
-	end
+	-- No optimistic local toggle for ToggleLock: the server always answers with a
+	-- full window refresh (sendOpenWheelWindow -> WheelOfDestiny.onDestinyWheel),
+	-- and that refresh carries the real lock state. A delayed local flip here can
+	-- arrive after the refresh and invert what's shown.
 end
 
 
