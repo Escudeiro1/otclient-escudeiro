@@ -233,12 +233,19 @@ function controllerNpcTrader:selectTradeItem(item, widget)
     if widget then
         widget:focus()
     end
-    self:updateAmount(1)
+
+    -- Selling defaults to the full available stack (matches Tibia's trade UX);
+    -- buying still starts at 1.
+    local defaultAmount = 1
+    if self.tradeMode == controllerNpcTrader.SELL then
+        defaultAmount = self:getSellQuantity(item.ptr)
+    end
+    self:updateAmount(defaultAmount)
 
     local scroll = self:findWidget("#amountScrollBar")
     if scroll then
         scroll:enable()
-        scroll:setValue(1)
+        scroll:setValue(self.amount)
     end
 end
 
