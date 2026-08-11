@@ -1172,6 +1172,10 @@ function onContainerUpdateItem(container, slot, item, oldItem)
     itemWidget:setItem(item)
     itemWidget:setShowDuration(g_game.getFeature(GameThingClock) and modules.client_options.getOption('showExpiryInContainers'))
     itemWidget:setShowCharges(g_game.getFeature(GameThingCounter) and modules.client_options.getOption('showExpiryInContainers'))
+    -- In-place updates (duration, imbuement progress, count) can change the item's
+    -- mean price without going through a full container refresh, so the colored
+    -- rarity/value frame must be re-evaluated here too, not just on initial fill.
+    ItemsDatabase.setRarityItem(itemWidget, item)
     
     -- Note: Removed automatic re-sorting to prevent interference with manual item movement
     -- Sorting should only happen when explicitly requested by the user
