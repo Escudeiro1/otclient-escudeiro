@@ -389,7 +389,7 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     -- sendOpenRewardWall), so timeLeft stays at its C++ default of 0 -- which formatTimeLeft
     -- treats as a "no data" sentinel and renders as "Expired". Show the collected checkmark
     -- instead of calling formatTimeLeft in that case, rather than misreading 0 as expired.
-    restingAreaInfo.timeLeftDone:setVisible(rewardTaken)
+    restingAreaInfo.timeLeft.timeLeftDone:setVisible(rewardTaken)
     restingAreaInfo.timeLeft:setText(rewardTaken and "" or formatTimeLeft(timeLeft))
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold.text:setText(tokens)
     rewardWallController.ui.footerPanel.footerGold1.text:setText(tokens)
