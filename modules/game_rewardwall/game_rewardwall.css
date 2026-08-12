@@ -48,6 +48,11 @@
   --image-source: /images/ui/test/button-verydarkgrey-down;
 }
 
+.resting-area-time-done {
+  width: 11px;
+  height: 19px;
+}
+
 #bonusIcon1 {
   --icon-clip: 0 0 64 64;
   width: 100%;

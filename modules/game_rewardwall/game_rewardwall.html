@@ -12,7 +12,10 @@
     <div id="restingAreaInfo" layout="type: verticalBox;spacing:5" class="resting-area-info">
       <img src="/game_rewardwall/images/icon-rewardstreak-default" id="rewardStreakIcon" class="resting-area-icon"
         onhover="self:onhoverStatusPlayer(event)" text="2" style="text-offset:30 -7" />
-      <div id="timeLeft" class="resting-area-time" onhover="self:onhoverStatusPlayer(event)" ></div>
+      <div id="timeLeft" class="resting-area-time" onhover="self:onhoverStatusPlayer(event)">
+        <img src="/game_rewardwall/images/icon-dailyrewarddone" id="timeLeftDone" class="resting-area-time-done"
+          placement="center" *visible="false" />
+      </div>
       <GoldLabel2 id="restingAreaGold" class="resting-area-gold" onhover="self:onhoverStatusPlayer(event)"></GoldLabel2>
     </div>
 
