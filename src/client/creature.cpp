@@ -761,6 +761,17 @@ void Creature::updateWalkingTile()
         }
     }
 
+    // NW - for the effect of going behind the object west of it, walking creature will be drawn in
+    // front of the object for the half of the way, and after behind
+    // SE - for the effect of going in front the object south of it, walking creature will be drawn
+    // behind the object for the half of the way, and after in front
+    if (m_walkedPixels < g_gameConfig.getSpriteSize() / 2) {
+        if (m_direction == Otc::Direction::NorthWest)
+            newWalkingTile = m_walkingTile ? m_walkingTile : getTile();
+        else if (m_direction == Otc::Direction::SouthEast)
+            newWalkingTile = g_map.getTile(getPosition().translated(-1, -1, 0));
+    }
+
     if (newWalkingTile == m_walkingTile) return;
 
     const auto& self = static_self_cast<Creature>();
