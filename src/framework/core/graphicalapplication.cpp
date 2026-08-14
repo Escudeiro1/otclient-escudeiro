@@ -26,6 +26,7 @@
 #include "clock.h"
 #include "eventdispatcher.h"
 #include "garbagecollection.h"
+#include "client/game.h"
 #include "framework/graphics/drawpoolmanager.h"
 #include "framework/graphics/graphics.h"
 #include "framework/graphics/image.h"
@@ -167,7 +168,8 @@ bool GraphicalApplication::canDrawMap() const {
     if (!m_drawEvents->canDraw(MAP))
         return false;
 
-    static constexpr std::array<DrawPoolType, 3> types{ MAP, LIGHT, FOREGROUND_MAP };
+    // FOREGROUND is here only because of attached widgets on the map (like tile widgets)
+    static constexpr std::array<DrawPoolType, 4> types{ MAP, LIGHT, FOREGROUND_MAP, FOREGROUND };
 
     for (DrawPoolType type : types) {
         if (g_drawPool.isDrawing(type))
@@ -217,7 +219,7 @@ void GraphicalApplication::run()
                 // that reads it. The foreground UI task below runs on a worker thread,
                 // so submitting it before preLoad() finishes let it render with stale
                 // (previous frame's) data.
-                {
+                if (g_game.isOnline()) {
                     AutoStat s(STATS_RENDER, "DrawPreload");
                     m_drawEvents->preLoad();
                 }

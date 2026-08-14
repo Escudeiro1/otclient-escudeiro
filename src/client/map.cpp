@@ -1249,7 +1249,7 @@ bool Map::removeAttachedWidgetFromObject(const UIWidgetPtr& widget) {
 
 void Map::updateAttachedWidgets(const MapViewPtr& mapView)
 {
-    g_drawPool.select(DrawPoolType::MAP);
+    bool should_repaint = false;
     for (const auto& [widget, object] : m_attachedObjectWidgetMap) {
         if (widget->isDestroyed()) {
             continue;
@@ -1300,9 +1300,16 @@ void Map::updateAttachedWidgets(const MapViewPtr& mapView)
         const auto& widgetRect = widget->getRect();
         const auto& newWidgetRect = Rect(p, widgetRect.width(), widgetRect.height());
 
-        widget->disableUpdateTemporarily();
-        widget->setRect(newWidgetRect);
+        if (widgetRect != newWidgetRect) {
+            widget->disableUpdateTemporarily();
+            widget->setRect(newWidgetRect);
+            should_repaint = true;
+        }
     }
+
+    // only repaint if some widget changed position on the screen
+    if (should_repaint)
+        g_drawPool.repaint(DrawPoolType::FOREGROUND);
 }
 
 std::map<std::string, std::tuple<int, int, int, std::string>> Map::findEveryPath(const Position& start, int maxDistance, const std::map<std::string, std::string>& params)
