@@ -77,27 +77,11 @@ void Tile::draw(const Point& dest, const int flags, LightView* lightView)
         return;
     }
 
-    std::vector<ThingPtr> skipped_non_walkable;
     for (const auto& thing : m_things) {
-        if (!thing->isGround() && !thing->isGroundBorder() && !thing->isOnBottom())
+        if (!thing->isGround() && !thing->isGroundBorder())
             break;
 
-        // delay drawing after NE/SW walking creature
-        if (thing->isNotWalkable()) {
-            skipped_non_walkable.emplace_back(thing);
-            continue;
-        }
-
         drawThing(thing, dest, flags, drawElevation);
-    }
-
-    drawAttachedEffect(dest, dest, lightView, false);
-
-    if (hasCommonItem()) {
-        for (auto& item : std::ranges::reverse_view(m_things)) {
-            if (!item->isCommon()) continue;
-            drawThing(item, dest, flags, drawElevation);
-        }
     }
 
     // when walking diagonally over a tile that has a non-walkable object on it (for example - a tree) the creature should be drawn behind it
@@ -123,8 +107,23 @@ void Tile::draw(const Point& dest, const int flags, LightView* lightView)
         g_drawPool.resetDrawOrder();
     }
 
-    for (const auto& thing : skipped_non_walkable)
+    for (const auto& thing : m_things) {
+        if (thing->isGround() || thing->isGroundBorder())
+            continue;
+        if (!thing->isOnBottom())
+            break;
+
         drawThing(thing, dest, flags, drawElevation);
+    }
+
+    drawAttachedEffect(dest, dest, lightView, false);
+
+    if (hasCommonItem()) {
+        for (auto& item : std::ranges::reverse_view(m_things)) {
+            if (!item->isCommon()) continue;
+            drawThing(item, dest, flags, drawElevation);
+        }
+    }
 
     // after we render 2x2 lying corpses, we must redraw previous creatures/ontop above them
     if (m_tilesRedraw) {
