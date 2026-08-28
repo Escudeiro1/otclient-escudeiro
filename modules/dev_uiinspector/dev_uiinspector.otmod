@@ -1,0 +1,12 @@
+Module
+  name: dev_uiinspector
+  description: In-client live UI inspector/editor. Ctrl+Alt+I toggles edit mode; Ctrl+Alt+click selects a widget; edits apply live via mergeStyle; Save writes back to the source .otui when the widget maps to a file node.
+  author: escudeiro.rafa@gmail.com
+  website: none
+  sandboxed: true
+  autoload: true
+  reloadable: false
+  scripts: [ otml, dev_uiinspector ]
+  dependencies: [ client_topmenu ]
+  @onLoad: init()
+  @onUnload: terminate()
