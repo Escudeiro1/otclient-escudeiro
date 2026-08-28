@@ -106,24 +106,27 @@ Window
     margin-top: 2
     !text: ''
 
-  TextEdit
-    id: sourceFileEdit
-    height: 20
-    anchors.top: prev.bottom
-    anchors.left: parent.left
-    anchors.right: setSourceBtn.left
-    margin-top: 2
-    margin-right: 4
-    !text: ''
-
+  # setSourceBtn anchors only to mappingBanner + parent (never back to
+  # sourceFileEdit), so the two do not form a widget-level anchor cycle.
   Button
     id: setSourceBtn
     !text: 'Set source'
     height: 20
     width: 90
-    anchors.top: prev.top
+    anchors.top: mappingBanner.bottom
     anchors.right: parent.right
+    margin-top: 2
     @onClick: modules.dev_uiinspector.setSourceFromInput()
+
+  TextEdit
+    id: sourceFileEdit
+    height: 20
+    anchors.top: mappingBanner.bottom
+    anchors.left: parent.left
+    anchors.right: setSourceBtn.left
+    margin-top: 2
+    margin-right: 4
+    !text: ''
 
   UiiSectionLabel
     id: modeTitle
