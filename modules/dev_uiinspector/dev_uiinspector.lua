@@ -23,10 +23,10 @@ local selectionBox = nil
 local hoverBox = nil
 local restackEvent = nil
 
--- widget -> { file = '/norm/path.otui', src = 'wrap'|'scan'|'manual' }
+-- window widget -> { file = '/norm/path.otui', src = 'scan'|'index'|'manual' }
 local registry = setmetatable({}, { __mode = 'k' })
-local rawLoadUI, rawDisplayUI = nil, nil
-local wrappedLoadUI, wrappedDisplayUI = nil, nil
+-- lazily built: doc.root.tag -> { '/path/a.otui', ... } across /modules and /mods
+local rootTagIndex = nil
 
 local selectedWidget = nil
 local anchorWidget = nil        -- widget that the file's doc.root corresponds to
@@ -306,25 +306,15 @@ local function nodeForWidget(widget, anchorW)
   return node, nil, { kind = 'widget', path = path }
 end
 
--- ============================================================ window -> file registry
+-- ============================================================ window -> file
 
-local function recordMapping(w, file, src)
-  if not w or w:isDestroyed() then return end
-  local norm = resolveOtuiPath(file)
-  if not norm then return end
-  if src ~= 'manual' and registry[w] and registry[w].src ~= 'scan' then return end
-  registry[w] = { file = norm, src = src }
-end
-
--- Windows that existed before this module loaded are not in the registry. Guess
--- the file from the window's style/id and accept only if the parsed root tag
--- matches. A wrong guess is caught later by nodeForWidget (Save just stays off).
-local function seedGuessRegistry(win)
-  if not win or win:isDestroyed() or registry[win] then return end
+-- Convention guess: a window's .otui usually lives at modules/<name>/<name>.otui
+-- (or game_<name>/...). Accept only if the parsed root tag matches the window
+-- style; a wrong guess is caught later by nodeForWidget anyway.
+local function guessByName(win)
   local style = win:getStyleName()
-  local id = win:getId()
   local names = {}
-  for _, n in ipairs({ id, style }) do
+  for _, n in ipairs({ win:getId(), style }) do
     if n and n ~= '' then
       names[#names + 1] = n
       names[#names + 1] = n:lower()
@@ -332,42 +322,81 @@ local function seedGuessRegistry(win)
   end
   for _, n in ipairs(names) do
     for _, cand in ipairs({ '/modules/' .. n .. '/' .. n .. '.otui',
-                            '/modules/game_' .. n .. '/game_' .. n .. '.otui' }) do
+                            '/modules/game_' .. n .. '/game_' .. n .. '.otui',
+                            '/mods/' .. n .. '/' .. n .. '.otui' }) do
       if g_resources.fileExists(cand) then
         local okRead, text = pcall(function() return g_resources.readFileContents(cand) end)
         if okRead and text then
           local okParse, d = pcall(function() return UiInspectorOtml.parse(text) end)
           if okParse and d and d.root and d.root.tag == style then
-            registry[win] = { file = normOtui(cand), src = 'scan' }
-            return
+            return cand
           end
         end
       end
     end
   end
+  return nil
+end
+
+-- One-time scan of every .otui under /modules and /mods, mapping the file's
+-- main-widget tag -> list of files. Lets a window be matched by its root style
+-- name when the name-guess misses. dev_otui does a similar scan for its gallery.
+local function buildRootTagIndex()
+  if rootTagIndex then return rootTagIndex end
+  rootTagIndex = {}
+  local files = {}
+  for _, dir in ipairs({ '/modules', '/mods' }) do
+    local ok, listed = pcall(function()
+      return g_resources.listDirectoryFiles(dir, true, false, true)
+    end)
+    if ok and listed then
+      for _, f in ipairs(listed) do
+        if f:ends('.otui') then files[#files + 1] = f end
+      end
+    end
+  end
+  for _, f in ipairs(files) do
+    local okRead, text = pcall(function() return g_resources.readFileContents(f) end)
+    if okRead and text then
+      local okParse, d = pcall(function() return UiInspectorOtml.parse(text) end)
+      if okParse and d and d.root and d.root.tag and d.root.tag ~= '' then
+        local bucket = rootTagIndex[d.root.tag]
+        if not bucket then bucket = {}; rootTagIndex[d.root.tag] = bucket end
+        bucket[#bucket + 1] = f
+      end
+    end
+  end
+  return rootTagIndex
 end
 
 -- Returns file, anchorWidget, srcKind for the widget's owning .otui.
 local function resolveOwningFile(w, win)
-  local cur = w
-  while cur do
-    local hit = registry[cur]
-    if hit then return hit.file, cur, hit.src end
-    if cur == win then break end
-    cur = cur:getParent()
-  end
+  -- 1. per-session manual mapping
+  local hit = registry[win]
+  if hit then return hit.file, win, hit.src end
 
+  -- 2. remembered manual mapping for a window like this one
   local key = (win:getStyleName() or 'UIWidget') .. '#' .. (win:getId() or '')
   local cached = g_settings.getString('dev_uiinspector_map_' .. key)
   if cached and cached ~= '' and g_resources.fileExists(cached) then
     return cached, win, 'manual'
   end
 
-  seedGuessRegistry(win)
-  local hit = registry[win]
-  if hit then return hit.file, win, hit.src end
+  -- 3. modules/<name>/<name>.otui convention
+  local named = guessByName(win)
+  if named then
+    registry[win] = { file = named, src = 'scan' }
+    return named, win, 'scan'
+  end
 
-  return nil, win, nil
+  -- 4. unique file whose main-widget tag == this window's style
+  local bucket = buildRootTagIndex()[win:getStyleName() or '']
+  if bucket and #bucket == 1 then
+    registry[win] = { file = bucket[1], src = 'index' }
+    return bucket[1], win, 'index'
+  end
+
+  return nil, win, (bucket and #bucket > 1) and 'ambiguous' or nil
 end
 
 function setSourceFromInput()
@@ -919,32 +948,6 @@ function init()
   inspectorWindow = g_ui.displayUI('dev_uiinspector')
   inspectorWindow:hide()
 
-  -- wrap g_ui.loadUI / g_ui.displayUI so windows opened after us are traceable
-  -- to their .otui. displayUI is C++ loadUI(file, rootWidget) internally, a
-  -- C++->C++ call, so both must be wrapped.
-  rawLoadUI = g_ui.loadUI
-  rawDisplayUI = g_ui.displayUI
-
-  wrappedLoadUI = function(...)
-    local w = rawLoadUI(...)
-    local file = ...
-    if w and type(file) == 'string' then recordMapping(w, file, 'wrap') end
-    return w
-  end
-  wrappedDisplayUI = function(...)
-    local w = rawDisplayUI(...)
-    local file = ...
-    if w and type(file) == 'string' then recordMapping(w, file, 'wrap') end
-    return w
-  end
-  g_ui.loadUI = wrappedLoadUI
-  g_ui.displayUI = wrappedDisplayUI
-
-  -- windows that already exist: best-effort guess
-  for _, w in ipairs(rootWidget:getChildren()) do
-    seedGuessRegistry(w)
-  end
-
   topButton = modules.client_topmenu.addTopRightToggleButton(
     'uiInspectorButton', tr('UI Inspector'), '/images/topbuttons/buttons', toggle)
   topButton:setOn(false)
@@ -966,10 +969,6 @@ function terminate()
 
   Keybind.delete('Debug', 'Toggle UI Inspector Edit Mode')
 
-  if g_ui.loadUI == wrappedLoadUI and rawLoadUI then g_ui.loadUI = rawLoadUI end
-  if g_ui.displayUI == wrappedDisplayUI and rawDisplayUI then g_ui.displayUI = rawDisplayUI end
-  rawLoadUI, rawDisplayUI, wrappedLoadUI, wrappedDisplayUI = nil, nil, nil, nil
-
   editModeOn = false
   if captureLayer and not captureLayer:isDestroyed() then captureLayer:destroy() end
   captureLayer = nil
@@ -984,6 +983,7 @@ function terminate()
   topButton, inspectorWindow = nil, nil
 
   registry = setmetatable({}, { __mode = 'k' })
+  rootTagIndex = nil
   selectedWidget, anchorWidget, doc = nil, nil, nil
   currentNode, currentRef, nodeError, currentSourceFile = nil, nil, nil, nil
   propRows = {}
