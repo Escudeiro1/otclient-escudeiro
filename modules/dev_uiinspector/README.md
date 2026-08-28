@@ -32,11 +32,17 @@ any disagreement disables Save rather than risk writing to the wrong node.
 
 ## Source file resolution
 
-The owning `.otui` of a window is found by, in order: a registry populated by
-wrapping `g_ui.loadUI`/`g_ui.displayUI` (windows opened after this module
-loads); a guess from the window's style/id (windows that already existed); a
-remembered manual mapping; or the **Set source** field where you type the path
+The owning `.otui` of a window is found by, in order: a remembered manual
+mapping (per-session, then `g_settings`); the `modules/<name>/<name>.otui`
+convention guessed from the window's style/id (accepted only if the file's
+root tag matches); a one-time lazy scan of every `.otui` under `/modules` and
+`/mods` mapping main-widget tag → file, used when exactly one file has the
+window's root style; otherwise the **Set source** field where you type the path
 yourself (remembered per window in `g_settings`).
+
+Wrapping `g_ui.loadUI`/`g_ui.displayUI` was tried and abandoned: the engine
+resolves a bare name arg relative to the *calling script's* directory, so a Lua
+wrapper makes every other module load its UI from the wrong path.
 
 ## Not in this version
 
@@ -49,5 +55,5 @@ row only takes effect on Save. `@onClick` and friends can't be rebound live.
 - `otml.lua` here is a vendored copy of `modules/dev_otui/otml.lua` (global
   renamed `UiInspectorOtml`), so the two tools never share state.
 - The module is `reloadable: false` so the file watcher can't tear down its
-  capture layer / `g_ui` wrappers mid-session. Editing this module's own files
-  needs `g_modules.getModule('dev_uiinspector'):reload()` or a client restart.
+  capture layer mid-session. Editing this module's own files needs
+  `g_modules.getModule('dev_uiinspector'):reload()` or a client restart.
