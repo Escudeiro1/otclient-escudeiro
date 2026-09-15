@@ -3,6 +3,7 @@ local smartWalkDir = nil
 local walkEvent = nil
 local lastTurn = 0
 local nextWalkDir = nil
+local lastWalkDir = nil
 local lastCancelWalkTime = 0
 
 
@@ -98,11 +99,14 @@ local function walk(dir)
     end
 
     if not player:canWalk() then
-        nextWalkDir = dir
+        if lastWalkDir ~= dir then
+            nextWalkDir = dir
+        end
         return
     end
 
     nextWalkDir = nil
+    lastWalkDir = dir
     modules.game_interface.lastManualWalk = os.time()
 
     if g_game.getFeature(GameAllowPreWalk) then
