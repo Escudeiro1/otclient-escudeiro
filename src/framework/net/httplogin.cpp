@@ -225,13 +225,14 @@ void LoginHttp::httpLogin(const std::string& host, const std::string& path,
     g_asyncDispatcher->detach_task(
         [this, host, path, port, email, password, token, request_id, httpLogin] {
         if (cancelled.load()) return;
+        // Never silently fall back to plaintext HTTP on an HTTPS failure -
+        // including a certificate-verification failure, which is exactly the
+        // case an attacker would engineer. httpLogin==true means the user (or
+        // a manually-added server entry) explicitly chose plain HTTP; that
+        // path is unchanged. See SECURITY_AUDIT.md 5.1.1.
         HttpResponse result = httpLogin
             ? this->loginHttpJson(host, path, port, email, password, token)
             : this->loginHttpsJson(host, path, port, email, password, token);
-        if (!httpLogin && (!result || result.status != Success)) {
-            if (cancelled.load()) return;
-            result = loginHttpJson(host, path, port, email, password, token);
-        }
 
         if (result && result.status == Success && parseJsonResponse(result.body)) {
             g_dispatcher.addEvent([this, request_id] {
@@ -381,8 +382,6 @@ LoginHttp::HttpResponse LoginHttp::loginHttpsJson(const std::string& host,
         [this](const auto& req, const auto& res) { LoginHttp::Logger(req, res); });
 
     client.set_ca_cert_path("./cacert.pem");
-    client.enable_server_certificate_verification(false);
-    client.enable_server_hostname_verification(false);
 
     json body = {
         {"email", email},
