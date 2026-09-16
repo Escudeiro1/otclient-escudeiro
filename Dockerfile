@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM ubuntu:24.04 AS dependencies
+FROM gcc:13-bookworm AS dependencies
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND}
@@ -120,9 +120,11 @@ RUN export VCPKG_ROOT=/opt/vcpkg \
 		-DBUILD_STATIC_LIBRARY=ON \
 		-DVCPKG_MANIFEST_INSTALL=OFF \
 		-DVCPKG_INSTALLED_DIR=/srv/vcpkg_installed \
+		-DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
+		-DCMAKE_C_FLAGS="-march=x86-64-v2" \
 	&& cmake --build --preset linux-release --target otclient
 
-FROM ubuntu:24.04
+FROM debian:12
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND=${DEBIAN_FRONTEND}
