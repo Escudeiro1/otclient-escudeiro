@@ -3,11 +3,23 @@ local MAP_SHADERS = { {
     name = 'Map - Default',
     frag = nil
 }, {
-    name = 'Map - xBR',
+    name = 'Map - EPX / Scale2x',
+    frag = 'shaders/fragment/epx.frag'
+}, {
+    name = 'Map - Eagle',
+    frag = 'shaders/fragment/eagle.frag'
+}, {
+    name = 'Map - Scale3x',
+    frag = 'shaders/fragment/scale3x.frag'
+}, {
+    name = 'Map - xBR (lv2)',
     frag = 'shaders/fragment/xbr.frag'
 }, {
-    name = 'Map - xBR (Strong)',
+    name = 'Map - xBR (lv2, Strong)',
     frag = 'shaders/fragment/xbr_strong.frag'
+}, {
+    name = 'Map - xBR (lv3)',
+    frag = 'shaders/fragment/xbr_lv3.frag'
 }, {
     name = 'Map - xBR (Debug Edges)',
     frag = 'shaders/fragment/xbr_debug.frag'
