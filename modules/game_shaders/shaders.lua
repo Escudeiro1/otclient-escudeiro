@@ -6,6 +6,12 @@ local MAP_SHADERS = { {
     name = 'Map - xBR',
     frag = 'shaders/fragment/xbr.frag'
 }, {
+    name = 'Map - xBR (Strong)',
+    frag = 'shaders/fragment/xbr_strong.frag'
+}, {
+    name = 'Map - xBR (Debug Edges)',
+    frag = 'shaders/fragment/xbr_debug.frag'
+}, {
     name = 'Map - Fog',
     frag = 'shaders/fragment/fog.frag',
     tex1 = 'images/clouds'
