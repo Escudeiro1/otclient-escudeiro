@@ -11,6 +11,11 @@ uniform vec2 u_Resolution;
 uniform float u_MapZoom;
 
 #define XBR_EQ_THRESHOLD 6.0
+// See xbr.frag for why this exists: bilinear/"Smooth Retro" filtering means
+// bit-exact float equality (what the reference shader uses for its base
+// edge-existence checks) fires on pure interpolation noise almost
+// everywhere. This is a tolerance-based replacement for that check.
+#define XBR_NOISE_THRESHOLD 4.0
 #define XBR_LV2_COEFFICIENT 1.0
 #define XBR_SCALE 3.0
 
@@ -26,6 +31,10 @@ vec4 eqv(vec4 a, vec4 b) {
 
 vec4 neqv(vec4 a, vec4 b) {
     return vec4(1.0) - eqv(a, b);
+}
+
+vec4 neqNoiseTol(vec4 a, vec4 b) {
+    return vec4(1.0) - step(df(a, b), vec4(XBR_NOISE_THRESHOLD));
 }
 
 vec4 wd(vec4 a, vec4 b, vec4 c, vec4 d, vec4 e, vec4 f, vec4 g, vec4 h) {
@@ -116,7 +125,7 @@ void main() {
     vec4 fx_l = Ax * fp.y + Bx * fp.x;
     vec4 fx_u = Ay * fp.y + By * fp.x;
 
-    vec4 irlv0 = vec4(notEqual(e, f)) * vec4(notEqual(e, h));
+    vec4 irlv0 = neqNoiseTol(e, f) * neqNoiseTol(e, h);
     // CORNER_C rule (the variant the reference ships enabled by default).
     vec4 irlv1 = irlv0 * (
         neqv(f, b) * neqv(f, c) + neqv(h, d) * neqv(h, g)
@@ -124,8 +133,8 @@ void main() {
         + eqv(e, g) + eqv(e, c)
     );
 
-    vec4 irlv2l = vec4(notEqual(e, g)) * vec4(notEqual(d, g));
-    vec4 irlv2u = vec4(notEqual(e, c)) * vec4(notEqual(b, c));
+    vec4 irlv2l = neqNoiseTol(e, g) * neqNoiseTol(d, g);
+    vec4 irlv2u = neqNoiseTol(e, c) * neqNoiseTol(b, c);
 
     vec4 fx45i = clamp((fx   + delta   - Co - Ci) / (2.0 * delta),   0.0, 1.0);
     vec4 fx45  = clamp((fx   + delta   - Co)      / (2.0 * delta),   0.0, 1.0);
