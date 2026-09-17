@@ -18,9 +18,6 @@ local MAP_SHADERS = { {
     name = 'Map - xBR (lv2, Strong)',
     frag = 'shaders/fragment/xbr_strong.frag'
 }, {
-    name = 'Map - xBR (lv2, Noisy/Experimental)',
-    frag = 'shaders/fragment/xbr_noisy.frag'
-}, {
     name = 'Map - xBR (lv3)',
     frag = 'shaders/fragment/xbr_lv3.frag'
 }, {
