@@ -31,7 +31,15 @@ uniform float u_MapZoom;
 // filtering/dithering noise, small enough to still catch real edges.
 #define XBR_NOISE_THRESHOLD 4.0
 #define XBR_LV2_COEFFICIENT 2.0
-#define XBR_SCALE 3.0
+// The reference's fixed XBR_SCALE=3.0 sets the blend transition's width as a
+// fraction of one source texel, tuned for classic emulator upscaling (3x-5x)
+// where that translates to several screen pixels of visible gradient. This
+// client's "Smooth Retro" mode only renders at 2x internally (u_MapZoom),
+// where the same fixed fraction is under 1 screen pixel wide - present but
+// essentially invisible. XBR_BLEND_TARGET_PIXELS replaces that fixed
+// fraction with a target expressed in actual screen pixels instead, so the
+// blend stays visible (and consistently sized) regardless of zoom.
+#define XBR_BLEND_TARGET_PIXELS 3.0
 
 const vec3 rgbw = vec3(14.352, 28.176, 5.472);
 
@@ -131,8 +139,11 @@ void main() {
     const vec4 Cy = vec4( 2.0,  0.0, -1.0, 0.5);
     const vec4 Ci = vec4(0.25, 0.25, 0.25, 0.25);
 
-    vec4 delta   = vec4(1.0 / XBR_SCALE);
-    vec4 delta_l = vec4(0.5 / XBR_SCALE, 1.0 / XBR_SCALE, 0.5 / XBR_SCALE, 1.0 / XBR_SCALE);
+    // Effective "XBR_SCALE" derived from actual render scale so the blend
+    // transition always covers XBR_BLEND_TARGET_PIXELS real screen pixels.
+    float xbrScale = (2.0 * u_MapZoom) / XBR_BLEND_TARGET_PIXELS;
+    vec4 delta   = vec4(1.0 / xbrScale);
+    vec4 delta_l = vec4(0.5 / xbrScale, 1.0 / xbrScale, 0.5 / xbrScale, 1.0 / xbrScale);
     vec4 delta_u = delta_l.yxwz;
 
     vec4 fx   = Ao * fp.y + Bo * fp.x;

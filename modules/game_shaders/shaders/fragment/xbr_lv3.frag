@@ -25,9 +25,14 @@ uniform float u_MapZoom;
 #define XBR_EQ_THRESHOLD2 2.0
 #define XBR_NOISE_THRESHOLD 4.0
 #define XBR_LV2_COEFFICIENT 2.0
+// See xbr.frag for why this exists: the reference's fixed delta=0.4 sets the
+// blend transition's width as a fraction of one source texel, invisible at
+// this client's 2x "Smooth Retro" render scale. This expresses the target
+// in real screen pixels instead (computed per-fragment from u_MapZoom, so
+// it can't be a compile-time const like the reference's fixed delta).
+#define XBR_BLEND_TARGET_PIXELS 3.0
 
 const vec3 rgbw = vec3(14.352, 28.176, 5.472);
-const vec4 delta = vec4(0.4);
 
 vec4 df(vec4 a, vec4 b) {
     return abs(a - b);
@@ -135,6 +140,8 @@ void main() {
     const vec4 Aw = vec4( 2.0, -6.0, -2.0, 6.0);
     const vec4 Bw = vec4( 6.0,  2.0, -6.0,-2.0);
     const vec4 Cw = vec4( 5.0, -1.0, -3.0, 3.0);
+
+    vec4 delta = vec4(XBR_BLEND_TARGET_PIXELS / (2.0 * u_MapZoom));
 
     vec4 fx       = Ao * fp.y + Bo * fp.x;
     vec4 fx_left  = Ax * fp.y + Bx * fp.x;

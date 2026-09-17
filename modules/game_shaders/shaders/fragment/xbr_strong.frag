@@ -17,7 +17,10 @@ uniform float u_MapZoom;
 // everywhere. This is a tolerance-based replacement for that check.
 #define XBR_NOISE_THRESHOLD 4.0
 #define XBR_LV2_COEFFICIENT 1.0
-#define XBR_SCALE 3.0
+// See xbr.frag for why this exists: the reference's fixed fraction-of-texel
+// blend width is under 1 screen pixel wide at this client's 2x "Smooth
+// Retro" render scale. This expresses the target in real screen pixels.
+#define XBR_BLEND_TARGET_PIXELS 3.0
 
 const vec3 rgbw = vec3(14.352, 28.176, 5.472);
 
@@ -117,8 +120,9 @@ void main() {
     const vec4 Cy = vec4( 2.0,  0.0, -1.0, 0.5);
     const vec4 Ci = vec4(0.25, 0.25, 0.25, 0.25);
 
-    vec4 delta   = vec4(1.0 / XBR_SCALE);
-    vec4 delta_l = vec4(0.5 / XBR_SCALE, 1.0 / XBR_SCALE, 0.5 / XBR_SCALE, 1.0 / XBR_SCALE);
+    float xbrScale = (2.0 * u_MapZoom) / XBR_BLEND_TARGET_PIXELS;
+    vec4 delta   = vec4(1.0 / xbrScale);
+    vec4 delta_l = vec4(0.5 / xbrScale, 1.0 / xbrScale, 0.5 / xbrScale, 1.0 / xbrScale);
     vec4 delta_u = delta_l.yxwz;
 
     vec4 fx   = Ao * fp.y + Bo * fp.x;
