@@ -3,8 +3,8 @@ local MAP_SHADERS = { {
     name = 'Map - Default',
     frag = nil
 }, {
-    name = 'Map - HD',
-    frag = 'shaders/fragment/hd.frag'
+    name = 'Map - xBR',
+    frag = 'shaders/fragment/xbr.frag'
 }, {
     name = 'Map - Fog',
     frag = 'shaders/fragment/fog.frag',
