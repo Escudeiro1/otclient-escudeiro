@@ -6,6 +6,12 @@ local MAP_SHADERS = { {
     name = 'Map - Sharp (Nearest-Style)',
     frag = 'shaders/fragment/sharp.frag'
 }, {
+    name = 'Map - Painterly (Smooth/Rubber HD)',
+    frag = 'shaders/fragment/painterly.frag'
+}, {
+    name = 'Map - Painterly (Strong)',
+    frag = 'shaders/fragment/painterly_strong.frag'
+}, {
     name = 'Map - EPX / Scale2x',
     frag = 'shaders/fragment/epx.frag'
 }, {
