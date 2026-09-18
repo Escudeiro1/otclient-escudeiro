@@ -2,7 +2,7 @@
 // PAINTERLY_SPREAD times wider (still only 21 samples, not a bigger radius-3
 // filter) for a more exaggerated, more "rubber"/rounded smoothing effect.
 // See painterly.frag for the full algorithm explanation.
-#define PAINTERLY_SPREAD 1.75
+#define PAINTERLY_SPREAD 1.25
 uniform sampler2D u_Tex0;
 varying vec2 v_TexCoord;
 uniform vec2 u_Resolution;
