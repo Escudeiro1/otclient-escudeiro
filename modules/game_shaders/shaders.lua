@@ -3,6 +3,9 @@ local MAP_SHADERS = { {
     name = 'Map - Default',
     frag = nil
 }, {
+    name = 'Map - Sharp (Nearest-Style)',
+    frag = 'shaders/fragment/sharp.frag'
+}, {
     name = 'Map - EPX / Scale2x',
     frag = 'shaders/fragment/epx.frag'
 }, {
