@@ -153,14 +153,12 @@ local function updateBonusIcons(dayStreakLevel)
     for i, widget in ipairs(rewardWallController.ui.restingAreaPanel.bonusIcons:getChildren()) do
         local active = streak >= i + 1
         widget:setOn(active)
-        -- imgBonuses (declared as an HTML <div class="imgBonuses">, not an OTUI
-        -- tag) never gets the nested overlay children its style defines --
-        -- those are only created by the tag-based widget path (see
-        -- UIManager::createWidgetFromOTML), which class-application doesn't go
-        -- through. :setOn() is therefore cosmetically inert here. Tint the icon
-        -- layer directly instead -- setIconColor is a plain UIWidget property,
-        -- unaffected by that limitation.
-        widget:setIconColor(active and "#ffffff" or "#4d4d4d")
+        -- game_rewardwall.html declares these as <imgBonuses> tags (not a CSS
+        -- class on a <div>), so the style's nested ditherpattern overlay child
+        -- is actually instantiated (see UIManager::createWidgetFromOTML) and
+        -- reachable here, same as RewardButton3's ditherpattern is used above
+        -- for the daily-reward-row locks.
+        widget.ditherpattern:setVisible(not active)
     end
 end
 
