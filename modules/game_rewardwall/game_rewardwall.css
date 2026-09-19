@@ -3,7 +3,8 @@
   width: 541px;
   height: 495px;
   display: block;
-  color: #929292;
+  color: #909090;
+  font: Verdana Bold-11px;
 }
 
 .history-panel {
@@ -23,6 +24,8 @@
   height: 136px;
   margin-left: 5px;
   margin-top: -5px;
+  color: #909090;
+  font: Verdana Bold-11px;
 }
 
 .resting-area-info {
@@ -41,9 +44,9 @@
 }
 
 .resting-area-time {
-  width: 22px;
-  height: 28px;
-  margin-left: 30;
+  width: 66px;
+  height: 20px;
+  margin-left: 22;
   --image-border: 3;
   --image-source: /images/ui/test/button-verydarkgrey-down;
 }
@@ -84,8 +87,8 @@
 }
 
 .resting-area-gold {
-  size: 22 20;
-  margin-left: 27;
+  size: 66 20;
+  margin-left: 22;
 }
 
 .bonus-icons-container {
@@ -102,11 +105,15 @@
   margin-top: 70px;
   margin-left: 111px;
   --text-auto-resize: false;
+  color: #c0c0c0;
+  font: verdana-11px-rounded;
 }
 
 .daily-rewards-panel {
   height: 139px;
   padding-left: 25px;
+  color: #909090;
+  font: Verdana Bold-11px;
 }
 
 .reward-item {
@@ -223,23 +230,23 @@
   float: right;
   text-align: center;
   vertical-align: center;
-  width: 50px;
-  height: 9px;
+  width: 43px;
+  height: 21px;
   font: cipsoftFont;
   color: #dfdfdf;
 }
 .history-button {
   float: right;
   margin-right: 10px;
-  width: 50px;
-  height: 9px;
+  width: 43px;
+  height: 21px;
   font: cipsoftFont;
   color: #dfdfdf;
 }
 
 .imgBonusesCss {
-  width: 60px;
-  height: 70px;
+  width: 64px;
+  height: 64px;
 }
 
 
