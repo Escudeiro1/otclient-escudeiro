@@ -230,7 +230,11 @@ local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken, nextRewardT
             test.gold:setVisible(false)
             test.text:setText(formatTimeLeft(nextRewardTime))
             test.text:setColor("white")
-        elseif daysMissed and daysMissed > 0 then
+        else
+            -- Always shown while the current reward hasn't been collected yet, even
+            -- at 0 (not expired yet -- this previews what it would currently cost to
+            -- keep the streak if it did expire right now).
+            local missed = daysMissed or 0
             local test = g_ui.createWidget("GoldLabel2", rewardGoldWidget)
             test:setOn(true)
             test:fill("parent")
@@ -238,8 +242,8 @@ local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken, nextRewardT
             test.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
             test.gold:setImageSize("12 12")
             test.gold:setImageOffset("-20 0")
-            test.text:setText(daysMissed >= 4 and ">3" or tostring(daysMissed))
-            test.text:setColor("red")
+            test.text:setText(missed >= 4 and ">3" or tostring(missed))
+            test.text:setColor(missed > 0 and "red" or "white")
         end
         rewardGoldWidget.status = 2
         currentReward:setOn(false)
