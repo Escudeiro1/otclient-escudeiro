@@ -151,13 +151,7 @@ end
 local function updateBonusIcons(dayStreakLevel)
     local streak = math.min(dayStreakLevel, 7)
     for i, widget in ipairs(rewardWallController.ui.restingAreaPanel.bonusIcons:getChildren()) do
-        local active = streak >= i + 1
-        widget:setOn(active)
-        -- The dragon artwork is always drawn (each icon has its own fixed
-        -- icon-clip frame set in game_rewardwall.css); "inactive" is achieved
-        -- by showing the ditherpattern noise overlay on top of it, not by any
-        -- style tied to :setOn(), which imgBonuses doesn't define.
-        widget.ditherpattern:setVisible(not active)
+        widget:setOn(streak >= i + 1)
     end
 end
 
