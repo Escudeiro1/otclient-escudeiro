@@ -423,12 +423,21 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     restingAreaInfo.timeLeft:setText(rewardTaken and "" or (expired and "expired" or formatTimeLeft(timeLeft)))
 
     if streakWarning then
-        streakWarning:setVisible(expired)
-        if expired then
+        streakWarning:setVisible(true)
+        if rewardTaken then
+            if dayStreakLevel >= 7 then
+                streakWarning:parseColoredText("Great! You benefit from the best possible rewards and bonuses",
+                    "#c0c0c0")
+            else
+                streakWarning:parseColoredText("You already claimed your daily reward.", "#c0c0c0")
+            end
+        elseif expired then
             local jokerMessage = daysMissed >= 4 and "Too bad, you do not have enough Daily Reward Jokers." or
                                       ("Spend " .. daysMissed .. " Daily Reward Joker(s) to keep your streak.")
             streakWarning:parseColoredText(
                 "You did not claim your daily reward in time.\n" .. jokerMessage, "#c0c0c0")
+        else
+            streakWarning:parseColoredText("Hurry up! collect your daily reward and keep your streak.", "#c0c0c0")
         end
     end
 
