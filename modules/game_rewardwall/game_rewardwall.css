@@ -37,15 +37,15 @@
 .resting-area-icon {
   margin-left: 44px;
   width: 22px;
-  height: 42px;
+  height: 40px;
   --image-size: 66 44;
   --image-fixed-ratio: true;
   --text-offset: 25 -7;
 }
 
 .resting-area-time {
-  width: 66px;
-  height: 20px;
+  width: 68px;
+  height: 22px;
   margin-left: 22;
   --image-border: 3;
   --image-source: /images/ui/test/button-verydarkgrey-down;
@@ -90,7 +90,7 @@
 
 .resting-area-gold {
   width: 66px;
-  height: 9px;
+  height: 22px;
   margin-left: 22;
   --fixed-size: true;
 }
@@ -235,7 +235,7 @@
   text-align: center;
   vertical-align: center;
   width: 43px;
-  height: 21px;
+  height: 23px;
   font: cipsoftFont;
   color: #dfdfdf;
   --text-auto-resize: false;
@@ -244,7 +244,7 @@
   float: right;
   margin-right: 10px;
   width: 43px;
-  height: 21px;
+  height: 23px;
   font: cipsoftFont;
   color: #dfdfdf;
   --text-auto-resize: false;
