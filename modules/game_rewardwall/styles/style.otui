@@ -53,6 +53,9 @@ RewardButton < UIWidget
     image-source: /game_rewardwall/images/rewardButton
     image-clip: 0 0 66 20
 
+RewardWallButton < Button
+  size: 43 21
+
 RewardButton3 < UIButton
   font: verdana-11px-antialised
   color: #dfdfdfff
@@ -109,7 +112,7 @@ imgBonuses < UIWidget
   border-color-right: #747474
   image-source: /images/ui/test/button-verydarkgrey-down
   icon-source: /game_rewardwall/images/icon-restingareabonuseslevels
-  size: 64 70
+  size: 64 64
 
   UIWidget
     id:ditherpattern
