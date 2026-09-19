@@ -123,7 +123,7 @@ imgBonuses < UIWidget
     margin-bottom: 1
     visible:false
   UIWidget
-    id:ditherpattern
+    id:premiumBanner
     image-source: /game_rewardwall/images/icon-banner-premium
     phantom: true
     anchors.top: parent.top
