@@ -314,20 +314,27 @@ local function onRestingAreaState(zone, state, message)
     -- activate/deactivate (state/message change) while the player never leaves the
     -- resting area (zone stays 1 the whole time), and that update must not be dropped.
     local key = zone .. "|" .. state .. "|" .. message
+    print(string.format("[RewardWallDebug] onRestingAreaState: zone=%s state=%s message=%q lastKey=%s newKey=%s",
+        tostring(zone), tostring(state), message, tostring(ZONE.LAST_KEY), key))
     if ZONE.LAST_KEY == key then
+        print("[RewardWallDebug] onRestingAreaState: dedup HIT, skipping")
         return
     end
     ZONE.LAST_KEY = key
     local gameInterface = modules.game_interface
     if zone == ZONE.RESTING_AREA_ZONE then
+        print("[RewardWallDebug] onRestingAreaState: branch=update/create, icon id=" .. ZONE.ICON_ID)
         -- Same string ICON_ID used here and in the destroy branch below, so the
         -- lookup actually finds the existing widget instead of always falling
         -- through to the createIfMissing path (widget ids are always strings).
         gameInterface.processIcon(ZONE.ICON_ID, function(icon)
+            print("[RewardWallDebug] onRestingAreaState: setTooltip on icon " .. tostring(icon))
             icon:setTooltip(message)
         end, true)
     else
+        print("[RewardWallDebug] onRestingAreaState: branch=destroy, icon id=" .. ZONE.ICON_ID)
         gameInterface.processIcon(ZONE.ICON_ID, function(icon)
+            print("[RewardWallDebug] onRestingAreaState: destroying icon " .. tostring(icon))
             icon:destroy()
         end)
     end

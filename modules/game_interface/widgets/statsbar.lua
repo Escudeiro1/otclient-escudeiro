@@ -312,12 +312,33 @@ function StatsBar.reloadCurrentStatsBarQuickInfo()
     end
 end
 
+-- Icons[] is keyed by the numeric PlayerStates bit (e.g. 30 for Rewards), but
+-- callers like game_rewardwall's processIcon() only know the widget's string
+-- id (Icons[bit].id, e.g. "condition_Rewards") since that's the only thing
+-- getChildById can match against an already-created widget. Accept either.
+local function resolveIconDef(id)
+    if type(id) == "number" then
+        return Icons[id]
+    end
+    for _, def in pairs(Icons) do
+        if def.id == id then
+            return def
+        end
+    end
+    return nil
+end
+
 local function loadIcon(bitChanged, content, topmenu)
+    local iconDef = resolveIconDef(bitChanged)
+    if not iconDef then
+        g_logger.warning(string.format("loadIcon: no Icons[] entry found for id %s", tostring(bitChanged)))
+        return nil
+    end
     local icon = g_ui.createWidget('ConditionWidget', content)
-    icon:setId(Icons[bitChanged].id)
+    icon:setId(iconDef.id)
     icon:setImageSource("/images/game/states/player-state-flags")
-    icon:setImageClip(((Icons[bitChanged].clip - 1) * 9) .. ' 0 9 9')
-    local tooltip = Icons[bitChanged].tooltipBar or Icons[bitChanged].tooltip
+    icon:setImageClip(((iconDef.clip - 1) * 9) .. ' 0 9 9')
+    local tooltip = iconDef.tooltipBar or iconDef.tooltip
     if tooltip == "You are GoshnarTaint" then
         tooltip = "Goshnar's Lairs Penalties:\n" ..
             "- 10% chance of creature teleportation to you\n" ..
@@ -376,11 +397,19 @@ function processIcon(id, action, createIfMissing)
     for _, contentData in ipairs(getStatsBarsIconContent()) do
         local icon = contentData.content:getChildById(id)
         if icon then
+            print("[RewardWallDebug] processIcon: found existing icon for id=" .. tostring(id) .. " in content=" .. tostring(contentData.content))
             action(icon)
         elseif createIfMissing then
             icon = loadIcon(id, contentData.content, contentData.loadIconTransparent)
-            icon:setParent(contentData.content)
-            action(icon)
+            if icon then
+                print("[RewardWallDebug] processIcon: created new icon for id=" .. tostring(id) .. " in content=" .. tostring(contentData.content))
+                icon:setParent(contentData.content)
+                action(icon)
+            else
+                print("[RewardWallDebug] processIcon: loadIcon FAILED to resolve id=" .. tostring(id))
+            end
+        else
+            print("[RewardWallDebug] processIcon: no icon for id=" .. tostring(id) .. ", not creating (createIfMissing=false)")
         end
     end
 end
