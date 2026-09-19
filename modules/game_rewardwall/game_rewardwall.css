@@ -49,6 +49,7 @@
   margin-left: 22;
   --image-border: 3;
   --image-source: /images/ui/test/button-verydarkgrey-down;
+  --fixed-size: true;
 }
 
 .resting-area-time-done {
@@ -88,8 +89,10 @@
 }
 
 .resting-area-gold {
-  size: 66 20;
+  width: 66px;
+  height: 9px;
   margin-left: 22;
+  --fixed-size: true;
 }
 
 .bonus-icons-container {
