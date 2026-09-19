@@ -6319,6 +6319,7 @@ void ProtocolGame::parseOpenRewardWall(const InputMessagePtr& msg)
     uint16_t tokens = 0;
     std::string errorMessage = "";
     uint32_t timeLeft = 0;
+    uint8_t daysMissed = 0;
 
     if (wasDailyRewardTaken != 0) {// taken (player already took reward?)
         errorMessage = msg->getString(); // error message
@@ -6327,7 +6328,7 @@ void ProtocolGame::parseOpenRewardWall(const InputMessagePtr& msg)
             tokens = msg->getU16(); // Tokens
         }
     } else {
-        msg->getU8(); // Unknown
+        daysMissed = msg->getU8(); // 0 = not expired, 1-3 = jokers needed to keep streak, 4 = ">3" unrecoverable
         timeLeft = msg->getU32(); // time left to pickup reward without loosing streak
         tokens = msg->getU16(); // Tokens
     }
@@ -6335,7 +6336,7 @@ void ProtocolGame::parseOpenRewardWall(const InputMessagePtr& msg)
     const uint16_t dayStreakLevel = msg->getU16(); // day streak level
 
     g_lua.callGlobalField("g_game", "onOpenRewardWall", bonusShrine, nextRewardTime, dayStreakDay,
-                          wasDailyRewardTaken, errorMessage, tokens, timeLeft, dayStreakLevel);
+                          wasDailyRewardTaken, errorMessage, tokens, timeLeft, dayStreakLevel, daysMissed);
 }
 
 namespace {

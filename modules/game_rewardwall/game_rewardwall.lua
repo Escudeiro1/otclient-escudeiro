@@ -38,10 +38,9 @@ local COLORS = {
     BASE_2 = "#414141"
 }
 local ZONE = {
-    LAST_ZONE = -99,
+    LAST_KEY = nil,
     RESTING_AREA_ZONE = 1,
-    ICON_ID = "condition_Rewards",
-    NUMERIC_ICON_ID = 30
+    ICON_ID = "condition_Rewards" -- maps to PlayerStates.Rewards (30) via Icons[30].id in gamelib/player.lua
 }
 
 local bundleType = {
@@ -143,12 +142,16 @@ local function premiumStatusWindwos(isPremium)
     rewardWallController.ui.premiumStatus.premiumButton:setOn(not isPremium)
     rewardWallController.ui.infoPanel.free:setColor(isPremium and "#909090" or "#FFFFFF")
     rewardWallController.ui.infoPanel.premium:setColor(isPremium and "#FFFFFF" or "#909090")
-    if isPremium then
-        for i, widget in pairs(rewardWallController.ui.restingAreaPanel.bonusIcons:getChildren()) do
-            if widget then
-                widget:setOn(true)
-            end
-        end
+end
+
+-- Bonus icon i (1..6) represents streak day (i+1) - day 1 has no bonus. Lights
+-- based on the actual (server-reset-on-expiry) streak level, not premium status;
+-- mirrors canary's Player.getActiveDailyRewardBonusesName/getDailyRewardBonusesCount
+-- (data/libs/functions/player.lua), which cap the same loop at streak day 7.
+local function updateBonusIcons(dayStreakLevel)
+    local streak = math.min(dayStreakLevel, 7)
+    for i, widget in ipairs(rewardWallController.ui.restingAreaPanel.bonusIcons:getChildren()) do
+        widget:setOn(streak >= i + 1)
     end
 end
 
@@ -305,30 +308,22 @@ end
 -- /*=============================================
 -- =            onParse                  =
 -- =============================================*/
---[[
---  0xDE ??
-local function onDailyRewardCollectionState(state)
-    if not rewardWallController.ui:isVisible() then
-        return
-    end
-
-    local text = {
-        [DailyRewardStatus.DAILY_REWARD_COLLECTED] = "you did not claim your daily reward in time. too bad, you do not have enough Daily Reward Jokers.",
-        [DailyRewardStatus.DAILY_REWARD_NOTCOLLECTED] = "You did not claim your daily reward in time. If you don't claim your reward now, your [color=#D33C3C]streak will be reset.[/color]",
-        [DailyRewardStatus.DAILY_REWARD_NOTAVAILABLE] ="idk",
-    }
-    rewardWallController.ui.restingAreaPanel.streakWarning:parseColoredText(text[state],"#c0c0c0")
-end 
-]]
 
 local function onRestingAreaState(zone, state, message)
-    if ZONE.LAST_ZONE == zone then -- todo move cpp
+    -- Dedup on the full (zone, state, message) tuple, not zone alone: a bonus can
+    -- activate/deactivate (state/message change) while the player never leaves the
+    -- resting area (zone stays 1 the whole time), and that update must not be dropped.
+    local key = zone .. "|" .. state .. "|" .. message
+    if ZONE.LAST_KEY == key then
         return
     end
-    ZONE.LAST_ZONE = zone
+    ZONE.LAST_KEY = key
     local gameInterface = modules.game_interface
     if zone == ZONE.RESTING_AREA_ZONE then
-        gameInterface.processIcon(ZONE.NUMERIC_ICON_ID, function(icon)
+        -- Same string ICON_ID used here and in the destroy branch below, so the
+        -- lookup actually finds the existing widget instead of always falling
+        -- through to the createIfMissing path (widget ids are always strings).
+        gameInterface.processIcon(ZONE.ICON_ID, function(icon)
             icon:setTooltip(message)
         end, true)
     else
@@ -373,7 +368,7 @@ local function disconnectOnServerError()
 end
 
 local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasDailyRewardTaken, errorMessage, tokens,
-    timeLeft, dayStreakLevel)
+    timeLeft, dayStreakLevel, daysMissed)
     if bonusShrines == OPEN_WINDOWS.SHRINE then
         rewardWallController.ui:show()
         rewardWallController.ui:raise()
@@ -382,15 +377,35 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     bonusShrine = bonusShrines
     updateDailyRewards(dayStreakDay, wasDailyRewardTaken)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setText(dayStreakLevel)
+    updateBonusIcons(dayStreakLevel)
 
     local restingAreaInfo = rewardWallController.ui.restingAreaPanel.restingAreaInfo
+    local streakWarning = rewardWallController.ui.restingAreaPanel.streakWarning
     local rewardTaken = wasDailyRewardTaken ~= 0
+    local expired = not rewardTaken and (daysMissed or 0) > 0
+
+    -- Three top-left slot states:
+    --   (a) just collected            -> green checkmark
+    --   (b) collected, grace running  -> live countdown of hours remaining
+    --   (c) grace elapsed, uncollected -> "Expired" + joker-cost message (daysMissed 1-3,
+    --       or 4 meaning ">3"/unrecoverable since jokers cap at 3)
     -- When the reward is already taken, the server sends no timeLeft field at all (see
     -- sendOpenRewardWall), so timeLeft stays at its C++ default of 0 -- which formatTimeLeft
     -- treats as a "no data" sentinel and renders as "Expired". Show the collected checkmark
     -- instead of calling formatTimeLeft in that case, rather than misreading 0 as expired.
     restingAreaInfo.timeLeft.timeLeftDone:setVisible(rewardTaken)
-    restingAreaInfo.timeLeft:setText(rewardTaken and "" or formatTimeLeft(timeLeft))
+    restingAreaInfo.timeLeft:setText(rewardTaken and "" or (expired and "Expired" or formatTimeLeft(timeLeft)))
+
+    if streakWarning then
+        streakWarning:setVisible(expired)
+        if expired then
+            local jokerMessage = daysMissed >= 4 and "Too bad, you do not have enough Daily Reward Jokers." or
+                                      ("Spend " .. daysMissed .. " Daily Reward Joker(s) to keep your streak.")
+            streakWarning:parseColoredText(
+                "You did not claim your daily reward in time.\n" .. jokerMessage, "#c0c0c0")
+        end
+    end
+
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold.text:setText(tokens)
     rewardWallController.ui.footerPanel.footerGold1.text:setText(tokens)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setImageSource(
@@ -497,7 +512,6 @@ function rewardWallController:onInit()
         onDailyReward = onDailyReward,
         onRewardHistory = onRewardHistory,
         onRestingAreaState = onRestingAreaState
-        -- onDailyRewardCollectionState
     })
     fixCssIncompatibility()
 end
