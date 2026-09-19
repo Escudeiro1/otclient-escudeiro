@@ -194,7 +194,14 @@ local function visibleHistory(bool)
     end
 end
 
-local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken)
+-- Third argument (nextRewardTime) is only non-zero once today's reward has
+-- already been collected: it's the timestamp the *next* reward opens up, and
+-- drives a countdown under the current slot. The fourth (daysMissed) is only
+-- non-zero once the current reward's grace period has elapsed uncollected,
+-- and switches that same slot to a joker-cost badge instead. Neither applies
+-- while the current reward is still collectible within its grace period, so
+-- the slot shows no label at all in that case.
+local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken, nextRewardTime, daysMissed)
     local dailyRewardsPanel = rewardWallController.ui.dailyRewardsPanel
     for i = 1, dayStreakDay do
         local rewardWidget = dailyRewardsPanel:getChildById("reward" .. i)
@@ -213,20 +220,28 @@ local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken)
 
     local currentReward = dailyRewardsPanel:getChildById("reward" .. dayStreakDay + 1)
     if currentReward then
-        local test = g_ui.createWidget("GoldLabel2", currentReward:getChildById("rewardGold" .. dayStreakDay + 1))
-        test:setOn(true)
-        test:fill("parent")
-        test:setPhantom(true)
-        test.text:setText(wasDailyRewardTaken)
-        if wasDailyRewardTaken < g_game.getLocalPlayer():getResourceBalance(ResourceTypes.DAILYREWARD_STREAK) then
+        local rewardGoldWidget = currentReward:getChildById("rewardGold" .. dayStreakDay + 1)
+        rewardGoldWidget:destroyChildren()
+        if nextRewardTime and nextRewardTime > 0 then
+            local test = g_ui.createWidget("GoldLabel2", rewardGoldWidget)
+            test:setOn(true)
+            test:fill("parent")
+            test:setPhantom(true)
+            test.gold:setVisible(false)
+            test.text:setText(formatTimeLeft(nextRewardTime))
             test.text:setColor("white")
-        else
+        elseif daysMissed and daysMissed > 0 then
+            local test = g_ui.createWidget("GoldLabel2", rewardGoldWidget)
+            test:setOn(true)
+            test:fill("parent")
+            test:setPhantom(true)
+            test.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
+            test.gold:setImageSize("12 12")
+            test.gold:setImageOffset("-20 0")
+            test.text:setText(daysMissed >= 4 and ">3" or tostring(daysMissed))
             test.text:setColor("red")
         end
-        test.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
-        test.gold:setImageSize("12 12")
-        test.gold:setImageOffset("-20 0")
-        currentReward:getChildById("rewardGold" .. dayStreakDay + 1).status = 2
+        rewardGoldWidget.status = 2
         currentReward:setOn(false)
         currentReward:getChildById("rewardButton" .. dayStreakDay + 1).ditherpattern:setVisible(false)
         currentReward:getChildById("rewardButton" .. dayStreakDay + 1):setOn(false)
@@ -314,27 +329,20 @@ local function onRestingAreaState(zone, state, message)
     -- activate/deactivate (state/message change) while the player never leaves the
     -- resting area (zone stays 1 the whole time), and that update must not be dropped.
     local key = zone .. "|" .. state .. "|" .. message
-    print(string.format("[RewardWallDebug] onRestingAreaState: zone=%s state=%s message=%q lastKey=%s newKey=%s",
-        tostring(zone), tostring(state), message, tostring(ZONE.LAST_KEY), key))
     if ZONE.LAST_KEY == key then
-        print("[RewardWallDebug] onRestingAreaState: dedup HIT, skipping")
         return
     end
     ZONE.LAST_KEY = key
     local gameInterface = modules.game_interface
     if zone == ZONE.RESTING_AREA_ZONE then
-        print("[RewardWallDebug] onRestingAreaState: branch=update/create, icon id=" .. ZONE.ICON_ID)
         -- Same string ICON_ID used here and in the destroy branch below, so the
         -- lookup actually finds the existing widget instead of always falling
         -- through to the createIfMissing path (widget ids are always strings).
         gameInterface.processIcon(ZONE.ICON_ID, function(icon)
-            print("[RewardWallDebug] onRestingAreaState: setTooltip on icon " .. tostring(icon))
             icon:setTooltip(message)
         end, true)
     else
-        print("[RewardWallDebug] onRestingAreaState: branch=destroy, icon id=" .. ZONE.ICON_ID)
         gameInterface.processIcon(ZONE.ICON_ID, function(icon)
-            print("[RewardWallDebug] onRestingAreaState: destroying icon " .. tostring(icon))
             icon:destroy()
         end)
     end
@@ -382,7 +390,7 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
         rewardWallController.ui:focus()
     end
     bonusShrine = bonusShrines
-    updateDailyRewards(dayStreakDay, wasDailyRewardTaken)
+    updateDailyRewards(dayStreakDay, wasDailyRewardTaken, nextRewardTime, daysMissed)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setText(dayStreakLevel)
     updateBonusIcons(dayStreakLevel)
 
@@ -401,7 +409,7 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     -- treats as a "no data" sentinel and renders as "Expired". Show the collected checkmark
     -- instead of calling formatTimeLeft in that case, rather than misreading 0 as expired.
     restingAreaInfo.timeLeft.timeLeftDone:setVisible(rewardTaken)
-    restingAreaInfo.timeLeft:setText(rewardTaken and "" or (expired and "Expired" or formatTimeLeft(timeLeft)))
+    restingAreaInfo.timeLeft:setText(rewardTaken and "" or (expired and "expired" or formatTimeLeft(timeLeft)))
 
     if streakWarning then
         streakWarning:setVisible(expired)
@@ -413,7 +421,11 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
         end
     end
 
-    rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold.text:setText(tokens)
+    -- Below the top-left slot this badge normally shows the player's current joker
+    -- balance, but once expired it switches to the joker cost to recover the streak
+    -- (same 0-3 / ">3" range as the streakWarning message above).
+    rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold.text:setText(
+        expired and (daysMissed >= 4 and ">3" or tostring(daysMissed)) or tokens)
     rewardWallController.ui.footerPanel.footerGold1.text:setText(tokens)
     rewardWallController.ui.restingAreaPanel.restingAreaInfo.rewardStreakIcon:setImageSource(
         "/game_rewardwall/images/" .. getDayStreakIcon(dayStreakLevel))

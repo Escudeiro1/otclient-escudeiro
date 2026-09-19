@@ -5515,8 +5515,6 @@ void ProtocolGame::parseRestingAreaState(const InputMessagePtr& msg)
     const uint8_t state = msg->getU8();
     const auto& message = msg->getString();
 
-    g_logger.info("[RewardWallDebug] parseRestingAreaState: zone={} state={} message=\"{}\"", zone, state, message);
-
     g_lua.callGlobalField("g_game", "onRestingAreaState", zone, state, message);
 }
 

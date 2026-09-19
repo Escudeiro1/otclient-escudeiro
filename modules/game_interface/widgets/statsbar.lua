@@ -397,19 +397,13 @@ function processIcon(id, action, createIfMissing)
     for _, contentData in ipairs(getStatsBarsIconContent()) do
         local icon = contentData.content:getChildById(id)
         if icon then
-            print("[RewardWallDebug] processIcon: found existing icon for id=" .. tostring(id) .. " in content=" .. tostring(contentData.content))
             action(icon)
         elseif createIfMissing then
             icon = loadIcon(id, contentData.content, contentData.loadIconTransparent)
             if icon then
-                print("[RewardWallDebug] processIcon: created new icon for id=" .. tostring(id) .. " in content=" .. tostring(contentData.content))
                 icon:setParent(contentData.content)
                 action(icon)
-            else
-                print("[RewardWallDebug] processIcon: loadIcon FAILED to resolve id=" .. tostring(id))
             end
-        else
-            print("[RewardWallDebug] processIcon: no icon for id=" .. tostring(id) .. ", not creating (createIfMissing=false)")
         end
     end
 end
