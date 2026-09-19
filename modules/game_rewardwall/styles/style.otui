@@ -118,12 +118,12 @@ imgBonuses < UIWidget
     id:ditherpattern
     image-source: /game_rewardwall/images/ditherpattern
     image-border: 3
-    anchors.fill: parent
+    size: 62 62
+    anchors.top: parent.top
+    anchors.left: parent.left
     phantom: true
     margin-top: 1
     margin-left: 1
-    margin-right: 1
-    margin-bottom: 1
     visible:false
   UIWidget
     id:premiumBanner

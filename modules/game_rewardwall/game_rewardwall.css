@@ -52,8 +52,9 @@
 }
 
 .resting-area-time-done {
-  width: 32px;
-  height: 18px;
+  width: 66px;
+  height: 20px;
+  --image-clip: 0 20 66 20;
 }
 
 #bonusIcon1 {
@@ -230,12 +231,16 @@
   float: right;
   text-align: center;
   vertical-align: center;
+  width: 43px;
+  height: 21px;
   font: cipsoftFont;
   color: #dfdfdf;
 }
 .history-button {
   float: right;
   margin-right: 10px;
+  width: 43px;
+  height: 21px;
   font: cipsoftFont;
   color: #dfdfdf;
 }

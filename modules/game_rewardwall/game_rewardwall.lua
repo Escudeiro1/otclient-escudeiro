@@ -537,9 +537,6 @@ local function fixCssIncompatibility() -- temp
     footerGold2.gold:setImageSource("/game_rewardwall/images/instant-reward-access-icon")
     footerGold2.gold:setImageSize("12 12")
     footerGold2.gold:setImageOffset("-5 0")
-
-    print("[RewardWallDebug] restingAreaGold=" .. tostring(restingAreaGold) .. " restingAreaGold.gold=" .. tostring(restingAreaGold.gold))
-    print("[RewardWallDebug] footerGold2=" .. tostring(footerGold2) .. " footerGold2.gold=" .. tostring(footerGold2.gold))
 end
 -- /*=============================================
 -- =            Controller                  =
