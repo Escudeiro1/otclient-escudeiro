@@ -578,6 +578,11 @@ function rewardWallController:onInit()
     rewardWallController.ui:hide()
     createFooterButtons()
 
+    -- Set directly on the widget (not via a CSS class) so it doesn't cascade
+    -- to infoPanel's free/premium children, which have their own colors.
+    rewardWallController.ui.infoPanel:setFont("Verdana Bold-11px")
+    rewardWallController.ui.infoPanel:setColor("#c0c0c0")
+
     rewardWallController:registerEvents(g_game, {
         onOpenRewardWall = onOpenRewardWall,
         onDailyReward = onDailyReward,
@@ -721,12 +726,12 @@ function rewardWallController:onhoverBonus(event)
 
     local isPremium = g_game.getLocalPlayer():isPremium()
     local bonusText = string.format(
-        "Allow [color=#909090]%s[/color]%s\nThis bonus is active because you are [color=%s]Premium[/color] and reached a reward streak of at least [color=#44AD25]%d[/color].%s",
-        bonus.name, isPremium and "" or "[color=#ff0000](Locked)[/color]", isPremium and "#44AD25" or "#ff0000",
-        bonus.id,
-        isPremium and ("\n\nActive bonuses: [color=#909090]%s[/color]."):format(getBonusStrings(bonuses)) or "")
+        "Allow %s%s\nThis bonus is active because you are %s and reached a reward streak of at least [color=#44AD25]%d[/color].",
+        bonus.name, isPremium and "" or " (Locked)",
+        isPremium and "[color=#44AD25]Premium[/color]" or "Premium",
+        bonus.id)
 
-    rewardWallController.ui.infoPanel:parseColoredText(bonusText)
+    rewardWallController.ui.infoPanel:parseColoredText(bonusText, "#c0c0c0")
 end
 
 function rewardWallController:onhoverStatusPlayer(event)
@@ -747,7 +752,7 @@ function rewardWallController:onhoverStatusPlayer(event)
 
     local id = event.target:getId()
     local info = playerStatus[id]
-    rewardWallController.ui.infoPanel:parseColoredText(info or DEFAULT_MESSAGE)
+    rewardWallController.ui.infoPanel:parseColoredText(info or DEFAULT_MESSAGE, "#c0c0c0")
 end
 
 function rewardWallController:onhoverRewardType(event)
