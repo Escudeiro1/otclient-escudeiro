@@ -42,6 +42,7 @@
   --image-size: 66 44;
   --image-fixed-ratio: true;
   --text-offset: 25 0;
+  color: #c0c0c0;
 }
 
 .resting-area-time {
