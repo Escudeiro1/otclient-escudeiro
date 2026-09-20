@@ -26,6 +26,7 @@
   margin-top: -5px;
   color: #909090;
   font: Verdana Bold-11px;
+  --fixed-size: true;
 }
 
 .resting-area-info {
@@ -119,6 +120,7 @@
   padding-left: 25px;
   color: #909090;
   font: Verdana Bold-11px;
+  --fixed-size: true;
 }
 
 .reward-item {
