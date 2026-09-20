@@ -104,6 +104,7 @@ function mapController:onInit()
 end
 
 function mapController:onGameStart()
+    print("[LoginStutterDebug] game_minimap onGameStart fired at t=" .. g_clock.millis())
     mapController:registerEvents(g_game, {
         onChangeWorldTime = onChangeWorldTime
     })
@@ -127,10 +128,14 @@ function mapController:onGameStart()
     end
 
     if g_resources.fileExists(minimapFile) then
+        local t0 = g_clock.millis()
         loadFnc(minimapFile)
+        print("[LoginStutterDebug] minimap load (" .. minimapFile .. ") took " .. (g_clock.millis() - t0) .. "ms")
     end
 
+    local t1 = g_clock.millis()
     self.ui.minimapBorder.minimap:load()
+    print("[LoginStutterDebug] minimapBorder.minimap:load() took " .. (g_clock.millis() - t1) .. "ms")
 end
 
 function mapController:onGameEnd()

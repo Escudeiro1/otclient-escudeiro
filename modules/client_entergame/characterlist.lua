@@ -390,6 +390,7 @@ local function tryLogin(charInfo, tries)
 
     CharacterList.hide()
 
+    print("[LoginStutterDebug] g_game.loginWorld() called at t=" .. g_clock.millis())
     g_game.loginWorld(G.account, G.password, charInfo.worldName, charInfo.worldHost, charInfo.worldPort,
                       charInfo.characterName, G.authenticatorToken, G.sessionKey)
 
