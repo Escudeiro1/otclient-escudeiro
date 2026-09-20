@@ -525,7 +525,7 @@ local function fixCssIncompatibility() -- temp
     local restingAreaGold = rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold
     restingAreaGold.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
     restingAreaGold.gold:setImageSize("12 12")
-    restingAreaGold.gold:setImageOffset("-42 0")
+    restingAreaGold.gold:setImageOffset("-18 0")
 
     local footerGold1 = rewardWallController.ui.footerPanel.footerGold1
     footerGold1.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
