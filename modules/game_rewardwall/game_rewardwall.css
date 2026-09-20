@@ -40,7 +40,7 @@
   height: 40px;
   --image-size: 66 44;
   --image-fixed-ratio: true;
-  --text-offset: 24 0;
+  --text-offset: 25 -15;
 }
 
 .resting-area-time {
