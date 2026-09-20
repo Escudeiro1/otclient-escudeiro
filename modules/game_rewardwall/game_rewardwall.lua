@@ -541,10 +541,42 @@ end
 -- /*=============================================
 -- =            Controller                  =
 -- =============================================*/
+-- closeButton/historyButton are created here as plain OTUI widgets instead
+-- of in the HTML, and anchored/positioned via Lua -- widgets parsed from
+-- game_rewardwall.html get an html node attached (isOnHtml() == true), which
+-- silently skips the otui "size:" property and pulls in a chain of
+-- html-specific auto-sizing/stretch behavior that never let these two
+-- buttons render at their declared size. Plain g_ui.createWidget() avoids
+-- all of that, matching how game_cyclopedia's CloseButton/BackButton (which
+-- render correctly) are built.
+local function createFooterButtons()
+    local footerPanel = rewardWallController.ui.footerPanel
+
+    local closeButton = g_ui.createWidget('RewardWallButton', footerPanel)
+    closeButton:setId('closeButton')
+    closeButton:addAnchor(AnchorBottom, 'parent', AnchorBottom)
+    closeButton:addAnchor(AnchorRight, 'parent', AnchorRight)
+    closeButton:setText('Close')
+    closeButton.onClick = function()
+        rewardWallController:onClickToggle()
+    end
+
+    local historyButton = g_ui.createWidget('RewardWallButton', footerPanel)
+    historyButton:setId('historyButton')
+    historyButton:addAnchor(AnchorBottom, 'parent', AnchorBottom)
+    historyButton:addAnchor(AnchorRight, 'closeButton', AnchorLeft)
+    historyButton:setMarginRight(10)
+    historyButton:setText('History')
+    historyButton.onClick = function()
+        rewardWallController:onClickshowHistory()
+    end
+end
+
 function rewardWallController:onInit()
     g_ui.importStyle("styles/style.otui")
     rewardWallController:loadHtml('game_rewardwall.html')
     rewardWallController.ui:hide()
+    createFooterButtons()
 
     rewardWallController:registerEvents(g_game, {
         onOpenRewardWall = onOpenRewardWall,

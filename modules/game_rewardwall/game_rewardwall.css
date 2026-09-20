@@ -232,28 +232,6 @@
   font: cipsoftFont;
   --text-auto-resize: true;
 }
-.close-button {
-  margin-left: 5px;
-  float: right;
-  text-align: center;
-  vertical-align: center;
-  width: 43px;
-  height: 22px;
-  font: cipsoftFont;
-  color: #dfdfdf;
-  --text-auto-resize: false;
-  --padding: 0;
-}
-.history-button {
-  float: right;
-  margin-right: 10px;
-  width: 43px;
-  height: 22px;
-  font: cipsoftFont;
-  color: #dfdfdf;
-  --text-auto-resize: false;
-  --padding: 0;
-}
 
 .imgBonusesCss {
   width: 64px;
