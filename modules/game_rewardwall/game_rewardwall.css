@@ -239,6 +239,7 @@
   font: cipsoftFont;
   color: #dfdfdf;
   --text-auto-resize: false;
+  --padding: 0;
 }
 .history-button {
   float: right;
@@ -248,6 +249,7 @@
   font: cipsoftFont;
   color: #dfdfdf;
   --text-auto-resize: false;
+  --padding: 0;
 }
 
 .imgBonusesCss {
