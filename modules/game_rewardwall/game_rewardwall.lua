@@ -688,11 +688,27 @@ end
 -- =            Call onHover css                  =
 -- =============================================*/
 
+-- infoPanel's own text (used by the hover handlers below) and its free/premium
+-- child labels (permanently showing "Reward for Free/Premium Accounts: ...")
+-- occupy the same screen space. Hide the labels while a hover explanation is
+-- showing, and restore them once the hover ends, so they don't overlap.
+local function hideRewardAccountLabels()
+    rewardWallController.ui.infoPanel.free:setVisible(false)
+    rewardWallController.ui.infoPanel.premium:setVisible(false)
+end
+
+local function showRewardAccountLabels()
+    rewardWallController.ui.infoPanel.free:setVisible(true)
+    rewardWallController.ui.infoPanel.premium:setVisible(true)
+end
+
 function rewardWallController:onhoverBonus(event)
     if not event.value then
         rewardWallController.ui.infoPanel:setText("")
+        showRewardAccountLabels()
         return
     end
+    hideRewardAccountLabels()
 
     local id = event.target:getId()
     local index = tonumber(id:match("%d+"))
@@ -716,8 +732,10 @@ end
 function rewardWallController:onhoverStatusPlayer(event)
     if not event.value then
         rewardWallController.ui.infoPanel:setText("")
+        showRewardAccountLabels()
         return
     end
+    hideRewardAccountLabels()
 
     local playerStatus = {
         rewardStreakIcon = "This explains the reward streak system. You need to claim your daily reward between regular server saves to maintain your streak. At a streak of 2+, your character gets resting area bonuses. Free accounts can reach a maximum bonus at streak level 3, while premium players can reach higher levels. Characters on the same account share the streak.",
@@ -790,8 +808,10 @@ function rewardWallController:onhoverStatusReward(event)
     }
     if not event.value then
         rewardWallController.ui.infoPanel:setText("")
+        showRewardAccountLabels()
         return
     end
+    hideRewardAccountLabels()
     rewardWallController.ui.infoPanel:setText(statusReward[event.target.status])
 end
 
