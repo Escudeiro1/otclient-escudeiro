@@ -112,7 +112,7 @@
   margin-left: 111px;
   --text-auto-resize: false;
   color: #c0c0c0;
-  font: verdana-11px-rounded;
+  font: Verdana Bold-11px;
 }
 
 .daily-rewards-panel {
@@ -175,6 +175,7 @@
   width: 350px;
   margin-left: -0px;
   margin-top: -5px;
+  color: #c0c0c0;
 }
 
 .premium-button {

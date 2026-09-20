@@ -55,7 +55,7 @@ RewardButton < UIWidget
 
 RewardWallButton < Button
   size: 43 22
-  text-offset: 0 -1
+  text-offset: 0 1
   color: #c0c0c0
 
 RewardButton3 < UIButton
