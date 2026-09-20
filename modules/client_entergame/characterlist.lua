@@ -680,6 +680,7 @@ function CharacterList.terminate()
 end
 
 function CharacterList.create(characters, account, otui)
+    print("[LoginStutterDebug] CharacterList.create entered at t=" .. g_clock.millis() .. " with " .. #characters .. " character(s) from server")
     if not otui then
         otui = 'characterlist'
     end
@@ -797,6 +798,9 @@ function CharacterList.rebuildCharactersList()
     local focusLabel
     characterList:destroyChildren()
 
+    local debugT0 = g_clock.millis()
+    print("[LoginStutterDebug] rebuildCharactersList: building " .. #characters .. " character row(s), showAppearance=" .. tostring(showAppearance) .. ", showOutfits=" .. tostring(showOutfits))
+
     for i, characterInfo in ipairs(characters) do
         local widget = g_ui.createWidget('CharacterWidget', characterList)
         local rowColor = (i % 2 == 0) and evenRowColor or oddRowColor
@@ -850,6 +854,8 @@ function CharacterList.rebuildCharactersList()
         end
         widget:updateOnStates()
     end
+
+    print("[LoginStutterDebug] rebuildCharactersList: row build loop took " .. (g_clock.millis() - debugT0) .. "ms")
 
     if focusLabel then
         characterList:focusChild(focusLabel, KeyboardFocusReason)
