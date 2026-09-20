@@ -626,10 +626,23 @@ function EnterGame.onClientVersionChange(comboBox, text, data)
 end
 
 function EnterGame.tryHttpLogin(clientVersion, httpLogin)
+    local dbgT0 = g_clock.millis()
     g_game.setClientVersion(clientVersion)
+    print("[LoginStutterDebug] g_game.setClientVersion(" .. clientVersion .. ") took " .. (g_clock.millis() - dbgT0) .. "ms")
+
+    dbgT0 = g_clock.millis()
     g_game.setProtocolVersion(g_game.getClientProtocolVersion(clientVersion))
+    print("[LoginStutterDebug] g_game.setProtocolVersion(...) took " .. (g_clock.millis() - dbgT0) .. "ms")
+
+    dbgT0 = g_clock.millis()
     g_game.chooseRsa(G.host)
-    if not modules.game_things.isLoaded() then
+    print("[LoginStutterDebug] g_game.chooseRsa(...) took " .. (g_clock.millis() - dbgT0) .. "ms")
+
+    dbgT0 = g_clock.millis()
+    local thingsLoaded = modules.game_things.isLoaded()
+    print("[LoginStutterDebug] modules.game_things.isLoaded() took " .. (g_clock.millis() - dbgT0) .. "ms -> " .. tostring(thingsLoaded))
+
+    if not thingsLoaded then
         if loadBox then
             loadBox:destroy()
             loadBox = nil
