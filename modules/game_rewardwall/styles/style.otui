@@ -198,7 +198,7 @@ TextListWithScroll < Panel
   text-align: topLeft
   border-width: 1
   border-color: #00000077
-  height: 375
+  height: 425
   image-border: 4
   image-border-top: 23
   image-border-bottom: 4
