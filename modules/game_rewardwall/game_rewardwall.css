@@ -20,7 +20,7 @@
 }
 
 .content-panel {
-  width: 529px;
+  width: 512px;
   height: 136px;
   margin-left: 5px;
   margin-top: -5px;
@@ -114,6 +114,7 @@
 }
 
 .daily-rewards-panel {
+  width: 512px;
   height: 139px;
   padding-left: 25px;
   color: #909090;
