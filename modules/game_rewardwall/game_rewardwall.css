@@ -1,7 +1,7 @@
 .reward-wall-window {
   position: relative;
   width: 512px;
-  height: 490px;
+  height: 480px;
   display: block;
   color: #909090;
   font: Verdana Bold-11px;
@@ -208,6 +208,8 @@
 .footer-separator {
   width: 540px;
   height: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .footer-gold-1 {
