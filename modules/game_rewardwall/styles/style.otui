@@ -198,7 +198,7 @@ TextListWithScroll < Panel
   text-align: topLeft
   border-width: 1
   border-color: #00000077
-  height: 425
+  height: 405
   image-border: 4
   image-border-top: 23
   image-border-bottom: 4
@@ -209,7 +209,6 @@ TextListWithScroll < Panel
     anchors.fill: parent
     padding: 1
     width: 10
-    height: 400
     focusable: false
     background-color: #404040
   VerticalQtScrollBar
