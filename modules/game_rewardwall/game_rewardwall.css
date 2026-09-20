@@ -262,13 +262,13 @@
 }
 
 
-.bottom-panel { 
-  text-wrap: true; 
-  --image-source: /images/ui/2pixel_up_frame_borderimage; 
-  --image-border: 3; 
-  display: block; 
-  margin-top: 10px; 
-  height: 95px; 
-  width: 100%; 
+.bottom-panel {
+  text-wrap: true;
+  --image-source: /images/ui/2pixel_up_frame_borderimage;
+  --image-border: 3;
+  display: block;
+  margin-top: 0;
+  height: 95px;
+  width: 100%;
   --text-offset: 10 2;
  }
