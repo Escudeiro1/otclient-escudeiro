@@ -523,9 +523,9 @@ local function fixCssIncompatibility() -- temp
 
     -- note: I don't know how to edit children in css
     local restingAreaGold = rewardWallController.ui.restingAreaPanel.restingAreaInfo.restingAreaGold
-    restingAreaGold.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker-shift")
+    restingAreaGold.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
     restingAreaGold.gold:setImageSize("12 12")
-    restingAreaGold.gold:setImageOffset("-30 0")
+    restingAreaGold.gold:setImageOffset("-42 0")
 
     local footerGold1 = rewardWallController.ui.footerPanel.footerGold1
     footerGold1.gold:setImageSource("/game_rewardwall/images/icon-daily-reward-joker")
