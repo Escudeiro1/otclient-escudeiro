@@ -57,6 +57,7 @@
 .resting-area-time-done {
   width: 66px;
   height: 20px;
+  --image-clip: 0 20 66 20;
 }
 
 #bonusIcon1 {
