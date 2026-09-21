@@ -626,21 +626,11 @@ function EnterGame.onClientVersionChange(comboBox, text, data)
 end
 
 function EnterGame.tryHttpLogin(clientVersion, httpLogin)
-    local dbgT0 = g_clock.millis()
     g_game.setClientVersion(clientVersion)
-    print("[LoginStutterDebug] g_game.setClientVersion(" .. clientVersion .. ") took " .. (g_clock.millis() - dbgT0) .. "ms")
-
-    dbgT0 = g_clock.millis()
     g_game.setProtocolVersion(g_game.getClientProtocolVersion(clientVersion))
-    print("[LoginStutterDebug] g_game.setProtocolVersion(...) took " .. (g_clock.millis() - dbgT0) .. "ms")
-
-    dbgT0 = g_clock.millis()
     g_game.chooseRsa(G.host)
-    print("[LoginStutterDebug] g_game.chooseRsa(...) took " .. (g_clock.millis() - dbgT0) .. "ms")
 
-    dbgT0 = g_clock.millis()
     local thingsLoaded = modules.game_things.isLoaded()
-    print("[LoginStutterDebug] modules.game_things.isLoaded() took " .. (g_clock.millis() - dbgT0) .. "ms -> " .. tostring(thingsLoaded))
 
     if not thingsLoaded then
         if loadBox then
@@ -694,7 +684,6 @@ function EnterGame.tryHttpLogin(clientVersion, httpLogin)
     G.requestId = math.random(1)
 
     local http = LoginHttp.create()
-    print("[LoginStutterDebug] http:httpLogin() dispatched at t=" .. g_clock.millis() .. " host=" .. tostring(host) .. " path=" .. tostring(path))
     http:httpLogin(host, path, G.port, G.account, G.password, G.requestId, httpLogin, G.authenticatorToken)
 end
 
@@ -711,7 +700,6 @@ function printTable(t)
 end
 
 function EnterGame.loginSuccess(requestId, jsonSession, jsonWorlds, jsonCharacters)
-    print("[LoginStutterDebug] EnterGame.loginSuccess() entered at t=" .. g_clock.millis())
     if G.requestId ~= requestId then
         return
     end
@@ -794,7 +782,6 @@ function EnterGame.loginFailed(requestId, msg, result)
 end
 
 function EnterGame.doLogin()
-    print("[LoginStutterDebug] EnterGame.doLogin() entered at t=" .. g_clock.millis())
     G.account = enterGame:getChildById('accountNameTextEdit'):getText()
     G.password = enterGame:getChildById('accountPasswordTextEdit'):getText()
     G.stayLogged = enterGame:getChildById('stayLoggedBox'):isChecked()
@@ -819,12 +806,9 @@ function EnterGame.doLogin()
     local needsAssetCheck = clientVersion >= 1281 and modules.client_assets and modules.client_assets.ensureClientVersion and
         (not modules.client_assets.isEnabled or modules.client_assets.isEnabled()) and
         not modules.client_assets.isClientVersionInstalled(clientVersion)
-    print("[LoginStutterDebug] doLogin: clientVersion=" .. tostring(clientVersion) .. " needsAssetCheck=" .. tostring(needsAssetCheck) .. " at t=" .. g_clock.millis())
 
     if needsAssetCheck then
-        local assetT0 = g_clock.millis()
         modules.client_assets.ensureClientVersion(clientVersion, function(success, message)
-            print("[LoginStutterDebug] ensureClientVersion callback: success=" .. tostring(success) .. " took " .. (g_clock.millis() - assetT0) .. "ms")
             if success then
                 EnterGame.doLogin()
                 return
