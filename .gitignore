@@ -19,6 +19,9 @@ vcpkg_installed/
 [Rr]elease*/
 x64/
 build/
+dist/
+.buildx-cache/
+/launcher.cfg
 static/
 [Bb]in/
 [Oo]bj/

@@ -28,10 +28,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	libltdl-dev \
 	libtool \
 	libtool-bin \
+	libwayland-dev \
 	libx11-dev \
 	libxcursor-dev \
 	libxi-dev \
 	libxinerama-dev \
+	libxkbcommon-dev \
 	libxrandr-dev \
 	linux-libc-dev \
 	make \
@@ -43,6 +45,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	tar \
 	tzdata \
 	unzip \
+	wayland-protocols \
 	zip \
 	&& ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime \
 	&& echo "${TZ}" > /etc/timezone \
@@ -110,6 +113,7 @@ WORKDIR /srv
 COPY CMakeLists.txt CMakePresets.json vcpkg.json /srv/
 COPY cmake /srv/cmake
 COPY src /srv/src
+COPY launcher /srv/launcher
 COPY --from=dependencies /opt/vcpkg_installed /srv/vcpkg_installed
 
 RUN export VCPKG_ROOT=/opt/vcpkg \
@@ -122,7 +126,14 @@ RUN export VCPKG_ROOT=/opt/vcpkg \
 		-DVCPKG_INSTALLED_DIR=/srv/vcpkg_installed \
 		-DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
 		-DCMAKE_C_FLAGS="-march=x86-64-v2" \
-	&& cmake --build --preset linux-release --target otclient
+	&& cmake --build --preset linux-release --target otclient --target otclient-launcher
+
+# Export-only stage: its entire filesystem is just the two built binaries, so
+# `docker buildx build --target launcher-dist-export --output type=local,dest=...`
+# writes only ~180MB of relevant files, not an entire Debian rootfs. Used by
+# tools/publish-launcher-release.sh; never loaded/tagged as a normal image.
+FROM scratch AS launcher-dist-export
+COPY --from=build /srv/build/linux-release/bin/otclient /srv/build/linux-release/bin/otclient-launcher /
 
 FROM debian:12
 
