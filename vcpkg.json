@@ -29,8 +29,8 @@
       "name": "sdl2",
       "default-features": false,
       "features": [
-        "wayland",
-        "x11"
+        { "name": "wayland", "platform": "linux" },
+        { "name": "x11", "platform": "linux" }
       ]
     },
     "sdl2-image",
