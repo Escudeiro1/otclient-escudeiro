@@ -58,20 +58,24 @@ cp -a "$REPO_ROOT/cacert.pem" "$DIST_DIR/cacert.pem"
 echo "==> Copying otclientrc.lua (bootstrap-only -- never overwrites an existing install's copy)"
 cp -a "$REPO_ROOT/otclientrc.lua" "$DIST_DIR/otclientrc.lua"
 
-# modules/, mods/, and data/ (minus things/ and sounds/, which stay owned
-# entirely by the separate client_assets auto-installer -- see the plan's
-# Context section) are thousands of small files between them; distributed as
-# one zip per directory instead of per-file tracking, staged here and
-# removed once zipped so only the zips + individual files above end up in
-# dist/linux/ for publishing.
+# modules/, mods/, and data/ (including data/things and data/sounds -- the
+# Tibia sprite/sound assets, full copy so a fresh install works completely
+# standalone) are thousands of files between them; distributed as one zip
+# per directory instead of per-file tracking, staged here and removed once
+# zipped so only the zips + individual files above end up in dist/linux/
+# for publishing. Bundling things/sounds as-is is safe alongside the
+# separate client_assets auto-installer: its own "already installed" check
+# (client_assets.lua's isClientVersionInstalled -> hasModernClientFilesAtPath)
+# looks for the actual asset files, not a separate marker, so it correctly
+# detects these as already present and skips re-downloading them itself.
 STAGING_DIR="$REPO_ROOT/dist/.staging"
 rm -rf "$STAGING_DIR"
 mkdir -p "$STAGING_DIR"
 
-echo "==> Staging + zipping modules/, mods/, data/ (excluding data/things, data/sounds)"
+echo "==> Staging + zipping modules/, mods/, data/ (full copy, including things/sounds)"
 cp -a "$REPO_ROOT/modules" "$STAGING_DIR/modules"
 cp -a "$REPO_ROOT/mods" "$STAGING_DIR/mods"
-rsync -a --exclude=/things --exclude=/sounds "$REPO_ROOT/data/" "$STAGING_DIR/data/"
+cp -a "$REPO_ROOT/data" "$STAGING_DIR/data"
 
 for name in modules mods data; do
     rm -f "$DIST_DIR/$name.zip"
