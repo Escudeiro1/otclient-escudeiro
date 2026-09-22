@@ -26,6 +26,7 @@ if(DEFINED VCPKG_PLATFORM_TOOLSET)
 endif()
 
 option(OTCLIENT_BUILD_CLIENT "Build client executable" ON)
+option(OTCLIENT_BUILD_LAUNCHER "Build launcher executable" ON)
 option(OTCLIENT_BUILD_TESTS "Build unit tests" OFF)
 set(VCPKG_MANIFEST_FEATURES "${VCPKG_MANIFEST_FEATURES}" CACHE STRING "vcpkg manifest features")
 
@@ -146,6 +147,7 @@ endif()
 
 # Src
 add_subdirectory(src)
+add_subdirectory(launcher)
 
 if(OTCLIENT_BUILD_TESTS AND NOT ANDROID)
     if(NOT "tests" IN_LIST VCPKG_MANIFEST_FEATURES)
