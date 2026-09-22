@@ -32,7 +32,9 @@
 #include "framework/util/crypt.h"
 
 #ifndef USE_PRECOMPILED_HEADERS
+#include <algorithm>
 #include <array>
+#include <cctype>
 #include <cstdint>
 #include <filesystem>
 #endif
@@ -1198,10 +1200,21 @@ bool ResourceManager::launchCorrect(const std::vector<std::string>& args) { // c
 #if (defined(ANDROID) || defined(FREE_VERSION))
     return false;
 #else
+    // Strips a trailing "-<timestamp>" suffix (as written by updateExecutable()
+    // below), not everything after the first dash: a sibling binary whose own
+    // base name legitimately contains a dash (e.g. "otclient-launcher" living
+    // in the same directory) would otherwise normalize down to "otclient" too,
+    // get treated as a newer version of this binary, and get spawned in its
+    // place -- with this binary itself then deleted as a "stale" duplicate.
     const auto normalizeName = [](std::string name) {
-        const auto dash = name.find('-');
+        const auto dash = name.rfind('-');
         if (dash != std::string::npos) {
-            name = name.substr(0, dash);
+            const auto suffix = name.substr(dash + 1);
+            const bool allDigits = !suffix.empty() &&
+                std::ranges::all_of(suffix, [](unsigned char c) { return std::isdigit(c); });
+            if (allDigits) {
+                name = name.substr(0, dash);
+            }
         }
         stdext::tolower(name);
         return name;
