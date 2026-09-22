@@ -8,21 +8,21 @@
 
 #if defined(_WIN32)
 #include <windows.h>
-#elif defined(__APPLE__)
-#include <mach-o/dyld.h>
-#else
-#include <unistd.h>
 #endif
 
 namespace {
 
-// The launcher must know its own real path (not argv[0], which can be a
-// relative path, a symlink, or just "otclient-launcher" if found via PATH)
-// so applySelfUpdateIfPending() and UpdateFlow can reliably resolve sibling
-// files and the launcher's own directory.
-std::filesystem::path getExecutablePath()
-{
+// On POSIX, deliberately mirrors ResourceManager::init() (resourcemanager.cpp)
+// -- std::filesystem::absolute(argv0), NOT a canonical/proc-self-exe
+// resolution. otclient itself resolves its own directory this way, which is
+// exactly why a dev symlink such as `./otclient -> build/.../otclient` works:
+// the client treats the symlink's own location as home, not the real file's.
+// Using canonical() here instead would make `./otclient-launcher` behave
+// differently from `./otclient` -- looking for launcher.cfg and data files
+// inside the build tree instead of next to the symlink.
 #if defined(_WIN32)
+std::filesystem::path getExecutablePath(const char*)
+{
     std::vector<wchar_t> buffer(MAX_PATH);
     while (true) {
         const DWORD len = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
@@ -32,25 +32,19 @@ std::filesystem::path getExecutablePath()
             return std::filesystem::path(buffer.data(), buffer.data() + len);
         buffer.resize(buffer.size() * 2);
     }
-#elif defined(__APPLE__)
-    uint32_t size = 0;
-    _NSGetExecutablePath(nullptr, &size);
-    std::vector<char> buffer(size);
-    if (_NSGetExecutablePath(buffer.data(), &size) != 0)
-        return {};
-    std::error_code ec;
-    return std::filesystem::canonical(std::filesystem::path(buffer.data()), ec);
-#else
-    std::error_code ec;
-    return std::filesystem::canonical("/proc/self/exe", ec);
-#endif
 }
+#else
+std::filesystem::path getExecutablePath(const char* argv0)
+{
+    return std::filesystem::absolute(argv0);
+}
+#endif
 
 } // namespace
 
 int main(int argc, char** argv)
 {
-    const auto launcherPath = getExecutablePath();
+    const auto launcherPath = getExecutablePath(argv[0]);
     if (launcherPath.empty()) {
         ConsoleUi().reportFatalError("Could not determine launcher's own executable path");
         return 1;
