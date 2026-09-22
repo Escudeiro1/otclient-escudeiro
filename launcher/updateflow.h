@@ -13,10 +13,17 @@ public:
     UpdateFlow(LauncherConfig config, std::filesystem::path launcherDir,
                std::filesystem::path launcherPath, IUi& ui);
 
-    // Returns true if the client was successfully spawned (or an update-free
-    // run completed and the client was launched). False means a fatal error
-    // was already reported via IUi and the caller should exit non-zero.
-    bool run();
+    // Checks for and applies updates (data files, client executable, staged
+    // launcher self-update) but does NOT spawn the client. Returns true only
+    // if the client is now confirmed up to date and ready to run; false
+    // means a fatal error was already reported via IUi. Split out from
+    // spawnClient() so a GUI can gate a "Play" button's enabled state on
+    // this call's result without also launching the client immediately.
+    bool checkAndApplyUpdates();
+
+    // Spawns the (now up to date) client. Only meaningful to call after
+    // checkAndApplyUpdates() has returned true.
+    bool spawnClient();
 
 private:
     LauncherConfig m_config;

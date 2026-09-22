@@ -4,6 +4,9 @@
 find_package(OpenSSL REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(httplib CONFIG REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
+find_package(SDL2_ttf CONFIG REQUIRED)
 
 add_executable(otclient-launcher
     main.cpp
@@ -16,6 +19,8 @@ add_executable(otclient-launcher
     processspawn.h processspawn.cpp
     ui.h
     consoleui.h consoleui.cpp
+    guiui.h guiui.cpp
+    window.h window.cpp
 )
 
 # CMAKE_CXX_STANDARD set by src/CMakeLists.txt does not propagate to this
@@ -30,11 +35,19 @@ set_target_properties(otclient-launcher PROPERTIES
     CXX_STANDARD ${OTCLIENT_LAUNCHER_CXX_STANDARD}
     CXX_STANDARD_REQUIRED ON)
 
+# vcpkg's SDL2-family ports publish either a shared or a `-static` suffixed
+# target depending on the triplet (this repo's Windows preset uses a static
+# triplet); these generator expressions pick whichever actually exists,
+# matching the exact usage vcpkg itself prints for these three ports.
 target_link_libraries(otclient-launcher PRIVATE
     OpenSSL::SSL
     OpenSSL::Crypto
     nlohmann_json::nlohmann_json
-    httplib::httplib)
+    httplib::httplib
+    $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+    $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+    $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>)
 
 if(WIN32 AND EXISTS "${CMAKE_SOURCE_DIR}/cmake/icon/otcicon.rc")
     target_sources(otclient-launcher PRIVATE ${CMAKE_SOURCE_DIR}/cmake/icon/otcicon.rc)
@@ -51,3 +64,12 @@ if(TOGGLE_BIN_FOLDER)
 else()
     set_target_properties(otclient-launcher PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/")
 endif()
+
+# Copy the launcher's own UI assets (background image, font) next to the
+# built binary, wherever it actually lands (mirrors how launcher.cfg is
+# resolved at runtime via the executable's own directory).
+add_custom_command(TARGET otclient-launcher POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:otclient-launcher>/assets"
+)

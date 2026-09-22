@@ -128,7 +128,7 @@ UpdateFlow::UpdateFlow(LauncherConfig config, std::filesystem::path launcherDir,
 {
 }
 
-bool UpdateFlow::run()
+bool UpdateFlow::checkAndApplyUpdates()
 {
     const auto clientPath = m_launcherDir / m_config.clientExecutable;
 
@@ -189,6 +189,14 @@ bool UpdateFlow::run()
         std::filesystem::remove(stagingPath, ec);
         m_ui.reportStatus("Launcher will update on next start");
     }
+
+    m_ui.reportStatus("Up to date");
+    return true;
+}
+
+bool UpdateFlow::spawnClient()
+{
+    const auto clientPath = m_launcherDir / m_config.clientExecutable;
 
     m_ui.reportStatus("Starting client...");
     if (!spawnProcess(clientPath, splitArgs(m_config.clientArgs))) {

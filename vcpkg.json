@@ -25,6 +25,16 @@
     "physfs",
     "protobuf",
     "pugixml",
+    {
+      "name": "sdl2",
+      "default-features": false,
+      "features": [
+        "wayland",
+        "x11"
+      ]
+    },
+    "sdl2-image",
+    "sdl2-ttf",
     "stduuid",
     "zlib",
     "bshoshany-thread-pool",
