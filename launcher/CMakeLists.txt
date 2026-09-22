@@ -7,6 +7,7 @@ find_package(httplib CONFIG REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
 
 add_executable(otclient-launcher
     main.cpp
@@ -17,11 +18,25 @@ add_executable(otclient-launcher
     updateflow.h updateflow.cpp
     selfupdate.h selfupdate.cpp
     processspawn.h processspawn.cpp
+    archive.h archive.cpp
     ui.h
     consoleui.h consoleui.cpp
     guiui.h guiui.cpp
     window.h window.cpp
+    ../src/framework/core/minizip/unzip.c
+    ../src/framework/core/minizip/unzip.h
+    ../src/framework/core/minizip/ioapi.c
+    ../src/framework/core/minizip/ioapi.h
+    ../src/framework/core/minizip/crypt.c
+    ../src/framework/core/minizip/crypt.h
 )
+
+# Reusing the client's own vendored minizip sources directly (not copying
+# them) for zip extraction -- plain C, no PhysFS/framework dependency, so
+# safe to compile standalone into the launcher. unzip.h does `#include
+# "ioapi.h"` (same-directory relative include), so that directory needs to
+# be on the include path.
+target_include_directories(otclient-launcher PRIVATE ../src/framework/core/minizip)
 
 # CMAKE_CXX_STANDARD set by src/CMakeLists.txt does not propagate to this
 # sibling directory (no PARENT_SCOPE), so mirror its logic here directly.
@@ -47,7 +62,8 @@ target_link_libraries(otclient-launcher PRIVATE
     $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
     $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
     $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
-    $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>)
+    $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
+    ZLIB::ZLIB)
 
 if(WIN32 AND EXISTS "${CMAKE_SOURCE_DIR}/cmake/icon/otcicon.rc")
     target_sources(otclient-launcher PRIVATE ${CMAKE_SOURCE_DIR}/cmake/icon/otcicon.rc)

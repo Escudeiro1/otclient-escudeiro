@@ -51,12 +51,34 @@ docker buildx build \
     .
 chmod +x "$DIST_DIR/otclient" "$DIST_DIR/otclient-launcher"
 
-echo "==> Copying plain (non-compiled) files from the working tree"
-rm -rf "$DIST_DIR/modules" "$DIST_DIR/mods"
-cp -a "$REPO_ROOT/modules" "$DIST_DIR/modules"
-cp -a "$REPO_ROOT/mods" "$DIST_DIR/mods"
+echo "==> Copying individual (always-synced) files from the working tree"
 cp -a "$REPO_ROOT/init.lua" "$DIST_DIR/init.lua"
 cp -a "$REPO_ROOT/cacert.pem" "$DIST_DIR/cacert.pem"
+
+echo "==> Copying otclientrc.lua (bootstrap-only -- never overwrites an existing install's copy)"
+cp -a "$REPO_ROOT/otclientrc.lua" "$DIST_DIR/otclientrc.lua"
+
+# modules/, mods/, and data/ (minus things/ and sounds/, which stay owned
+# entirely by the separate client_assets auto-installer -- see the plan's
+# Context section) are thousands of small files between them; distributed as
+# one zip per directory instead of per-file tracking, staged here and
+# removed once zipped so only the zips + individual files above end up in
+# dist/linux/ for publishing.
+STAGING_DIR="$REPO_ROOT/dist/.staging"
+rm -rf "$STAGING_DIR"
+mkdir -p "$STAGING_DIR"
+
+echo "==> Staging + zipping modules/, mods/, data/ (excluding data/things, data/sounds)"
+cp -a "$REPO_ROOT/modules" "$STAGING_DIR/modules"
+cp -a "$REPO_ROOT/mods" "$STAGING_DIR/mods"
+rsync -a --exclude=/things --exclude=/sounds "$REPO_ROOT/data/" "$STAGING_DIR/data/"
+
+for name in modules mods data; do
+    rm -f "$DIST_DIR/$name.zip"
+    (cd "$STAGING_DIR" && zip -rq "$DIST_DIR/$name.zip" "$name")
+done
+
+rm -rf "$STAGING_DIR"
 
 echo "==> Computing checksums and writing manifest.json"
 python3 - "$DIST_DIR" <<'PYEOF'
@@ -74,20 +96,18 @@ def sha256_of(path):
             h.update(chunk)
     return h.hexdigest()
 
-files = {}
-for tracked_dir in ("modules", "mods"):
-    base = os.path.join(dist_dir, tracked_dir)
-    for root, _dirs, filenames in os.walk(base):
-        for name in filenames:
-            full = os.path.join(root, name)
-            rel = os.path.relpath(full, dist_dir).replace(os.sep, "/")
-            files[rel] = sha256_of(full)
+files = {rel: sha256_of(os.path.join(dist_dir, rel)) for rel in ("init.lua", "cacert.pem")}
+bootstrap_files = {"otclientrc.lua": sha256_of(os.path.join(dist_dir, "otclientrc.lua"))}
 
-for rel in ("init.lua", "cacert.pem"):
-    files[rel] = sha256_of(os.path.join(dist_dir, rel))
+archives = [
+    {"name": name, "file": f"{name}.zip", "checksum": sha256_of(os.path.join(dist_dir, f"{name}.zip")), "extractTo": name}
+    for name in ("modules", "mods", "data")
+]
 
 manifest = {
     "files": files,
+    "bootstrapFiles": bootstrap_files,
+    "archives": archives,
     "client": {"file": "otclient", "checksum": sha256_of(os.path.join(dist_dir, "otclient"))},
     "launcher": {"file": "otclient-launcher", "checksum": sha256_of(os.path.join(dist_dir, "otclient-launcher"))},
     "keepFiles": False,
@@ -96,7 +116,7 @@ manifest = {
 with open(os.path.join(dist_dir, "manifest.json"), "w") as f:
     json.dump(manifest, f)
 
-print(f"  {len(files)} tracked files hashed")
+print(f"  {len(files)} individual files, {len(bootstrap_files)} bootstrap file, {len(archives)} archives hashed")
 PYEOF
 
 echo "==> dist/linux/ ready at $DIST_DIR"

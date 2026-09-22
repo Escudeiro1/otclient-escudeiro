@@ -20,6 +20,7 @@ vcpkg_installed/
 x64/
 build/
 dist/
+downTest/
 .buildx-cache/
 /launcher.cfg
 static/

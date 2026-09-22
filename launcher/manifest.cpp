@@ -53,10 +53,31 @@ Manifest parseManifest(const std::string& body)
         }
     }
 
+    if (j.contains("bootstrapFiles") && j["bootstrapFiles"].is_object()) {
+        for (const auto& [key, value] : j["bootstrapFiles"].items()) {
+            if (value.is_string())
+                manifest.bootstrapFiles[key] = value.get<std::string>();
+        }
+    }
+
+    if (j.contains("archives") && j["archives"].is_array()) {
+        for (const auto& entry : j["archives"]) {
+            if (!entry.is_object())
+                continue;
+            ArchiveDescriptor descriptor;
+            descriptor.name = entry.value("name", "");
+            descriptor.file = entry.value("file", "");
+            descriptor.checksum = entry.value("checksum", "");
+            descriptor.extractTo = entry.value("extractTo", "");
+            if (!descriptor.file.empty() && !descriptor.checksum.empty() && !descriptor.extractTo.empty())
+                manifest.archives.push_back(std::move(descriptor));
+        }
+    }
+
     manifest.client = parseBinaryDescriptor(j, "client");
     manifest.launcher = parseBinaryDescriptor(j, "launcher");
 
-    if (manifest.baseUrl.empty() && !manifest.files.empty()) {
+    if (manifest.baseUrl.empty() && (!manifest.files.empty() || !manifest.bootstrapFiles.empty() || !manifest.archives.empty())) {
         manifest.error = "Manifest lists files but has no base url";
     }
 

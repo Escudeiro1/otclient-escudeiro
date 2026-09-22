@@ -1,5 +1,6 @@
 #include "updateflow.h"
 
+#include "archive.h"
 #include "httpclient.h"
 #include "manifest.h"
 #include "processspawn.h"
@@ -8,6 +9,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include <fstream>
 #include <set>
 #include <sstream>
 #include <vector>
@@ -117,6 +119,80 @@ void cleanupStaleFiles(const std::filesystem::path& launcherDir, const Manifest&
     }
 }
 
+// Only fetches entries whose local file is entirely missing -- never
+// re-checks or overwrites an existing file, even if its checksum differs
+// from the manifest's, since these are files a user may have customized
+// (e.g. otclientrc.lua).
+bool applyBootstrapFiles(HttpClient& http, const std::filesystem::path& launcherDir, const Manifest& manifest,
+                          IUi& ui, bool allowInsecureHttp)
+{
+    for (const auto& [relativePath, expectedChecksum] : manifest.bootstrapFiles) {
+        const auto finalPath = launcherDir / relativePath;
+        std::error_code ec;
+        if (std::filesystem::exists(finalPath, ec))
+            continue;
+
+        const auto url = joinUrl(manifest.baseUrl, relativePath);
+        if (!downloadAndVerify(http, url, finalPath, expectedChecksum, ui, allowInsecureHttp))
+            return false;
+    }
+    return true;
+}
+
+std::filesystem::path archiveMarkerPath(const std::filesystem::path& extractDir)
+{
+    return extractDir / ".launcher-archive.sha256";
+}
+
+std::string readArchiveMarker(const std::filesystem::path& extractDir)
+{
+    std::ifstream in(archiveMarkerPath(extractDir));
+    std::string checksum;
+    std::getline(in, checksum);
+    return checksum;
+}
+
+void writeArchiveMarker(const std::filesystem::path& extractDir, const std::string& checksum)
+{
+    std::ofstream out(archiveMarkerPath(extractDir), std::ios::trunc);
+    out << checksum;
+}
+
+// Whole-directory replacement instead of per-file diffing: each archive is
+// downloaded and extracted as a unit only when its zip checksum no longer
+// matches the local marker left by the last successful extraction, and the
+// destination directory is wiped before extracting so no stale file from a
+// previous version can linger.
+bool applyArchives(HttpClient& http, const std::filesystem::path& launcherDir, const Manifest& manifest,
+                    IUi& ui, bool allowInsecureHttp)
+{
+    for (const auto& archive : manifest.archives) {
+        const auto extractDir = launcherDir / archive.extractTo;
+        if (readArchiveMarker(extractDir) == archive.checksum)
+            continue;
+
+        const auto zipPath = std::filesystem::path(launcherDir / (archive.name + ".zip.download"));
+        const auto url = joinUrl(manifest.baseUrl, archive.file);
+        if (!downloadAndVerify(http, url, zipPath, archive.checksum, ui, allowInsecureHttp))
+            return false;
+
+        ui.reportStatus("Extracting " + archive.name + "...");
+        std::string error;
+        if (!extractZip(zipPath, extractDir, error)) {
+            ui.reportFatalError("Failed to extract " + archive.name + ": " + error);
+            std::error_code ec;
+            std::filesystem::remove(zipPath, ec);
+            return false;
+        }
+
+        writeArchiveMarker(extractDir, archive.checksum);
+
+        std::error_code ec;
+        std::filesystem::remove(zipPath, ec);
+    }
+    return true;
+}
+
 } // namespace
 
 UpdateFlow::UpdateFlow(LauncherConfig config, std::filesystem::path launcherDir,
@@ -167,6 +243,12 @@ bool UpdateFlow::checkAndApplyUpdates()
 
     if (!manifest.keepFiles)
         cleanupStaleFiles(m_launcherDir, manifest, m_ui);
+
+    if (!applyBootstrapFiles(http, m_launcherDir, manifest, m_ui, m_config.allowInsecureHttp))
+        return false;
+
+    if (!applyArchives(http, m_launcherDir, manifest, m_ui, m_config.allowInsecureHttp))
+        return false;
 
     if (manifest.client && sha256File(clientPath) != manifest.client->checksum) {
         const auto url = joinUrl(manifest.baseUrl, manifest.client->file);
