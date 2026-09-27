@@ -258,8 +258,7 @@ function TaskBoardController:show()
     if TaskBoardButton then
         TaskBoardButton:setOn(true)
     end
-    local tabToShow = self.weeklyDifficultyPending and self.TAB_WEEKLY or self.activeTab
-    self:selectTab(tabToShow)
+    self:selectTab(self.activeTab)
     self:syncBountyDifficultySelect()
 end
 
@@ -285,10 +284,10 @@ end
 --  Tab switching
 
 function TaskBoardController:selectTab(n)
-    if self.weeklyDifficultyPending and n ~= self.TAB_WEEKLY then
-        return
-    end
+    -- A pending weekly difficulty choice no longer locks the player on the weekly
+    -- tab; the difficulty overlay is shown again whenever they come back to it.
     self.activeTab = n
+    self.diffModalVisible = false
     local tabDaily = self:findWidget("#tabDaily")
     local tabWeekly = self:findWidget("#tabWeekly")
     local tabShop = self:findWidget("#tabShop")
