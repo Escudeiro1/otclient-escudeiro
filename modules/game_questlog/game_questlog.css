@@ -4,7 +4,7 @@
   height: 619px;
   font: verdana-11px-antialised;
   display: block;
-  color: #929292
+  color: #c0c0c0
 }
 
 .content-left {
@@ -79,13 +79,13 @@
 }
 
 #trackerButton {
-  float: right;
-  margin-right: 2px;
+  float: left;
   width: 85px;
 }
 
 #closeButton {
-  float: left;
+  float: right;
+  margin-right: 2px;
   width: 25px;
   --text-auto-resize: false;
 }

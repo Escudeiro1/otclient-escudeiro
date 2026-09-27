@@ -46,7 +46,7 @@ MultiLineQuestLog < Panel
     id: questList
     vertical-scrollbar: spellsScrollBar
     anchors.fill: parent
-    padding: 1
+    padding: 2
     width: 10
     focusable: false
     text-wrap: true
@@ -90,6 +90,9 @@ TextEditQuestLog < Panel
       image-color: gray
 
 QuestLogLabel < UIWidget
+  height: 14
+  ttf-font: verdana-bold
+  ttf-font-size: 11
   color: #C0C0C0
   text-align: left
   text-offset: 15 0
