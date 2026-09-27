@@ -146,6 +146,13 @@
   overflow: scroll;
   padding: 2px;
 }
+/* Holds the convergence grid + its auto scrollbar so both hide together.
+   159x89 = grid 155x85 plus its 2px padding on each side. */
+.convergence-grid-wrap {
+  position: relative;
+  width: 159px;
+  height: 89px;
+}
 .transfer-select-donnor-center {
   width: 133px;
 }
@@ -167,7 +174,7 @@
   align-items: stretch;
   justify-content: flex-start;
   gap: 0;
-  padding-left: 8px;
+  padding-left: 10px;
   padding-top: 2px;
 
 }
@@ -471,6 +478,7 @@
 .close-btn {
   padding: 3px 10px !important;
   margin-left: auto;
+  color: #c0c0c0;
 }
 
 .close-btn:pressed {

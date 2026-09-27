@@ -143,8 +143,11 @@
           <div class="transfer-select-container" style="margin-top: 8px">
             <span class="transfer-header">{{self.fusion.title}}</span>
             <div class="transfer-requirements-wrapper">
+              <!-- *if lives on this wrapper, not on the grid: overflow:scroll inserts the
+                   grid's scrollbar as a sibling, so it must be inside something that hides
+                   with it, or it stays visible (and takes 12px) when Convergence is off. -->
+              <div *if="self.fusion.isConvergence" class="convergence-grid-wrap">
               <div
-                *if="self.fusion.isConvergence"
                 background-color="lightblue"
                 height="85"
                 image-size="155 90"
@@ -183,6 +186,7 @@
                   </div>
                 </div>
               </div>
+              </div><!-- /convergence-grid-wrap -->
               <div
                 class="transfer-requirement-item-container"
                 *if="not self.fusion.isConvergence"
@@ -233,7 +237,7 @@
                   <UIItem style="item-id: 37160" />
                 </div>
                 <div class="transfer-requirement-item-cost">
-                  <p *color="self:getColor('fusion-dust')">
+                  <p *color="self:getColor('fusion-dust')" style="margin-top: 5px">
                     {{self.fusion.dustLabel}}
                   </p>
                   <img placement="center-right"
@@ -870,7 +874,7 @@
                   *disabled="self.conversion.disableIncreaseDustLimit"
                   onclick="self.conversion.toggle(4)"
                   onhover="self:handleDescription('increase-dust-limit-cost')"
-                  style="position: relative; height: 80px;"
+                  style="position: relative; height: 73px;"
                 >
                   <UIItem style="item-id: 37160; height: 65px; width: 65px; position: absolute; left: 8px; bottom: 10px;" />
                   <UIItem style="item-id: 37160; height: 65px; width: 65px; position: absolute; left: 63px; top: -5px;" />
