@@ -1106,6 +1106,13 @@ function HelperController:_wireBottomBar()
     if btn then
         btn.onClick = function() self:openHotkeyPicker() end
     end
+
+    -- Text inside an HTML <button> becomes a separate top-left child widget, so the
+    -- label is set here instead to get the Button style's centered text.
+    local closeBtn = self.ui:recursiveGetChildById('closeHelperBtn')
+    if closeBtn then
+        closeBtn:setText('Close')
+    end
 end
 
 function HelperController:show()

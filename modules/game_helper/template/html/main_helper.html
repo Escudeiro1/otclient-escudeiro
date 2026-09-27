@@ -124,8 +124,10 @@
 
     <!-- Bottom bar: Set Helper Key (float:left) + Close (float:right) -->
     <div class="helperBottomBar">
-        <button id="setHelperKeyBtn" class="helperFooterBtnLeft">Set Helper Key</button>
-        <button class="helperFooterBtnRight" onclick="self:hide()">Close</button>
+        <!-- Label is set from Lua (updateSetKeyButtonLabel): "Set Helper Key" or "Key: X" -->
+        <button id="setHelperKeyBtn" class="helperFooterBtnLeft"></button>
+        <!-- Label set from Lua (_wireBottomBar) so the button draws its own centered text -->
+        <button id="closeHelperBtn" class="helperFooterBtnRight" onclick="self:hide()"></button>
     </div>
 
 </window>

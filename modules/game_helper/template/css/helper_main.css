@@ -428,6 +428,8 @@
     height: 2px;
     float: left;
     font: verdana-11px-antialised;
+    color: #c0c0c0;
+    --text-offset: 0 0;
     
 
 }
@@ -437,6 +439,8 @@
     height: 2px;
     float: right;
     font: verdana-11px-antialised;
+    color: #c0c0c0;
+    --text-offset: 0 0;
     
 
 }

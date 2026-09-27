@@ -1,6 +1,7 @@
 HelperHotkeyPicker < MainWindow
   !text: tr('Set Helper Key')
   size: 250 130
+  padding-top: 10
 
   Label
     id: hintLabel
