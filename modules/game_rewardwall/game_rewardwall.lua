@@ -180,6 +180,18 @@ local function formatTimeLeft(timeLeft)
     return timeLeft
 end
 
+local COUNTDOWN_FULL_SECONDS = 24 * 60 * 60
+local COUNTDOWN_FULL_WIDTH = 66
+
+-- Width of the countdown background bar: 24:00h left fills it, 0 empties it.
+-- Mirrors formatTimeLeft's inputs (0 = no data, 90001 = under a minute).
+local function countdownFillWidth(timeLeft)
+    if timeLeft == nil or timeLeft <= 1000000000 then return 0 end
+    local fraction = (timeLeft - os.time()) / COUNTDOWN_FULL_SECONDS
+    fraction = math.max(0, math.min(1, fraction))
+    return math.floor(COUNTDOWN_FULL_WIDTH * fraction + 0.5)
+end
+
 local function getBonusStrings(bonuses)
     local result = {}
     for _, bonus in ipairs(bonuses) do
@@ -235,8 +247,22 @@ local function updateDailyRewards(dayStreakDay, wasDailyRewardTaken, nextRewardT
             test:fill("parent")
             test:setPhantom(true)
             test.gold:setVisible(false)
+            -- The hidden gold icon still holds its place in the anchor layout, so
+            -- the text would stop short of it; give the timer a fixed width instead.
+            test.text:removeAnchor(AnchorRight)
+            test.text:setWidth(65)
             test.text:setText(formatTimeLeft(nextRewardTime))
             test.text:setColor("white")
+
+            -- Created with its parent (its style anchors need one), then lowered to
+            -- the first child so it draws above the label's background image but
+            -- underneath the text.
+            local fill = g_ui.createWidget("CountdownFill", test)
+            fill:setId("countdownFill")
+            test:lowerChild(fill)
+            local fillWidth = countdownFillWidth(nextRewardTime)
+            fill:setWidth(fillWidth)
+            fill:setVisible(fillWidth > 0)
         else
             -- Always shown while the current reward hasn't been collected yet, even
             -- at 0 (not expired yet -- this previews what it would currently cost to
@@ -420,7 +446,13 @@ local function onOpenRewardWall(bonusShrines, nextRewardTime, dayStreakDay, wasD
     -- treats as a "no data" sentinel and renders as "Expired". Show the collected checkmark
     -- instead of calling formatTimeLeft in that case, rather than misreading 0 as expired.
     restingAreaInfo.timeLeft.timeLeftDone:setVisible(rewardTaken)
-    restingAreaInfo.timeLeft:setText(rewardTaken and "" or (expired and "expired" or formatTimeLeft(timeLeft)))
+    restingAreaInfo.timeLeft.timeLeftText:setText(rewardTaken and "" or (expired and "expired" or formatTimeLeft(timeLeft)))
+    -- Hidden too, not just emptied: on HTML widgets setText("") doesn't clear the
+    -- previously drawn text, so the old countdown stayed on top of the checkmark.
+    restingAreaInfo.timeLeft.timeLeftText:setVisible(not rewardTaken)
+    local barWidth = (rewardTaken or expired) and 0 or countdownFillWidth(timeLeft)
+    restingAreaInfo.timeLeft.timeLeftBar:setWidth(barWidth)
+    restingAreaInfo.timeLeft.timeLeftBar:setVisible(barWidth > 0)
 
     if streakWarning then
         streakWarning:setVisible(true)

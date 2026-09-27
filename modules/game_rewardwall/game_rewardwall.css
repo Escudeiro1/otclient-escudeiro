@@ -48,10 +48,39 @@
 .resting-area-time {
   width: 68px;
   height: 22px;
+  color: #c0c0c0;
+  position: relative;
   margin-left: 22;
   --image-border: 3;
   --image-source: /images/ui/test/button-verydarkgrey-down;
   --fixed-size: true;
+}
+
+/* Holds timeLeft's countdown text so it can be centered without giving timeLeft
+   itself a text-align (which would also move its timeLeftDone checkmark). */
+.resting-area-time-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 68px;
+  height: 22px;
+  text-align: center;
+  --phantom: true;
+}
+
+/* Countdown bar behind timeLeftText: full width (66) = 24:00h left. No width
+   here on purpose -- Lua sets it (see countdownFillWidth). */
+.resting-area-time-bar {
+  position: absolute;
+  /* On position:absolute elements the engine ignores CSS margins (it overwrites
+     them with top/left, clamped to >= 0), so offsets must go in top/left. */
+  top: 0;
+  left: 1px;
+  bottom: 0;
+  height: 21px;
+  --image-source: /game_rewardwall/images/bar-bg-top;
+  --image-repeated: true;
+  --phantom: true;
 }
 
 .resting-area-time-done {
