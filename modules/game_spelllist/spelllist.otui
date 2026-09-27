@@ -32,7 +32,7 @@ FilterButton < Button
   anchors.top: spellList.bottom
   @onClick: toggleFilter(self)
   margin: 5 0 0 6
-  color: #630000
+  color: #ffffff
   $on:
     color: green
 

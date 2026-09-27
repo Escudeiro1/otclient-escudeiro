@@ -235,8 +235,10 @@ MainWindow
     anchors.right: parent.right
     !text: tr('Close')
     //font: verdana-bold-8px-antialiased
-    text-offset: 0 -1
+    text-offset: 0 1
     color: #C0C0C0
+    $disabled:
+      color: #C0C0C0
     @onClick: toggle()
   Button
     id: BackButton
@@ -246,8 +248,10 @@ MainWindow
     margin-right: 10
     !text: tr('Back')
     //font: verdana-bold-8px-antialiased
-    text-offset: 0 -1
+    text-offset: 0 1
     color: #C0C0C0
+    $disabled:
+      color: #C0C0C0
     enabled: false
     @onClick: toggleBack()
   HorizontalSeparator
