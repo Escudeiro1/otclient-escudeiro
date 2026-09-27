@@ -25,7 +25,7 @@ Services = {
 
 --- Enables or disables the entire server configuration block.
 -- Set to `false` to disable all configuration below.
-local ENABLE_SERVERS = false
+local ENABLE_SERVERS = true
 
 ---
 -- @module Servers_init
@@ -73,9 +73,9 @@ if ENABLE_SERVERS then
         -- @field httpLogin Enables HTTP-based login on the server
         -- @field useAuthenticator Enables additional authentication layer
         --
-        ["https://ot.inmundosstuff.com/login.php"] = {
+        ["https://escudeirot.com/login.php"] = {
             port = 443,
-            protocol = 1511,
+            protocol = 1525,
             httpLogin = false,
             useAuthenticator = false
         },
