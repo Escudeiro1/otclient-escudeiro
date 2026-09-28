@@ -6,6 +6,9 @@ local MAP_SHADERS = { {
     name = 'Map - Sharp (Nearest-Style)',
     frag = 'shaders/fragment/sharp.frag'
 }, {
+    name = 'Map - Painterly (Light)',
+    frag = 'shaders/fragment/painterly_light.frag'
+}, {
     name = 'Map - Painterly (Smooth/Rubber HD)',
     frag = 'shaders/fragment/painterly.frag'
 }, {
