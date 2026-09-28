@@ -27,8 +27,8 @@ local default_info = {
     -- hint 1
     {
         image = "images/randomhint",
-        Title = "Enabling Boosted Creature Panel",
-        description = "Boosted creatures panel requires configuring a webservice (init.lua) and preloading a client version by either setting one server in Servers_init (init.lua) or by altering entergame.lua.\n\nFor more hints, visit:\t\t https://github.com/mehah/otclient/wiki"
+        Title = "Welcome to Escudeirot",
+        description = "Play for fun. We constantly work to improve the server by implementing new features, making gameplay adjustments, and correcting bugs. Updates are an important part of Escudeirot, and we aim to keep the experience fresh and enjoyable for both new and experienced players.\n\nFor detailed information about the server, including features, rates, rules, commands, updates, and other important details, please visit the official server website."
     },
 
     -- hint 2
@@ -63,7 +63,7 @@ function init()
     monsterImage = boostedWindow:recursiveGetChildById('monsterImage')
     bossImage = boostedWindow:recursiveGetChildById('bossImage')
 
-    if not Services.status and default_info then
+    if default_info then
         local scrollable = showOffWindow:recursiveGetChildById('contentsPanel')
         local widget = g_ui.createWidget('ShowOffWidget', scrollable)
         local description = widget:recursiveGetChildById('description')
