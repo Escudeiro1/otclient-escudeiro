@@ -84,9 +84,10 @@ local function onCharacterList(protocol, characters, account, otui)
 
         ServerList.setServerAccount(G.host, G.account)
         ServerList.setServerPassword(G.host, G.password)
-        ServerList.setServerAutologin(G.host, enterGame:getChildById('autoLoginBox'):isChecked())
+        -- Auto login was removed from the login window; always store it off.
+        ServerList.setServerAutologin(G.host, false)
 
-        g_settings.set('autologin', enterGame:getChildById('autoLoginBox'):isChecked())
+        g_settings.set('autologin', false)
         ServerList.save()
     else
         -- reset server list account/password
@@ -202,7 +203,6 @@ function EnterGame.init()
         enterGame:getChildById('rememberEmailBox'):setChecked(false)
     end
     
-    enterGame:getChildById('autoLoginBox'):setChecked(serverData.autologin == true)
     enterGame:getChildById('serverHostTextEdit'):setText(host)
     enterGame:getChildById('serverPortTextEdit'):setText(port)
     enterGame:getChildById('stayLoggedBox'):setChecked(stayLogged)
@@ -256,7 +256,7 @@ function EnterGame.init()
             if checked and #account > 0 then
                 ServerList.setServerAccount(host, account)
                 ServerList.setServerPassword(host, password)
-                ServerList.setServerAutologin(host, enterGame:getChildById('autoLoginBox'):isChecked() or false)
+                ServerList.setServerAutologin(host, false)
                 g_settings.set('host', host)
             else
                 ServerList.setServerAccount(host, '')
@@ -274,7 +274,9 @@ function EnterGame.init()
         enterGame.disableToken = not (server and server.useAuthenticator)
         if table.size(Servers_init) == 1 then
             local hostInit, valuesInit = next(Servers_init)
-            EnterGame.setUniqueServer(hostInit, valuesInit.port, valuesInit.protocol)
+            -- Pass the window size explicitly; setUniqueServer otherwise falls back
+            -- to 380x229 and overrides the size set in entergame.otui.
+            EnterGame.setUniqueServer(hostInit, valuesInit.port, valuesInit.protocol, 280, 160)
             EnterGame.setHttpLogin(valuesInit.httpLogin)
         elseif not host or host == "" then
             local hostInit, valuesInit = next(Servers_init)
@@ -326,21 +328,8 @@ end
 
 function EnterGame.firstShow()
     EnterGame.show()
-
-    local host = g_settings.get('host')
-    local servers = g_settings.getNode('ServerList') or {}
-    local serverData = servers[host] or {}
-    local account = safeDecrypt(serverData.account)
-    local password = safeDecrypt(serverData.password)
-    local autologin = serverData.autologin == true
-    if #host > 0 and #password > 0 and #account > 0 and autologin then
-        addEvent(function()
-            if not g_settings.getBoolean('autologin') then
-                return
-            end
-            EnterGame.doLogin()
-        end)
-    end
+    -- Auto login is no longer offered, so it's never triggered here either, even
+    -- for players who still have autologin=true saved from an older version.
 
     if Services and Services.status then
         if g_modules.getModule("client_bottommenu"):isLoaded()  then
@@ -933,6 +922,12 @@ function EnterGame.setUniqueServer(host, port, protocol, windowWidth, windowHeig
 
     local rememberEmailBox = enterGame:getChildById('rememberEmailBox')
     rememberEmailBox:setMarginTop(5)
+
+    -- With the server fields hidden, anchor Login straight to the separator instead
+    -- of through their leftover margins, which added ~39px of empty space above it.
+    local loginButton = enterGame:getChildById('loginButton')
+    loginButton:addAnchor(AnchorTop, 'loginSeparator', AnchorBottom)
+    loginButton:setMarginTop(10)
 
     if not windowWidth then
         windowWidth = 380

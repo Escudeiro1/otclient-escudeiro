@@ -26,7 +26,7 @@ EnterGameWindow
   &authenticatorHeight: 44
   &stayLoggedBoxEnabled: false
   &stayLoggedBoxHeight: 24
-  size: 280 285
+  size: 280 160
   @onEnter: EnterGame.doLogin()
 
   Label
@@ -69,7 +69,6 @@ EnterGameWindow
     margin-top: 10
     opacity: 0.8
     @onCheckChange: |
-      self:getParent():getChildById('autoLoginBox'):setEnabled(self:isChecked())
       self:getParent():getChildById('rememberEmailTip'):setOn(self:isChecked())
 
   UIWidget
@@ -120,10 +119,11 @@ EnterGameWindow
       margin-top: 8
 
   HorizontalSeparator
+    id: loginSeparator
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: prev.bottom
-    margin-top: 8
+    margin-top: 4
 
   MenuLabel
     id: serverLabel
@@ -188,16 +188,6 @@ EnterGameWindow
     margin-left: 3
 
   QtCheckBox
-    id: autoLoginBox
-    enabled: false
-    !text: tr('Auto login')
-    !tooltip: tr('Open charlist automatically when starting client')
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: prev.bottom
-    margin-top: 10
-
-  QtCheckBox
     id: httpLoginBox
     enabled: true
     !text: tr('Enable HTTP login')
@@ -205,15 +195,10 @@ EnterGameWindow
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: prev.bottom
-    margin-top: 2
-
-  HorizontalSeparator
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: prev.bottom
-    margin-top: 6
+    margin-top: 10
 
   QtButton
+    id: loginButton
     !text: tr('Login')
     anchors.right: parent.right
     anchors.top: prev.bottom
