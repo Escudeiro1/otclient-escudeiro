@@ -57,6 +57,11 @@ function init()
     boostedWindow = bottomMenu:recursiveGetChildById('boostedWindow')
     monsterOutfit = boostedWindow:recursiveGetChildById('creature')
     bossOutfit = boostedWindow:recursiveGetChildById('boss')
+    -- These two must always be assigned, regardless of Services.status --
+    -- applyToBoostedSlot() (the real boosted-creature data path) needs
+    -- them unconditionally, not just when the placeholder hint is shown.
+    monsterImage = boostedWindow:recursiveGetChildById('monsterImage')
+    bossImage = boostedWindow:recursiveGetChildById('bossImage')
 
     if not Services.status and default_info then
         local scrollable = showOffWindow:recursiveGetChildById('contentsPanel')
@@ -73,9 +78,6 @@ function init()
         monsterOutfit:setVisible(false)
         bossOutfit:setVisible(false)
         widget:resize(widget:getWidth(), description:getHeight())
-
-        monsterImage = boostedWindow:recursiveGetChildById('monsterImage')
-        bossImage = boostedWindow:recursiveGetChildById('bossImage')
 
         monsterImage:setImageSource("images/icon-questionmark")
         monsterImage:setVisible(true)
