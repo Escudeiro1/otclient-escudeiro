@@ -28,7 +28,7 @@ local default_info = {
     {
         image = "images/randomhint",
         Title = "Welcome to Escudeirot",
-        description = "Play for fun. We constantly work to improve the server by implementing new features, making gameplay adjustments, and correcting bugs. Updates are an important part of Escudeirot, and we aim to keep the experience fresh and enjoyable for both new and experienced players.\n\nFor detailed information about the server, including features, rates, rules, commands, updates, and other important details, please visit the official server website."
+        description = "Play for fun. We constantly work to improve the server. Updates are an important part of Escudeirot, and we aim to keep the experience fresh and enjoyable for both new and experienced players. For detailed information about the server, please visit the server website."
     },
 
     -- hint 2
