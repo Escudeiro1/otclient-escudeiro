@@ -58,8 +58,7 @@ function init()
     monsterOutfit = boostedWindow:recursiveGetChildById('creature')
     bossOutfit = boostedWindow:recursiveGetChildById('boss')
 
---  if not Services.status and default_info then
-    if default_info then
+    if not Services.status and default_info then
         local scrollable = showOffWindow:recursiveGetChildById('contentsPanel')
         local widget = g_ui.createWidget('ShowOffWidget', scrollable)
         local description = widget:recursiveGetChildById('description')
