@@ -5202,11 +5202,11 @@ void ProtocolGame::parseMonkData(const InputMessagePtr& msg) {
             break;
         }
         case Otc::TYPES_MONK_VIRTUE: {
-            const uint8_t virtueCount = msg->getU8();
-            for (uint8_t i = 0; i < virtueCount; ++i) {
-                const uint16_t virtueId = msg->getU16();
-                g_logger.debug("Unused virtue {} TO-DO L4381", virtueId);
-            }
+            // Server always sends a single value byte here (ProtocolGame::sendMonkData
+            // writes exactly [type][value], never a count-prefixed list) — reading more
+            // than this one byte desyncs every packet parsed afterward for the session.
+            const uint8_t virtueValue = msg->getU8();
+            g_logger.debug("Unused virtue {} TO-DO L4381", virtueValue);
             break;
         }
         default:
