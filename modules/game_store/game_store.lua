@@ -28,7 +28,7 @@ GameStore = {}
 -- == Enums ==--
 GameStore.website = {
     WEBSITE_GETCOINS = "https://github.com/mehah/otclient",
-    IMAGES_URL = "https://ot.inmundosstuff.com/images/store/"
+    IMAGES_URL = "https://escudeirot.com/images/store/"
 }
 
 GameStore.CoinType = {
@@ -118,6 +118,18 @@ local function getPageLabelHistory()
 end
 
 local function setImagenHttp(widget, url, isIcon)
+    -- Images shipped with the client (game_store/images/13, /64, /home) load
+    -- instantly; only names missing locally are downloaded from IMAGES_URL.
+    local localPath = "/game_store/images/" .. url:gsub("^/", "")
+    if g_resources.fileExists(localPath) then
+        if isIcon then
+            widget:setIcon(localPath)
+        else
+            widget:setImageSource(localPath)
+        end
+        return
+    end
+
     if GameStore.website.IMAGES_URL then
         local fullUrl = GameStore.website.IMAGES_URL .. url:gsub("^/", "")
         --g_logger.info("[store] fetching: " .. fullUrl)
