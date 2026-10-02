@@ -423,6 +423,11 @@ bool Thing::isLyingCorpse() {
         return t->isLyingCorpse();
     return false;
 }
+bool Thing::isCorpse() {
+    if (const auto t = getThingType(); t)
+        return t->isCorpse();
+    return false;
+}
 bool Thing::isAnimateAlways() {
     if (const auto t = getThingType(); t)
         return t->isAnimateAlways();

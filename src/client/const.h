@@ -1291,6 +1291,7 @@ enum ThingFlagAttr :uint64_t
     ThingFlagAttrSkillWheelGem = static_cast<uint64_t>(1) << 50,
     ThingFlagAttrProficiency = static_cast<uint64_t>(1) << 51,
     ThingFlagAttrImbueable = static_cast<uint64_t>(1) << 52,
+    ThingFlagAttrCorpse = static_cast<uint64_t>(1) << 53,
 };
 
 enum STACK_PRIORITY : uint8_t

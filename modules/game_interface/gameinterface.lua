@@ -604,6 +604,13 @@ function removeMenuHook(category, name)
     end
 end
 
+-- True for things quick loot works on. isLyingCorpse() only reflects the old
+-- lying_object flag, which most protobuf (13+) corpses lack; isCorpse() reads
+-- their corpse/player_corpse flags (absent on client builds before it existed).
+local function isLootableCorpse(thing)
+    return thing:isLyingCorpse() or (thing.isCorpse ~= nil and thing:isCorpse())
+end
+
 function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
     if not g_game.isOnline() then
         return
@@ -706,7 +713,7 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
                 g_game.browseField(useThing:getPosition())
             end)
         end
-        if useThing:isLyingCorpse() and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot and useThing:getPosition().x ~= 0xffff then
+        if isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot and useThing:getPosition().x ~= 0xffff then
             menu.addOption(menu, tr("Loot corpse"), function()
                 g_game.sendQuickLoot(1, useThing)
             end)
@@ -1102,9 +1109,14 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                         -- For pickupable containers like quivers, backpacks, etc., open them instead of quicklooting
                         g_game.open(useThing)
                         return true
-                    elseif g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
-                        -- For containers in the world (not inside another container), quickloot
+                    elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                        -- Corpses in the world are quicklooted
                         g_game.sendQuickLoot(1, useThing)
+                        return true
+                    else
+                        -- Other world containers (bookcases, chests, barrels...) can't be
+                        -- quicklooted, so open them instead
+                        g_game.open(useThing)
                         return true
                     end
                 elseif useThing:isMultiUse() then
@@ -1262,8 +1274,9 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                             -- For depot chests, lockers, depot boxes, inbox, etc., always open them
                             g_game.open(useThing)
                             return true
-                        elseif g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
-                            -- For containers in the world, quickloot
+                        elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                            -- Corpses in the world are quicklooted; other world containers
+                            -- (bookcases, chests, barrels...) are opened below
                             g_game.sendQuickLoot(1, useThing)
                             return true
                         else
@@ -1353,11 +1366,16 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
 
             -- SHIFT+Right click: quickloot on containers
             if mouseButton == MouseRightButton and keyboardModifiers == KeyboardShiftModifier then
-                if useThing and (useThing:isContainer() or useThing:isLyingCorpse()) then
+                if useThing and isLootableCorpse(useThing) then
                     if g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
                         g_game.sendQuickLoot(1, useThing)
                         return true
                     end
+                elseif useThing and useThing:isContainer() and not useThing:isPickupable() then
+                    -- Only corpses can be quicklooted; open other world containers
+                    -- (bookcases, chests, barrels...) instead
+                    g_game.open(useThing)
+                    return true
                 end
 
                 -- Handle pickupable items
@@ -1382,7 +1400,8 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                             -- For depot chests, lockers, depot boxes, inbox, etc., always open them
                             g_game.open(useThing)
                             return true
-                        elseif g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                        elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                            -- Only corpses can be quicklooted; other world containers are opened
                             g_game.sendQuickLoot(1, useThing)
                             return true
                         else

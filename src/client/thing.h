@@ -133,6 +133,7 @@ public:
     bool isDontHide();
     bool isTranslucent();
     bool isLyingCorpse();
+    bool isCorpse();
     bool isAnimateAlways();
     bool isFullGround();
     bool isIgnoreLook();

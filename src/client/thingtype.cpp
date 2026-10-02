@@ -391,8 +391,13 @@ void ThingType::applyAppearanceFlags(const appearances::AppearanceFlags& flags)
     }
 
     // charged to expire
-    // corpse
-    // player_corpse
+
+    // corpse / player_corpse: the protobuf corpse flags. Kept separate from
+    // ThingFlagAttrLyingCorpse (lying_object), which drives tile positioning.
+    if ((flags.has_corpse() && flags.corpse()) || (flags.has_player_corpse() && flags.player_corpse())) {
+        m_flags |= ThingFlagAttrCorpse;
+    }
+
     if (flags.has_cyclopediaitem()) {
         m_cyclopediaType = flags.cyclopediaitem().cyclopedia_type();
     }

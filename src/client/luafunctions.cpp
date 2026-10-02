@@ -563,6 +563,7 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<Thing>("isUnwrapable", &Thing::isUnwrapable);
     g_lua.bindClassMemberFunction<Thing>("isTopEffect", &Thing::isTopEffect);
     g_lua.bindClassMemberFunction<Thing>("isLyingCorpse", &Thing::isLyingCorpse);
+    g_lua.bindClassMemberFunction<Thing>("isCorpse", &Thing::isCorpse);
     g_lua.bindClassMemberFunction<Thing>("getDefaultAction", &Thing::getDefaultAction);
     g_lua.bindClassMemberFunction<Thing>("getClassification", &Thing::getClassification);
     g_lua.bindClassMemberFunction<Thing>("getCyclopediaType", &Thing::getCyclopediaType);
@@ -776,6 +777,7 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<ThingType>("hasElevation", &ThingType::hasElevation);
     g_lua.bindClassMemberFunction<ThingType>("hasFloorChange", &ThingType::hasFloorChange);
     g_lua.bindClassMemberFunction<ThingType>("isLyingCorpse", &ThingType::isLyingCorpse);
+    g_lua.bindClassMemberFunction<ThingType>("isCorpse", &ThingType::isCorpse);
     g_lua.bindClassMemberFunction<ThingType>("isAnimateAlways", &ThingType::isAnimateAlways);
     g_lua.bindClassMemberFunction<ThingType>("hasMiniMapColor", &ThingType::hasMiniMapColor);
     g_lua.bindClassMemberFunction<ThingType>("hasLensHelp", &ThingType::hasLensHelp);

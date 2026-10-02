@@ -137,6 +137,7 @@ public:
     bool hasElevation() { return (m_flags & ThingFlagAttrElevation); }
     bool hasFloorChange() const { return (m_flags & ThingFlagAttrFloorChange); }
     bool isLyingCorpse() { return (m_flags & ThingFlagAttrLyingCorpse); }
+    bool isCorpse() { return (m_flags & ThingFlagAttrCorpse); }
     bool isAnimateAlways() { return (m_flags & ThingFlagAttrAnimateAlways); }
     bool hasMiniMapColor() { return (m_flags & ThingFlagAttrMinimapColor); }
     bool hasLensHelp() { return (m_flags & ThingFlagAttrLensHelp); }
