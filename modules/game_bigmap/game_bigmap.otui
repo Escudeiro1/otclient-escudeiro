@@ -1,0 +1,27 @@
+// Map area is the same size as the Cyclopedia map (478x440).
+// Never takes keyboard focus, so walking keys keep going to the game after
+// clicking the map (click-to-walk, dragging and zoom still work).
+MainWindow
+  id: bigMapWindow
+  !text: tr('Map')
+  size: 510 492
+  focusable: false
+  @onMousePress: self:raise()
+
+  Panel
+    id: mapBase
+    focusable: false
+    anchors.fill: parent
+    image-source: /images/ui/panel_flat
+    image-border: 10
+
+    UIMinimap
+      id: minimap
+      anchors.fill: parent
+      draggable: true
+      focusable: false
+      cross: true
+      color: black
+      zoom: 1
+      min-zoom: -1
+      max-zoom: 5

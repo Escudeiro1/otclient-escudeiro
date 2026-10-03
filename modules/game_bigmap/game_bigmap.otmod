@@ -1,0 +1,9 @@
+Module
+  name: game_bigmap
+  description: Floating big map window that follows the player
+  author: Escudeiro1
+  website: none
+  sandboxed: true
+  scripts: [ game_bigmap ]
+  @onLoad: init()
+  @onUnload: terminate()
