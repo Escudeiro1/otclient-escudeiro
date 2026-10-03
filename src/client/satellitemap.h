@@ -105,7 +105,17 @@ private:
         std::string path;
         TexturePtr  texture;    // nullptr until first successful load
         bool        loadFailed{ false }; // set on first load failure; skips retries
+        uint64_t    lastUsed{ 0 };       // m_useCounter value when last drawn (for LRU eviction)
     };
+
+    // Decoded chunk textures are ~1 MB each (512x512 RGBA). Keep at most this many in
+    // memory (satellite + static minimap combined), releasing the least recently drawn.
+    static constexpr size_t MAX_LOADED_TEXTURES = 96;
+
+    // Loads the chunk's texture if needed and marks it as just used. Returns false if it
+    // can't be drawn. Chunks used since drawStart are never evicted to make room.
+    bool ensureChunkTexture(ChunkInfo& info, uint64_t drawStart);
+    void evictLeastRecentlyUsed(uint64_t drawStart);
 
     // Selects the best LOD for a given scale (pixels per tile).
     static int pickLod(float scale);
@@ -138,6 +148,9 @@ private:
     struct ScannedFile { ChunkKey key; std::string path; bool isSatellite; };
     std::vector<ScannedFile> m_fileCache;
     std::string              m_fileCacheDir;
+
+    uint64_t m_useCounter{ 0 };     // increases every time a chunk is drawn
+    size_t   m_loadedTextures{ 0 }; // chunks currently holding a texture
 };
 
 extern SatelliteMap g_satelliteMap;

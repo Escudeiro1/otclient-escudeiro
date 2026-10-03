@@ -55,6 +55,7 @@ int SatelliteMap::loadFloors(const std::string& dir, const int floorMin, const i
         m_index.clear();
         m_mmChunks.clear();
         m_mmIndex.clear();
+        m_loadedTextures = 0;
     }
 
     // Build the file list exactly once per directory — reused on every subsequent call.
@@ -130,6 +131,7 @@ void SatelliteMap::clear()
     m_mmIndex.clear();
     m_fileCache.clear();
     m_fileCacheDir.clear();
+    m_loadedTextures = 0;
 }
 
 void SatelliteMap::draw(const Rect& screenRect, const Position& cameraPos, float scale, const Color& color, float floorSeparatorOpacity)
@@ -137,6 +139,7 @@ void SatelliteMap::draw(const Rect& screenRect, const Position& cameraPos, float
     if (screenRect.isEmpty() || m_chunks.empty())
         return;
 
+    const uint64_t drawStart = m_useCounter + 1;
     const auto oldClipRect = g_drawPool.getClipRect();
     g_drawPool.setClipRect(screenRect);
     
@@ -205,16 +208,8 @@ void SatelliteMap::draw(const Rect& screenRect, const Position& cameraPos, float
 
                 // Lazy-load texture only for visible chunks.
                 ChunkInfo& info = m_chunks.at(key);
-                if (!info.texture) {
-                    if (info.loadFailed)
-                        continue;
-                    info.texture = loadChunkTexture(info.path);
-                    if (!info.texture) {
-                        info.loadFailed = true;
-                        g_logger.warning("SatelliteMap: failed to load chunk '{}'", info.path);
-                        continue;
-                    }
-                }
+                if (!ensureChunkTexture(info, drawStart))
+                    continue;
 
                 g_drawPool.addTexturedRect(dest, info.texture, Rect(0, 0, 512, 512));
             }
@@ -231,6 +226,7 @@ void SatelliteMap::drawStaticMinimap(const Rect& screenRect, const Position& cam
     if (screenRect.isEmpty() || m_mmChunks.empty())
         return;
 
+    const uint64_t drawStart = m_useCounter + 1;
     const auto oldClipRect = g_drawPool.getClipRect();
     g_drawPool.setClipRect(screenRect);
 
@@ -277,16 +273,8 @@ void SatelliteMap::drawStaticMinimap(const Rect& screenRect, const Position& cam
                 continue;
 
             ChunkInfo& info = m_mmChunks.at(key);
-            if (!info.texture) {
-                if (info.loadFailed)
-                    continue;
-                info.texture = loadChunkTexture(info.path);
-                if (!info.texture) {
-                    info.loadFailed = true;
-                    g_logger.warning("SatelliteMap: failed to load minimap chunk '{}'", info.path);
-                    continue;
-                }
-            }
+            if (!ensureChunkTexture(info, drawStart))
+                continue;
 
             g_drawPool.addTexturedRect(dest, info.texture, Rect(0, 0, 512, 512));
         }
@@ -343,6 +331,58 @@ int SatelliteMap::pickLod(const float scale)
     if (tilesPerPixel <= 0.5f) return 16;
     if (tilesPerPixel <= 1.0f) return 32;
     return 64;
+}
+
+bool SatelliteMap::ensureChunkTexture(ChunkInfo& info, const uint64_t drawStart)
+{
+    if (info.texture) {
+        info.lastUsed = ++m_useCounter;
+        return true;
+    }
+
+    if (info.loadFailed)
+        return false;
+
+    info.texture = loadChunkTexture(info.path);
+    if (!info.texture) {
+        info.loadFailed = true;
+        g_logger.warning("SatelliteMap: failed to load chunk '{}'", info.path);
+        return false;
+    }
+
+    // Mark as used before evicting, so the chunk just decoded is never the one released.
+    info.lastUsed = ++m_useCounter;
+    ++m_loadedTextures;
+    if (m_loadedTextures > MAX_LOADED_TEXTURES)
+        evictLeastRecentlyUsed(drawStart);
+
+    return true;
+}
+
+void SatelliteMap::evictLeastRecentlyUsed(const uint64_t drawStart)
+{
+    // Only runs when a new chunk was just decoded past the limit, so a linear scan
+    // over the (few hundred) indexed chunks is cheap. Chunks drawn in the current
+    // draw call (lastUsed >= drawStart) are never released: if a single view ever
+    // needs more than the limit, the cache temporarily exceeds it instead of
+    // re-decoding the same chunks every frame.
+    while (m_loadedTextures > MAX_LOADED_TEXTURES) {
+        ChunkInfo* oldest = nullptr;
+        for (auto* chunks : { &m_chunks, &m_mmChunks }) {
+            for (auto& [key, info] : *chunks) {
+                if (!info.texture || info.lastUsed >= drawStart)
+                    continue;
+                if (!oldest || info.lastUsed < oldest->lastUsed)
+                    oldest = &info;
+            }
+        }
+
+        if (!oldest)
+            return;
+
+        oldest->texture = nullptr; // decoded again from its file if it comes back into view
+        --m_loadedTextures;
+    }
 }
 
 TexturePtr SatelliteMap::loadChunkTexture(const std::string& path)
