@@ -95,6 +95,22 @@ function controllerNpcTrader:onOpenNpcTrade(items, currencyId, currencyName)
     end
 end
 
+-- WORKAROUND (HTML engine): CSS properties are applied in alphabetical order, so
+-- `height` is calculated before `padding: 0` removes the Button style's 10px padding,
+-- making these 17px-high buttons 37px. Width is fine (it comes after padding).
+-- Set the real height once the window is loaded. Remove when the engine applies
+-- padding before width/height (see project notes on sanitizing HTML size hacks).
+local TRADE_BUTTON_HEIGHT = 17
+
+function controllerNpcTrader:fixTradeButtonHeights()
+    for _, id in ipairs({ "#tabBuy", "#tabSell", "#toggleButton" }) do
+        local button = self:findWidget(id)
+        if button then
+            button:setHeight(TRADE_BUTTON_HEIGHT)
+        end
+    end
+end
+
 function controllerNpcTrader:setTradeMode(mode)
     self.tradeMode = mode
     self.selectedItem = nil

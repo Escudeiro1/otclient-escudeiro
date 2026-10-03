@@ -71,8 +71,8 @@
     .currencySection { display: block; width: 100px; }
     .tradeCurrencyName { margin-top: 2px; }
     .tradeCurrencyIcon { margin-right: 5px; }
-    .tradeTabs { width: 50px; height: 34px; display: block; margin-left: auto; }
-    .tradeTab { width: 30px; height: -5px;  }
+    .tradeTabs { width: 50px; height: 39px; display: block; margin-left: auto; }
+    .tradeTab { width: 50px; height: 17px; --padding: 0; font: verdana-11px-antialised; color: #ffffff; --text-offset: 0 1; }
     .bottonTrade { --image-clip: 28 0 14 14; margin-right: 40px; }
     .bottonTrade:hover { --image-clip: 28 14 14 14; }
     .bottonTrade:active { --image-clip: 28 28 14 14; }
@@ -100,7 +100,7 @@
     .tradeTopRow { padding-right: 56px; height: 14px; }
     #amountScrollBar { width: 130px; }
     .tradePreviewBox { background: #1a1a1a; position: absolute; right: 4px; top: 4px; }
-    .tradeBuyButton { width: 29px; height: -15px; position: absolute; right: 2px; bottom: 0px; }
+    .tradeBuyButton { width: 50px; height: 17px; --padding: 0; position: absolute; right: 2px; bottom: 0px; font: verdana-11px-antialised; color: #ffffff; --text-offset: 0 1; }
     .tradeRows { margin-top: 2px; padding-right: 56px; }
     .tradeRow { height: 14px; }
     .tradeFooterLabel { width: 55px; }
@@ -155,8 +155,8 @@
             </div>
             <UIItem class="tradeCurrencyIcon iconBox sunkenBorder" item-id="3031" item-count="100" always-show-count="false" />
             <div class="tradeTabs">
-                <button id="tabBuy" class="tradeTab fontTitle" text="Buy" onclick="self:setTradeMode(self.BUY)"></button>
-                <button id="tabSell" class="tradeTab fontTitle" style="display:block;margin-top: 5px;" text="Sell" onclick="self:setTradeMode(self.SELL)"></button>
+                <button id="tabBuy" class="tradeTab" text="Buy" onclick="self:setTradeMode(self.BUY)"></button>
+                <button id="tabSell" class="tradeTab" style="display:block;margin-top: 5px;" text="Sell" onclick="self:setTradeMode(self.SELL)"></button>
             </div>
         </div>
 
@@ -192,7 +192,7 @@
             <UIItem class="tradePreviewBox item borderGrey iconBox sunkenBorder" *item="self.selectedItem and self.selectedItem.ptr or nil" />
 
             <!-- Buy button (bottom right) -->
-            <button id="toggleButton" class="tradeBuyButton fontTitle" text="Buy" onclick="self:executeTrade()"></button>
+            <button id="toggleButton" class="tradeBuyButton" text="Buy" onclick="self:executeTrade()"></button>
 
             <!-- Rows (left) -->
             <div class="tradeRows">

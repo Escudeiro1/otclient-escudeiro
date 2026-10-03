@@ -148,6 +148,7 @@ function controllerNpcTrader:initNpcWindow(creature, buttons)
     self:updateChatButton()
     if not self.ui or not self.ui:isVisible() then
         self:loadHtml('templates/game_npctrader.html')
+        self:fixTradeButtonHeights()
     end
     self:setupWindowDragBehavior()
     local creatureOutfit = self:findWidget("#creatureOutfit")
