@@ -1877,6 +1877,11 @@ function setupViewMode(mode)
     applyMobileMargins()
     currentViewMode = mode
     applyExtendedViewLayout(mode == 2)
+
+    -- The large minimap needs both right columns, which view modes can hide.
+    if modules.game_minimap and modules.game_minimap.updateLargeMap then
+        addEvent(modules.game_minimap.updateLargeMap)
+    end
 end
 
 function limitZoom()

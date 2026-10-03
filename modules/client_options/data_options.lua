@@ -565,6 +565,10 @@ return {
                     modules.game_actionbar.updateVisibleWidgetsExternal()
                 end)
             end
+            -- The large minimap depends on the second right column being open
+            if modules.game_minimap and modules.game_minimap.updateLargeMap then
+                addEvent(modules.game_minimap.updateLargeMap)
+            end
         end
     },
     showSpellGroupCooldowns           = {
@@ -872,4 +876,12 @@ return {
     },
     showInfoBanner = true,
     lookTooltipInInventory = false,
+    largeMapWhenSpace = {
+        value = false,
+        action = function(value, options, controller, panels, extraWidgets)
+            if modules.game_minimap and modules.game_minimap.updateLargeMap then
+                addEvent(modules.game_minimap.updateLargeMap)
+            end
+        end
+    },
 }
