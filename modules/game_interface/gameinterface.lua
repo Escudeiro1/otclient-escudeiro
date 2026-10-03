@@ -1129,13 +1129,14 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                         -- For containers inside other containers, we want to open them, not quickloot
                         g_game.open(useThing, useThing:getParentContainer())
                         return true
+                    elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                        -- Corpses in the world are quicklooted. Checked before "pickupable":
+                        -- some corpses decay into a carriable stage (e.g. dead rabbit 6017 -> 4301)
+                        g_game.sendQuickLoot(1, useThing)
+                        return true
                     elseif useThing:isPickupable() then
                         -- For pickupable containers like quivers, backpacks, etc., open them instead of quicklooting
                         g_game.open(useThing)
-                        return true
-                    elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
-                        -- Corpses in the world are quicklooted
-                        g_game.sendQuickLoot(1, useThing)
                         return true
                     else
                         -- Other world containers (bookcases, chests, barrels...) can't be
@@ -1290,6 +1291,13 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                         if useThing:getParentContainer() then
                             g_game.open(useThing, useThing:getParentContainer())
                             return true
+                        elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
+                            -- Corpses in the world are quicklooted; other world containers
+                            -- (bookcases, chests, barrels...) are opened below. Checked before
+                            -- "pickupable": some corpses decay into a carriable stage
+                            -- (e.g. dead rabbit 6017 -> 4301)
+                            g_game.sendQuickLoot(1, useThing)
+                            return true
                         elseif useThing:isPickupable() then
                             -- For pickupable containers like quivers, backpacks, etc., open them instead of quicklooting
                             g_game.open(useThing)
@@ -1297,11 +1305,6 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                         elseif table.find({ 3497, 3498, 3499, 3500, 3502, 12902 }, useThing:getId()) then
                             -- For depot chests, lockers, depot boxes, inbox, etc., always open them
                             g_game.open(useThing)
-                            return true
-                        elseif isLootableCorpse(useThing) and g_game.getFeature(GameThingQuickLoot) and modules.game_quickloot then
-                            -- Corpses in the world are quicklooted; other world containers
-                            -- (bookcases, chests, barrels...) are opened below
-                            g_game.sendQuickLoot(1, useThing)
                             return true
                         else
                             g_game.open(useThing)
