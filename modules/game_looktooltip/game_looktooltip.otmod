@@ -1,0 +1,9 @@
+Module
+  name: game_looktooltip
+  description: Shows an item's look description in a tooltip when hovering it in the inventory or a container window
+  author: Escudeiro1
+  website: none
+  sandboxed: true
+  scripts: [ game_looktooltip ]
+  @onLoad: init()
+  @onUnload: terminate()

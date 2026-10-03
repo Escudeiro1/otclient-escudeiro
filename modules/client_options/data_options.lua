@@ -871,4 +871,5 @@ return {
         end
     },
     showInfoBanner = true,
+    lookTooltipInInventory = false,
 }

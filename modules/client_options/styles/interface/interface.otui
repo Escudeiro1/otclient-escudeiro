@@ -100,6 +100,18 @@ UIWidget
       !text: tr('Show Info Banner')
       !tooltip: tr('Tick this box to display an info banner for certain in-game events.')
 
+  SmallReversedQtPanel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    height: 22
+    margin-top: 5
+
+    OptionCheckBoxMarked
+      id: lookTooltipInInventory
+      !text: tr('Use tooltip to look at items in your inventory')
+      !tooltip: tr('Rest the mouse on an item in your equipment or in a container window for 1 second to see its look description in a tooltip.')
+
 
   SmallReversedQtPanel
     anchors.left: parent.left
