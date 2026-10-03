@@ -611,6 +611,30 @@ local function isLootableCorpse(thing)
     return thing:isLyingCorpse() or (thing.isCorpse ~= nil and thing:isCorpse())
 end
 
+-- A carriable item lying in the world (not a corpse, not in a container/inventory).
+local function getFloorPickupItem(...)
+    for _, thing in ipairs({ ... }) do
+        if thing and thing:isItem() and thing:isPickupable() and not thing:isNotMoveable()
+            and not isLootableCorpse(thing) then
+            local pos = thing:getPosition()
+            if pos and pos.x ~= 0xffff then
+                return thing
+            end
+        end
+    end
+    return nil
+end
+
+-- Shift + right-click pickup: the server puts the item in the matching managed
+-- loot container (or the backpack), checking capacity, like dragging it there.
+local function pickUpFloorItem(item)
+    if not g_game.getFeature(GameThingQuickLoot) then
+        return false
+    end
+    g_game.sendQuickLoot(0, item)
+    return true
+end
+
 function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
     if not g_game.isOnline() then
         return
@@ -1132,8 +1156,8 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
 
                 -- If we couldn't use the item through any of the above methods,
                 -- but it's pickupable, try to pick it up (like in Classic Control mode)
-                if useThing:isPickupable() then
-                    g_game.move(useThing, useThing:getPosition(), 1)
+                local pickupItem = getFloorPickupItem(useThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
                     return true
                 end
 
@@ -1293,14 +1317,19 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                 end
 
                 -- Handle pickupable items if no container/corpse was handled
-                if lookThing and not lookThing:isCreature() and lookThing:isPickupable() then
-                    g_game.move(lookThing, lookThing:getPosition(), 1)
+                local pickupItem = getFloorPickupItem(lookThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
                     return true
                 end
             end
 
-            -- SHIFT+Right click: opens containers without quicklooting
+            -- SHIFT+Right click: opens corpses/containers without quicklooting, and
+            -- picks up carriable items lying in the world
             if mouseButton == MouseRightButton and keyboardModifiers == KeyboardShiftModifier then
+                local pickupItem = not (useThing and isLootableCorpse(useThing)) and getFloorPickupItem(useThing, lookThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
+                    return true
+                end
                 if useThing then
                     if useThing:isContainer() or useThing:isLyingCorpse() then
                         if useThing:getParentContainer() then
@@ -1378,9 +1407,9 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                     return true
                 end
 
-                -- Handle pickupable items
-                if lookThing and not lookThing:isCreature() and lookThing:isPickupable() then
-                    g_game.move(lookThing, lookThing:getPosition(), 1)
+                -- Pick up carriable items lying in the world
+                local pickupItem = getFloorPickupItem(useThing, lookThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
                     return true
                 end
             end
@@ -1412,8 +1441,17 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
                 end
 
                 -- Handle pickupable items in the game world
-                if lookThing and not lookThing:isCreature() and lookThing:isPickupable() then
-                    g_game.move(lookThing, lookThing:getPosition(), 1)
+                local pickupItem = getFloorPickupItem(useThing, lookThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
+                    return true
+                end
+            end
+
+            -- SHIFT+Right click: pick up carriable items lying in the world
+            -- (anything else falls through to Look below)
+            if mouseButton == MouseRightButton and keyboardModifiers == KeyboardShiftModifier then
+                local pickupItem = getFloorPickupItem(useThing, lookThing)
+                if pickupItem and pickUpFloorItem(pickupItem) then
                     return true
                 end
             end
