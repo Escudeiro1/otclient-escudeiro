@@ -47,8 +47,14 @@ local function isSurfaceFloor(floor)
     return floor <= SEA_FLOOR
 end
 
+-- The map tab's widgets are destroyed when another Cyclopedia tab is selected or the
+-- window closes, but its position handler stays registered; ignore calls after that.
+local function isMapTabAlive()
+    return UI ~= nil and not UI:isDestroyed()
+end
+
 local function updateViewMode()
-    if not UI or not viewRadioGroup then
+    if not isMapTabAlive() or not viewRadioGroup then
         return
     end
 
@@ -157,6 +163,9 @@ function Cyclopedia.loadMap()
     viewRadioGroup:addWidget(mapCheck)
 
     viewRadioGroup.onSelectionChange = function(self, selected)
+        if viewBase:isDestroyed() then
+            return
+        end
         local inSurface = selected == surfaceCheck and isSurfaceFloor(virtualFloor) and
                               g_satelliteMap.hasChunksForView(virtualFloor)
         minimapWidget:setSatelliteMode(inSurface)
@@ -299,6 +308,10 @@ refreshVirtualFloors = function()
 end
 
 function Cyclopedia.onUpdateCameraPosition()
+    if not isMapTabAlive() then
+        return
+    end
+
     local player = g_game.getLocalPlayer()
     if not player then
         return
