@@ -283,3 +283,35 @@ PhantomMiniWindow
 
       $pressed !disabled:
         image-clip: 344 0 15 15
+
+  // HD toggle (large map mode only): switches the large minimap between the
+  // standard explored map and the Cyclopedia look. Placed and shown from Lua.
+  UIButton
+    id: hdButton
+    size: 20 20
+    visible: false
+    image-source: /game_minimap/hd_button
+    !tooltip: tr('HD map (Surface View)')
+    @onClick: toggleHdMinimap()
+
+    $pressed:
+      image-color: #c0c0c0
+
+    // Same glow as the top menu buttons (e.g. the Helper) when active.
+    UIWidget
+      id: brightButton
+      size: 20 20
+      anchors.top: parent.top
+      anchors.left: parent.left
+      phantom: true
+      visible: false
+      image-source: /images/ui/bright-x20
+
+    UIWidget
+      id: highlight
+      size: 22 22
+      phantom: true
+      visible: false
+      image-source: /images/ui/highlight
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter

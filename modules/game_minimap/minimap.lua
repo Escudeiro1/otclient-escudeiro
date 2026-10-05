@@ -334,8 +334,8 @@ end
 -- so the panel is made click-through and two flat click areas replace its buttons.
 local LAYERS_ROTATION = 90
 local LAYERS_W, LAYERS_H = 20, 68 -- layersPanel's real (unrotated) size
-local LAYERS_TOP = 5              -- top of the horizontal bar inside mainmappanel
-local LAYERS_RIGHT = 7            -- gap between the horizontal bar and the panel's right edge
+local LAYERS_TOP = 16             -- top of the horizontal bar inside mainmappanel
+local LAYERS_RIGHT = 5            -- gap between the horizontal bar and the panel's right edge
 local layerClickUp = nil
 local layerClickDown = nil
 
@@ -453,6 +453,10 @@ function setLargeMap(large)
             { left = 4 })
 
         setLayersHorizontal(true)
+        -- HD toggle under the full map button, on the zoom in row.
+        setAnchors(ui.hdButton, { { AnchorTop, 'zoomIn', AnchorTop }, { AnchorLeft, 'fullMap', AnchorLeft } }, {})
+        ui.hdButton:show()
+        updateHdButtonGlow()
 
         mainRightPanel:addAnchor(AnchorTop, 'largeMinimapPanel', AnchorBottom)
         rightExtraPanel:addAnchor(AnchorTop, 'largeMinimapPanel', AnchorBottom)
@@ -476,6 +480,7 @@ function setLargeMap(large)
         setAnchors(ui.zoomOut, { { AnchorRight, 'fullMap', AnchorRight }, { AnchorBottom, 'zoomIn', AnchorTop } },
             { bottom = 2 })
         setLayersHorizontal(false)
+        ui.hdButton:hide()
 
         mainRightPanel:addAnchor(AnchorTop, 'parent', AnchorTop)
         rightExtraPanel:addAnchor(AnchorTop, 'parent', AnchorTop)
@@ -488,7 +493,7 @@ function setLargeMap(large)
     -- Large map: full static map + Surface View (see updateMinimapViewMode).
     local minimap = minimapBorderWidget.minimap
     if minimap then
-        minimap:setUseStaticMinimap(large)
+        minimap:setUseStaticMinimap(large and isHdMinimap())
         minimap:setFloorSeparatorOpacity(1.0)
     end
     updateMinimapViewMode()
@@ -530,10 +535,38 @@ function updateMinimapViewMode()
         return
     end
 
-    if largeMapActive then
+    if largeMapActive and isHdMinimap() then
         ensureSatelliteFloor(virtualFloor)
         minimap:setSatelliteMode(virtualFloor <= SURFACE_FLOOR and g_satelliteMap.hasChunksForView(virtualFloor))
     else
         minimap:setSatelliteMode(false)
     end
+end
+
+-- HD toggle for the large map: HD = Surface View + full static map, otherwise the
+-- standard explored map. Saved per client; on by default.
+local HD_SETTING = 'largeMinimapHD'
+
+function isHdMinimap()
+    local value = g_settings.get(HD_SETTING)
+    return value == '' or g_settings.getBoolean(HD_SETTING)
+end
+
+function updateHdButtonGlow()
+    local button = mapController.ui and mapController.ui.hdButton
+    if button then
+        local hd = isHdMinimap()
+        button.brightButton:setVisible(hd)
+        button.highlight:setVisible(hd)
+    end
+end
+
+function toggleHdMinimap()
+    g_settings.set(HD_SETTING, not isHdMinimap())
+    local minimap = minimapBorderWidget and minimapBorderWidget.minimap
+    if minimap then
+        minimap:setUseStaticMinimap(largeMapActive and isHdMinimap())
+    end
+    updateMinimapViewMode()
+    updateHdButtonGlow()
 end
