@@ -708,10 +708,15 @@ void Creature::updateWalkAnimation()
     const int maxFootDelay = footAnimPhases > 2 ? 80 : 205;
     int footAnimDelay = footAnimPhases;
 
+    // Leg cycle length in tiles walked: full cycle = frames * delay ~= divisor * step time.
+    // Upstream used 1.5 (one leg cycle every ~1.5 tiles); testing 1.0 (one cycle per tile,
+    // faster legs) to match the official client more closely.
+    constexpr float WALK_CYCLE_TILES = 1.0f;
+
     if (g_game.getFeature(Otc::GameEnhancedAnimations) && footAnimPhases > 2) {
         minFootDelay += 10;
         if (footAnimDelay > 1)
-            footAnimDelay /= 1.5;
+            footAnimDelay = std::max(1, static_cast<int>(footAnimDelay / WALK_CYCLE_TILES));
     }
 
     const auto walkSpeed = m_walkingAnimationSpeed > 0 ? m_walkingAnimationSpeed : m_stepCache.getDuration(m_lastStepDirection);
