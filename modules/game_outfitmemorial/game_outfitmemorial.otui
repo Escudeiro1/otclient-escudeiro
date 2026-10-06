@@ -1,0 +1,105 @@
+// One outfit stage: its name, price and the list of players who own it.
+MemorialColumn < Panel
+  width: 160
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    text-align: center
+    color: #c0c0c0
+    font: verdana-11px-antialised
+
+  Label
+    id: price
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 2
+    text-align: center
+    color: #e0c060
+    font: verdana-11px-antialised
+
+  TextList
+    id: owners
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: ownersScrollBar.left
+    anchors.bottom: parent.bottom
+    margin-top: 6
+    padding: 2
+    focusable: false
+    vertical-scrollbar: ownersScrollBar
+
+  // Anchored to price (not owners): owners' right edge already depends on this
+  // scrollbar, so anchoring back to owners would be a cycle.
+  VerticalScrollBar
+    id: ownersScrollBar
+    anchors.top: price.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 6
+    step: 14
+    pixels-scroll: true
+
+MemorialOwnerLabel < Label
+  color: #c0c0c0
+  font: verdana-11px-antialised
+  text-auto-resize: false
+  height: 14
+  focusable: false
+
+MainWindow
+  id: outfitMemorialWindow
+  !text: tr('Outfit Memorial')
+  size: 536 380
+  @onEscape: modules.game_outfitmemorial.hide()
+
+  TabButton
+    id: goldenTab
+    !text: tr('Golden Outfit')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    width: 110
+    @onClick: modules.game_outfitmemorial.showTab('golden')
+
+  TabButton
+    id: royalTab
+    !text: tr('Royal Costume')
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin-left: 4
+    width: 110
+    @onClick: modules.game_outfitmemorial.showTab('royal')
+
+  HorizontalSeparator
+    id: topSeparator
+    anchors.top: goldenTab.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+
+  Panel
+    id: columns
+    anchors.top: topSeparator.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: bottomSeparator.top
+    margin-top: 8
+    margin-bottom: 8
+
+  HorizontalSeparator
+    id: bottomSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: closeButton.top
+    margin-bottom: 8
+
+  Button
+    id: closeButton
+    !text: tr('Close')
+    width: 64
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_outfitmemorial.hide()

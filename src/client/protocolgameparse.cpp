@@ -432,7 +432,12 @@ void ProtocolGame::parseMessage(const InputMessagePtr& msg)
                     }
                     break;
                 case Proto::GameServerRuleViolationCancel:
-                    parseRuleViolationCancel(msg);
+                    // 12.15+ reuses this opcode for the Outfit Memorial (golden/royal outfit owners).
+                    if (g_game.getClientVersion() >= 1215) {
+                        parseOutfitMemorial(msg);
+                    } else {
+                        parseRuleViolationCancel(msg);
+                    }
                     break;
                 case Proto::GameServerRuleViolationLock:
                     if (g_game.getClientVersion() >= 1310) {
@@ -7343,6 +7348,39 @@ void ProtocolGame::parseHighscores(const InputMessagePtr& msg)
     const uint32_t entriesTs = msg->getU32(); // last update
 
     g_game.processHighscore(serverName, world, worldType, battlEye, vocations, categories, page, totalPages, highscores, entriesTs);
+}
+
+// Outfit Memorial (opcode 0xB0, 12.15+): who owns each stage of the golden and royal
+// outfits, plus their prices. Layout as sent by the server's outfit memorial action:
+//   golden: 3 x u32 price, then 3 x (u16 count + count x string)
+//   royal:  3 x (u16 silver token price, u16 golden token price), then 3 x (u16 count + names)
+void ProtocolGame::parseOutfitMemorial(const InputMessagePtr& msg)
+{
+    const auto readOwners = [&msg]() {
+        std::vector<std::vector<std::string>> owners(3);
+        for (auto& stage : owners) {
+            const uint16_t count = msg->getU16();
+            stage.reserve(count);
+            for (uint16_t i = 0; i < count; ++i)
+                stage.emplace_back(msg->getString());
+        }
+        return owners;
+    };
+
+    std::vector<uint32_t> goldenPrices(3);
+    for (auto& price : goldenPrices)
+        price = msg->getU32();
+    const auto goldenOwners = readOwners();
+
+    std::vector<uint16_t> royalSilverPrices(3);
+    std::vector<uint16_t> royalGoldenPrices(3);
+    for (size_t i = 0; i < 3; ++i) {
+        royalSilverPrices[i] = msg->getU16();
+        royalGoldenPrices[i] = msg->getU16();
+    }
+    const auto royalOwners = readOwners();
+
+    g_lua.callGlobalField("g_game", "onOutfitMemorial", goldenPrices, goldenOwners, royalSilverPrices, royalGoldenPrices, royalOwners);
 }
 
 void ProtocolGame::parseWeaponProficiencyExperience(const InputMessagePtr& msg)
