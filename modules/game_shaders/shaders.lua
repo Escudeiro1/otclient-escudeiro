@@ -143,9 +143,26 @@ local TEXT_SHADERS = { {
     frag = 'shaders/fragment/text_glow.frag' -- Soft glow effect (higher GPU cost)
 } }
 
+-- Options -> Graphics -> "Vectorized graphics" uses this map shader.
+local VECTORIZED_SHADER = 'Map - Painterly (Light)'
+
+-- Sets the map shader for the Vectorized graphics option: Painterly (Light) when on,
+-- Default when off. Called when the option changes and after every login (the map
+-- shader isn't saved; attachShaders resets it on game start).
+function applyVectorizedShader(enabled)
+    if not g_game.isOnline() then
+        return
+    end
+    local map = modules.game_interface.getMapPanel()
+    map:setShader(enabled and VECTORIZED_SHADER or 'Default')
+end
+
 local function attachShaders()
     local map = modules.game_interface.getMapPanel()
     map:setShader('Default')
+    if modules.client_options and modules.client_options.getOption('vectorizedGraphics') then
+        map:setShader(VECTORIZED_SHADER)
+    end
 
     local player = g_game.getLocalPlayer()
     if player then

@@ -23,7 +23,19 @@ UIWidget
     anchors.top: prev.bottom
     margin-top: 7
     height: 22
-  
+
+    OptionCheckBoxMarked
+      id: vectorizedGraphics
+      !text: tr('Vectorized graphics')
+      !tooltip: tr('Enabling this option gives the game an HD-like look by softening pixel-art edges and blending a few pixels.')
+
+  SmallReversedQtPanel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 5
+    height: 22
+
     OptionCheckBoxMarked
       id: fullscreen
       !text: 'Full Screen Mode'

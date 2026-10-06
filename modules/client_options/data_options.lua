@@ -876,6 +876,37 @@ return {
     },
     showInfoBanner = true,
     lookTooltipInInventory = false,
+    -- Preset: Antialiasing mode + the "Map - Painterly (Light)" shader. The antialiasing
+    -- mode in use before is saved and restored on disable; the dropdown is locked while on.
+    vectorizedGraphics = {
+        value = false,
+        action = function(value, options, controller, panels, extraWidgets)
+            local PREV_KEY = 'vectorizedPrevAntialias'
+            local ANTIALIASING = 1 -- 0 None, 1 Antialiasing, 2 Smooth Retro
+            local antialiasCombo = panels.graphicsPanel and panels.graphicsPanel:recursiveGetChildById('antialiasingMode')
+
+            if value then
+                -- Only remember the mode when turning on (not again on every client start).
+                if g_settings.get(PREV_KEY) == '' then
+                    g_settings.set(PREV_KEY, options.antialiasingMode.value)
+                end
+                modules.client_options.setOption('antialiasingMode', ANTIALIASING)
+            else
+                local previous = g_settings.get(PREV_KEY)
+                if previous ~= '' then
+                    g_settings.set(PREV_KEY, '')
+                    modules.client_options.setOption('antialiasingMode', tonumber(previous) or ANTIALIASING)
+                end
+            end
+            if antialiasCombo then
+                antialiasCombo:setEnabled(not value)
+            end
+
+            if modules.game_shaders and modules.game_shaders.applyVectorizedShader then
+                modules.game_shaders.applyVectorizedShader(value)
+            end
+        end
+    },
     largeMapWhenSpace = {
         value = false,
         action = function(value, options, controller, panels, extraWidgets)
