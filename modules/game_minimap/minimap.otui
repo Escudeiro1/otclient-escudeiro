@@ -291,6 +291,9 @@ PhantomMiniWindow
     size: 20 20
     visible: false
     image-source: /game_minimap/hd_button
+    // Base colour must be declared: otherwise $pressed's darker colour is never
+    // reverted after the first click.
+    image-color: #ffffff
     !tooltip: tr('HD map (Surface View)')
     @onClick: toggleHdMinimap()
 
