@@ -31,7 +31,7 @@ HealthCircleFront < UIProgressBar
 ManaCircleFront < UIProgressBar
   image-source: /data/images/game/healthcircle/right_full
   opacity: 0.7
-  image-color: #3F92EA
+  image-color: #3323d4
   phantom: true
 
 ManaShieldCircleFront < UIProgressBar

@@ -167,7 +167,7 @@ function whenMonkHealthChange()
         height = restYhppc
     })
     if healthPercent > 92 then
-        monkHealthCircle:setImageColor('#00BC00')
+        monkHealthCircle:setImageColor('#32b41a')
     elseif healthPercent > 60 then
         monkHealthCircle:setImageColor('#50A150')
     elseif healthPercent > 30 then

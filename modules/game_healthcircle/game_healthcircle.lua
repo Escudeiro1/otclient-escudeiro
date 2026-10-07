@@ -243,7 +243,7 @@ function whenHealthChange()
         })
 
         if healthPercent > 92 then
-            healthCircleFront:setImageColor('#00BC00')
+            healthCircleFront:setImageColor('#32b41a')
         elseif healthPercent > 60 then
             healthCircleFront:setImageColor('#50A150')
         elseif healthPercent > 30 then
