@@ -117,10 +117,28 @@ local function getPageLabelHistory()
     return tonumber(currentPage), tonumber(pageCount)
 end
 
+-- Client-side image choices: the server's catalogue names an image, the client
+-- decides what to show for it. (The Premium_Time_* files are star placeholders.)
+local IMAGE_OVERRIDES = {
+    ["64/Premium_Time_30.png"] = "64/30_days.png",
+    ["64/Premium_Time_90.png"] = "64/90_days.png",
+    ["64/Premium_Time_180.png"] = "64/180_days.png",
+    ["64/Premium_Time_360.png"] = "64/360_days.png",
+    -- Useful Things
+    ["64/Charm_Expansion_Offer.png"] = "64/Charm_Expansion.png",
+    ["64/Instant_Reward_Access.png"] = "64/Instant_Reward.png",
+    ["64/Permanent_Hunting_Task_Slot.png"] = "64/Permanent_Hunting_Taskslot.png",
+    ["64/Permanent_Prey_Slot.png"] = "64/Permanent_Preyslot.png",
+    ["64/Prey_Bonus_Reroll.png"] = "64/Prey_Wildcard.png",
+}
+
 local function setImagenHttp(widget, url, isIcon)
+    url = url:gsub("^/", "")
+    url = IMAGE_OVERRIDES[url] or url
+
     -- Images shipped with the client (game_store/images/13, /64, /home) load
     -- instantly; only names missing locally are downloaded from IMAGES_URL.
-    local localPath = "/game_store/images/" .. url:gsub("^/", "")
+    local localPath = "/game_store/images/" .. url
     if g_resources.fileExists(localPath) then
         if isIcon then
             widget:setIcon(localPath)
@@ -320,7 +338,21 @@ local function convert_timestamp(timestamp)
     return fecha_hora
 end
 
+-- Image chosen by offer name, for offers that share an image name with others
+-- (the server sends Hireling_Male.png for the apprentice, name change and sex change).
+local OFFER_NAME_ICONS = {
+    ["Hireling Name Change"] = "Name_Change.png",
+    ["Hireling Sex Change"] = "Sex_Change.png",
+}
+
 local function getProductData(product)
+    if product.icon and product.name and OFFER_NAME_ICONS[product.name] then
+        return {
+            VALOR = "icon",
+            ID = OFFER_NAME_ICONS[product.name]
+        }
+    end
+
     if product.itemId or product.itemType then
         return {
             VALOR = "item",
@@ -344,8 +376,72 @@ local function getProductData(product)
     end
 end
 
+-- Beds are two items (two halves on two tiles), so the server can't send them as an
+-- item and sends an image name instead, for which we have no pictures. Draw both
+-- halves from the game sprites instead, stacked vertically (head half on top).
+-- Item ids as in the server's catalogue (beds.lua); server and client ids match.
+local BED_ITEMS = {
+    ["Flower_Bed.png"] = { 39788, 39789 },
+    ["Grandiose_Bed.png"] = { 35936, 35937 },
+    ["Homely_Bed.png"] = { 34320, 34321 },
+    ["Knightly_Bed.png"] = { 39437, 39438 },
+    ["Kraken_Bed.png"] = { 37201, 37202 },
+    ["Log_Bed.png"] = { 37031, 37032 },
+    ["Magnificent_Bed.png"] = { 35859, 35860 },
+    ["Opulent_Kline.png"] = { 42359, 42360 },
+    ["Ornate_Bed.png"] = { 35871, 35872 },
+    ["Seafarer_Bed.png"] = { 42287, 42288 },
+    ["Sleeping_Mat.png"] = { 37793, 37794 },
+    ["Vengothic_Bed.png"] = { 35883, 35884 },
+    ["Verdant_Bed.png"] = { 26096, 26097 },
+    ["Wrought-Iron_Bed.png"] = { 35206, 35207 },
+}
+
+local function createBedImage(imageParent, itemIds)
+    local half = math.floor(math.min(imageParent:getWidth(), imageParent:getHeight() / 2))
+    if half <= 0 then
+        half = 32 -- not laid out yet: use the normal item size
+    end
+    for i, itemId in ipairs(itemIds) do
+        local itemWidget = g_ui.createWidget('Item', imageParent)
+        itemWidget:setItemId(itemId)
+        itemWidget:setVirtual(true)
+        itemWidget:setPhantom(true)
+        itemWidget:setSize({ width = half, height = half })
+        itemWidget:addAnchor(AnchorHorizontalCenter, 'parent', AnchorHorizontalCenter)
+        if i == 1 then
+            itemWidget:addAnchor(AnchorBottom, 'parent', AnchorVerticalCenter)
+        else
+            itemWidget:addAnchor(AnchorTop, 'parent', AnchorVerticalCenter)
+        end
+    end
+end
+
+-- Hireling dresses are also sent as image names (OFFER_TYPE_HIRELING_OUTFIT isn't
+-- an outfit type on the server), and most of those images don't exist. Draw the
+-- dress from the creature sprites like mounts/outfits. Looktypes { male, female }
+-- as in the server's data/libs/systems/hireling.lua (HIRELING_OUTFITS_TABLE).
+local HIRELING_DRESSES = {
+    ["Hireling_Banker.png"] = { 1110, 1109 },
+    ["Hireling_Trader.png"] = { 1112, 1111 },
+    ["Hireling_Cook.png"] = { 1114, 1113 },
+    ["Hireling_Steward.png"] = { 1116, 1115 },
+    ["Hireling_Servant.png"] = { 1118, 1117 },
+    ["Hireling_Bonelord.png"] = { 1124, 1123 },
+    ["Hireling_Dragon.png"] = { 1126, 1125 },
+    ["Hireling_Hydra.png"] = { 1130, 1129 },
+    ["Hireling_Ferumbras.png"] = { 1132, 1131 },
+}
+
 local function createProductImage(imageParent, data)
-    if data.VALOR == "item" then
+    if data.VALOR == "icon" and BED_ITEMS[data.ID] then
+        createBedImage(imageParent, BED_ITEMS[data.ID])
+    elseif data.VALOR == "icon" and HIRELING_DRESSES[data.ID] then
+        local creature = g_ui.createWidget('Creature', imageParent)
+        creature:setOutfit({ type = HIRELING_DRESSES[data.ID][1] })
+        creature:getCreature():setStaticWalking(1000)
+        creature:fill('parent')
+    elseif data.VALOR == "item" then
         local itemWidget = g_ui.createWidget('Item', imageParent)
         itemWidget:setId(data.ID)
         itemWidget:setItemId(data.ID)
@@ -785,7 +881,7 @@ function onParseStoreGetCategories(buttons)
     end
 
     local orderedCategoryNames = {"Home", "Premium Time", "Consumables", "Cosmetics", "Houses", "Boosts", "Extras",
-                                "Tournament"}
+                                "Exclusive Offers"}
 
     local priority = {}
     for index, name in ipairs(orderedCategoryNames) do
@@ -870,7 +966,11 @@ function onParseStoreGetCategories(buttons)
 
                 if parent.subCategoriesSize then
                     parent.closedSize = parent.closedSize or parent:getHeight() / (parent.subCategoriesSize + 1) + 15
-                    parent.openedSize = parent.openedSize or parent:getHeight() * (parent.subCategoriesSize + 1) - 6
+                    -- Exact height for the subcategory rows (see createSubWidget): the first row
+                    -- starts 20px down, each row is 22px and overlaps the previous one by 1px,
+                    -- plus a 4px gap at the bottom. (Was 22 * (n + 1) - 6, 3px short for n = 2.)
+                    local n = parent.subCategoriesSize
+                    parent.openedSize = parent.openedSize or (20 + 22 * n - (n - 1) + 4)
 
                     open(parent)
 
