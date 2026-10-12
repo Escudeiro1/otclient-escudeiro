@@ -6,13 +6,13 @@ return {
         end
     },
     showFps                           = {
-        value = false,
+        value = true,
         action = function(value, options, controller, panels, extraWidgets)
             modules.client_topmenu.setFpsVisible(value)
         end
     },
     showPing                          = {
-        value = false,
+        value = true,
         action = function(value, options, controller, panels, extraWidgets)
             modules.client_topmenu.setPingVisible(value)
         end
@@ -24,7 +24,7 @@ return {
         end
     },
     classicControl                    = {
-        value = g_platform.isMobile() and true or false,
+        value = true,
         action = function(value, options, controller, panels, extraWidgets)
             -- Update the mouseControlMode based on this option
             -- 0 = Regular Controls, 1 = Classic Controls, 2 = Left Smart-Click
@@ -90,7 +90,7 @@ return {
         end
     },
     mouseControlMode                  = {
-        value = 0, -- Default to "Regular Controls"
+        value = 1, -- Default to "Classic Controls"
         action = function(value, options, controller, panels, extraWidgets)
             -- Update the underlying options values first
             -- 0 = Regular Controls, 1 = Classic Controls, 2 = Left Smart-Click
@@ -152,7 +152,7 @@ return {
             end, 50)
         end
     },
-    returnDisablesChat                = false,
+    returnDisablesChat                = true,
     smartWalk                         = false,
     autoChaseOverride                 = true,
     talkOnRightClick                  = false,
@@ -185,7 +185,7 @@ return {
     },
     openMaximized                     = false,
     backgroundFrameRate               = {
-        value = 501,
+        value = 120,
         action = function(value, options, controller, panels, extraWidgets)
             local text, v = value, value
             if value <= 0 or value >= 501 then
@@ -220,7 +220,7 @@ return {
         end
     },
     musicSoundVolume                  = {
-        value = 100,
+        value = 25,
         action = function(value, options, controller, panels, extraWidgets)
             if g_sounds then
                 g_sounds.getChannel(SoundChannels.Music):setGain(value / 100)
@@ -248,7 +248,7 @@ return {
         end
     },
     ambientLight                      = {
-        value = 0,
+        value = 75,
         action = function(value, options, controller, panels, extraWidgets)
             panels.graphicsEffectsPanel:recursiveGetChildById('ambientLight'):setText(string.format(
                 'Ambient light: %s%%', value))
@@ -397,14 +397,14 @@ return {
         value = true,
     },
     antialiasingMode                  = {
-        value = 1,
+        value = 2,
         action = function(value, options, controller, panels, extraWidgets)
             panels.gameMapPanel:setAntiAliasingMode(value)
             panels.graphicsPanel:recursiveGetChildById('antialiasingMode'):setCurrentOptionByData(value, true)
         end
     },
     shadowFloorIntensity              = {
-        value = 30,
+        value = 100,
         action = function(value, options, controller, panels, extraWidgets)
             panels.graphicsEffectsPanel:recursiveGetChildById('shadowFloorIntensity'):setText(string.format(
                 'Shadow floor Intensity: %s%%', value))
@@ -430,7 +430,7 @@ return {
         end
     },
     floorViewMode                     = {
-        value = 1,
+        value = 0,
         action = function(value, options, controller, panels, extraWidgets)
             panels.gameMapPanel:setFloorViewMode(value)
             panels.graphicsEffectsPanel:recursiveGetChildById('floorViewMode'):setCurrentOptionByData(value, true)

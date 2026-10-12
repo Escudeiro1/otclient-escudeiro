@@ -582,7 +582,10 @@ function EnterGame.clearAccountFields()
 end
 
 function EnterGame.toggleStayLoggedBox(clientVersion, init)
-    local enabled = (clientVersion >= 1074)
+    -- Always hidden: on the first start the version combo fires a change
+    -- after setUniqueServer, which used to show the box and grow the window
+    -- past the login button.
+    local enabled = false
     if enabled == enterGame.stayLoggedBoxEnabled then
         return
     end
