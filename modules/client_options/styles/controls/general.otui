@@ -216,16 +216,6 @@ UIWidget
           local value = modules.client_options.getOption('walkStairsDelay')
           self:setText(tr('Walk delay after turn: %dms', value))
 
-    QtButton
-      id: hotkeysButton
-      !text: tr('Hotkeys Manager')
-      @onClick: modules.game_hotkeys.show()
-      anchors.top: prev.bottom
-      anchors.left: parent.left
-      margin-top: 12
-
-      size: 120 20
-
   VerticalScrollBar
     id: generalScrollBar
     anchors.top: parent.top

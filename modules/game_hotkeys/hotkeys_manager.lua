@@ -64,19 +64,31 @@ local nextSourceId = 1
 lastHotkeyTime = g_clock.millis()
 local hotkeysWindowButton = nil
 
+-- The legacy Hotkeys Manager window (Ctrl+K) is for older protocols; this client uses
+-- the action bar hotkeys. When false: no window toggle, no Ctrl+K / top menu button,
+-- and none of its saved or default F-key hotkeys are loaded or bound (they conflicted
+-- with the action bar). The helpers other modules use (canPerformKeyCombo,
+-- createHotkeyBlock, areHotkeysDisabled, toggleChaseMode, ...) keep working.
+local LEGACY_MANAGER_ENABLED = false
+
 -- public functions
 function init()
 
+    -- Ctrl+K: the legacy manager window when enabled, otherwise Options -> Controls ->
+    -- General Hotkeys (the action bar / keybind hotkeys this client uses).
     Keybind.new("Windows", "Show/hide Hotkeys", "Ctrl+K", "")
     Keybind.bind("Windows", "Show/hide Hotkeys", {
       {
         type = KEY_DOWN,
-        callback = toggle,
+        callback = LEGACY_MANAGER_ENABLED and toggle or toggleHotkeysOptions,
       }
     })
+    -- The (hidden) window is still created: several helpers look up currentHotkeys.
     hotkeysWindow = g_ui.displayUI('hotkeys_manager')
     hotkeysWindow:setVisible(false)
-    hotkeysWindowButton = modules.client_topmenu.addRightGameToggleButton('hotkeysWindowButton', tr('Hotkeys'), '/images/options/hotkeys', toggle)
+    if LEGACY_MANAGER_ENABLED then
+        hotkeysWindowButton = modules.client_topmenu.addRightGameToggleButton('hotkeysWindowButton', tr('Hotkeys'), '/images/options/hotkeys', toggle)
+    end
 
     currentHotkeys = hotkeysWindow:getChildById('currentHotkeys')
     currentItemPreview = hotkeysWindow:getChildById('itemPreview')
@@ -125,6 +137,10 @@ function init()
         currentHotkeys:focusPreviousChild(KeyboardFocusReason)
     end, hotkeysWindow)
 
+    if not LEGACY_MANAGER_ENABLED then
+        return
+    end
+
     connect(g_game, {
         onGameStart = online,
         onGameEnd = offline
@@ -140,8 +156,9 @@ function terminate()
     })
 
     Keybind.delete("Windows", "Show/hide Hotkeys")
-
-    unload()
+    if LEGACY_MANAGER_ENABLED then
+        unload()
+    end
 
     hotkeysWindow:destroy()
 
@@ -183,7 +200,7 @@ function offline()
 end
 
 function show()
-    if not g_game.isOnline() then
+    if not LEGACY_MANAGER_ENABLED or not g_game.isOnline() then
         return
     end
     hotkeysWindow:show()
@@ -201,7 +218,35 @@ function hide()
     end
 end
 
+-- Opens Options -> Controls -> General Hotkeys, or closes the Options window if it's open.
+function toggleHotkeysOptions()
+    local options = modules.client_options
+    if not options or not options.openOptionsCategory then
+        return
+    end
+    local ui = options.controller and options.controller.ui
+    if ui and ui:isVisible() then
+        options.hide()
+        return
+    end
+    -- Open through the regular path first (initialises the category state and
+    -- lays the window out), then switch to the sub-page on the next frame.
+    -- Clicking it in the same frame as show() lets the chat-mode row land
+    -- in the wrong place.
+    if options.toggle then
+        options.toggle()
+    end
+    addEvent(function()
+        if ui and ui:isVisible() then
+            options.openOptionsCategory('Controls', 'General Hotkeys')
+        end
+    end)
+end
+
 function toggle()
+    if not LEGACY_MANAGER_ENABLED then
+        return
+    end
     if not hotkeysWindow:isVisible() then
         show()
     else
@@ -439,7 +484,10 @@ function addKeyCombo(keyCombo, keySettings, focus)
     if not keyCombo then
         return
     end
-    if modules.game_actionbar and modules.game_actionbar.removeHotkeyFromActionBar then
+    -- Only when the player assigns a key here, never while load() restores saved keys or
+    -- adds the F1-F12/Shift+F1-F4 defaults: that silently deleted (and saved the deletion
+    -- of) the player's action bar hotkeys whenever the action bar happened to load first.
+    if hotkeysManagerLoaded and modules.game_actionbar and modules.game_actionbar.removeHotkeyFromActionBar then
         modules.game_actionbar.removeHotkeyFromActionBar(keyCombo)
     end
     local hotkeyLabel = currentHotkeys:getChildById(keyCombo)

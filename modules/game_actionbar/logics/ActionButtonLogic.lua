@@ -179,17 +179,28 @@ local function updateHotkeyCache()
     
     if not ApiJson.hasCurrentHotkeySet() then return end
     
-    local entries = ApiJson.getHotkeyEntries(currentChatMode)
-    if not entries then return end
-
-    for _, data in pairs(entries) do
-        if data["actionsetting"] and data["actionsetting"]["action"] then
-            local action = data["actionsetting"]["action"]
-            local keySequence = data["keysequence"]
-            if keySequence and not string_empty(keySequence) then
-                hotkeyCache[action] = keySequence
+    local function addEntries(entries, onlyNonTextKeys)
+        for _, data in pairs(entries or {}) do
+            if data["actionsetting"] and data["actionsetting"]["action"] then
+                local action = data["actionsetting"]["action"]
+                local keySequence = data["keysequence"]
+                if keySequence and not string_empty(keySequence) and not hotkeyCache[action] then
+                    -- F-keys and Ctrl/Alt combos can't type text, so they work in both
+                    -- chat modes (same rule as game_hotkeys.canPerformKeyCombo).
+                    local isNonTextKey = keySequence:match("F%d+") or keySequence:match("Ctrl%+") or keySequence:match("Alt%+")
+                    if not onlyNonTextKeys or isNonTextKey then
+                        hotkeyCache[action] = keySequence
+                    end
+                end
             end
         end
+    end
+
+    addEntries(ApiJson.getHotkeyEntries(currentChatMode), false)
+    -- Chat On without its own key for a button: fall back to the Chat Off key when it's
+    -- an F-key or Ctrl/Alt combo (otherwise logging in with chat on left no hotkeys).
+    if currentChatMode == 'chatOn' then
+        addEntries(ApiJson.getHotkeyEntries('chatOff'), true)
     end
 end
 
