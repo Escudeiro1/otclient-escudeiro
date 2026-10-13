@@ -117,8 +117,12 @@ function controllerCyclopedia:onGameStart()
             -- charms
             onUpdateBestiaryCharmsData = Cyclopedia.loadCharms,
             -- items
-            onParseItemDetail = Cyclopedia.loadItemDetail
+            onParseItemDetail = Cyclopedia.loadItemDetail,
+            -- houses
+            onCyclopediaHouseList = Cyclopedia.loadHouseList,
+            onCyclopediaHouseAuctionMessage = Cyclopedia.onHouseAuctionMessage
         })
+        Cyclopedia.loadHouseMetadata()
 
         --[[===================================================
     =               Tracker Bestiary                      =
