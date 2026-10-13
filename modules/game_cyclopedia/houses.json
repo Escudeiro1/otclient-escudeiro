@@ -1,0 +1,6953 @@
+{
+  "10001": {
+    "beds": 23,
+    "gh": true,
+    "name": "Spiritkeep",
+    "rent": 500000,
+    "sqm": 289
+  },
+  "10002": {
+    "beds": 21,
+    "gh": true,
+    "name": "Snake Tower",
+    "rent": 500000,
+    "sqm": 627
+  },
+  "10003": {
+    "beds": 18,
+    "gh": true,
+    "name": "Halls of the Adventurers",
+    "rent": 250000,
+    "sqm": 317
+  },
+  "10004": {
+    "beds": 17,
+    "gh": true,
+    "name": "Dark Mansion",
+    "rent": 1000000,
+    "sqm": 375
+  },
+  "10005": {
+    "beds": 16,
+    "gh": true,
+    "name": "Bloodhall",
+    "rent": 500000,
+    "sqm": 321
+  },
+  "10006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Demon Tower",
+    "rent": 100000,
+    "sqm": 75
+  },
+  "10007": {
+    "beds": 1,
+    "gh": false,
+    "name": "Open-Air Theatre",
+    "rent": 150000,
+    "sqm": 81
+  },
+  "10101": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 01",
+    "rent": 100000,
+    "sqm": 15
+  },
+  "10102": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 02",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "10103": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 03",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "10104": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 11",
+    "rent": 80000,
+    "sqm": 15
+  },
+  "10112": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 12",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "10113": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sunset Homes, Flat 13",
+    "rent": 100000,
+    "sqm": 22
+  },
+  "10114": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 14",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "10121": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 21",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "10122": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 22",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "10123": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sunset Homes, Flat 23",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "10124": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sunset Homes, Flat 24",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "10201": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 01",
+    "rent": 50000,
+    "sqm": 16
+  },
+  "10202": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 02",
+    "rent": 80000,
+    "sqm": 16
+  },
+  "10203": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 03",
+    "rent": 80000,
+    "sqm": 15
+  },
+  "10204": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 04",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "10205": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 05",
+    "rent": 80000,
+    "sqm": 15
+  },
+  "10206": {
+    "beds": 2,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 06",
+    "rent": 100000,
+    "sqm": 24
+  },
+  "10211": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 11",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "10212": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 12",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "10213": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 13",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "10214": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 14",
+    "rent": 25000,
+    "sqm": 8
+  },
+  "10215": {
+    "beds": 1,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 15",
+    "rent": 25000,
+    "sqm": 9
+  },
+  "10216": {
+    "beds": 2,
+    "gh": false,
+    "name": "Beach Home Apartments, Flat 16",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "10301": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 01",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "10302": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 02",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "10303": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 03",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "10304": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 04",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "10305": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 05",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "10306": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 06",
+    "rent": 100000,
+    "sqm": 25
+  },
+  "10307": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 07",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "10308": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 08",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "10311": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 11",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "10312": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 12",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "10313": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 13",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "10314": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 14",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "10315": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 15",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "10316": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 16",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "10317": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 17",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "10318": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 18",
+    "rent": 50000,
+    "sqm": 22
+  },
+  "10319": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 22",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "10320": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 21",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "10321": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 23",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "10322": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 24",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "10323": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 25",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "10324": {
+    "beds": 2,
+    "gh": false,
+    "name": "Alai Flats, Flat 26",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "10325": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 27",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "10326": {
+    "beds": 1,
+    "gh": false,
+    "name": "Alai Flats, Flat 28",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "10401": {
+    "beds": 4,
+    "gh": false,
+    "name": "Upper Swamp Lane 2",
+    "rent": 600000,
+    "sqm": 100
+  },
+  "10402": {
+    "beds": 4,
+    "gh": false,
+    "name": "Upper Swamp Lane 4",
+    "rent": 600000,
+    "sqm": 100
+  },
+  "10403": {
+    "beds": 4,
+    "gh": false,
+    "name": "Lower Swamp Lane 1",
+    "rent": 400000,
+    "sqm": 80
+  },
+  "10404": {
+    "beds": 4,
+    "gh": false,
+    "name": "Lower Swamp Lane 3",
+    "rent": 400000,
+    "sqm": 80
+  },
+  "10405": {
+    "beds": 3,
+    "gh": false,
+    "name": "Upper Swamp Lane 8",
+    "rent": 600000,
+    "sqm": 159
+  },
+  "10406": {
+    "beds": 16,
+    "gh": true,
+    "name": "Southern Thais Guildhall",
+    "rent": 1000000,
+    "sqm": 374
+  },
+  "10407": {
+    "beds": 3,
+    "gh": false,
+    "name": "Upper Swamp Lane 10",
+    "rent": 150000,
+    "sqm": 40
+  },
+  "10408": {
+    "beds": 3,
+    "gh": false,
+    "name": "Upper Swamp Lane 12",
+    "rent": 300000,
+    "sqm": 76
+  },
+  "10501": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue 1a",
+    "rent": 100000,
+    "sqm": 24
+  },
+  "10502": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue 1b",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "10503": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue 1c",
+    "rent": 100000,
+    "sqm": 25
+  },
+  "10504": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sorcerer's Avenue 5 (Shop)",
+    "rent": 150000,
+    "sqm": 54
+  },
+  "10505": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue Labs 2a",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "10508": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue Labs 2b",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "10510": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sorcerer's Avenue Labs 2c",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "10601": {
+    "beds": 10,
+    "gh": true,
+    "name": "Thais Clanhall",
+    "rent": 500000,
+    "sqm": 206
+  },
+  "10602": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Place 4",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "10603": {
+    "beds": 24,
+    "gh": false,
+    "name": "Thais Hostel",
+    "rent": 200000,
+    "sqm": 129
+  },
+  "10701": {
+    "beds": 0,
+    "gh": false,
+    "name": "Farm Lane, Basement (Shop)",
+    "rent": 50000,
+    "sqm": 21
+  },
+  "10702": {
+    "beds": 0,
+    "gh": false,
+    "name": "Farm Lane, 1st floor (Shop)",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "10703": {
+    "beds": 0,
+    "gh": false,
+    "name": "Farm Lane, 2nd Floor (Shop)",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "10801": {
+    "beds": 11,
+    "gh": true,
+    "name": "Warriors' Guildhall",
+    "rent": 5000000,
+    "sqm": 334
+  },
+  "10802": {
+    "beds": 1,
+    "gh": false,
+    "name": "Main Street 9, 1st floor (Shop)",
+    "rent": 200000,
+    "sqm": 30
+  },
+  "10803": {
+    "beds": 1,
+    "gh": false,
+    "name": "Main Street 9a, 2nd floor (Shop)",
+    "rent": 100000,
+    "sqm": 15
+  },
+  "10804": {
+    "beds": 1,
+    "gh": false,
+    "name": "Main Street 9b, 2nd floor (Shop)",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "10901": {
+    "beds": 1,
+    "gh": false,
+    "name": "Mill Avenue 1 (Shop)",
+    "rent": 200000,
+    "sqm": 28
+  },
+  "10902": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mill Avenue 2 (Shop)",
+    "rent": 200000,
+    "sqm": 47
+  },
+  "10903": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mill Avenue 3",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "10904": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mill Avenue 4",
+    "rent": 100000,
+    "sqm": 33
+  },
+  "10905": {
+    "beds": 4,
+    "gh": false,
+    "name": "Mill Avenue 5",
+    "rent": 300000,
+    "sqm": 69
+  },
+  "11001": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5a",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "11002": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5b",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "11003": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5c",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "11004": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5d",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "11005": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5e",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "11006": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 5f",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "11007": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 7a",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "11008": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 7b",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "11009": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 7c",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "11010": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 7d",
+    "rent": 50000,
+    "sqm": 22
+  },
+  "11011": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 7e",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "11012": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 7f",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "11013": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 7g",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "11014": {
+    "beds": 1,
+    "gh": false,
+    "name": "The City Wall 7h",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "11015": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 9",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "11016": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3a",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11017": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3b",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11018": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3c",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11019": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3d",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11020": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3e",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11021": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 3f",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "11022": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 1a",
+    "rent": 150000,
+    "sqm": 32
+  },
+  "11023": {
+    "beds": 2,
+    "gh": false,
+    "name": "The City Wall 1b",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "11024": {
+    "beds": 7,
+    "gh": false,
+    "name": "Smuggler's Den",
+    "rent": 400000,
+    "sqm": 226
+  },
+  "11401": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Place 2 (Shop)",
+    "rent": 600000,
+    "sqm": 25
+  },
+  "11402": {
+    "beds": 5,
+    "gh": false,
+    "name": "Harbour Place 3",
+    "rent": 800000,
+    "sqm": 88
+  },
+  "11404": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Place 1 (Shop)",
+    "rent": 800000,
+    "sqm": 21
+  },
+  "12001": {
+    "beds": 26,
+    "gh": true,
+    "name": "Mercenary Tower",
+    "rent": 250000,
+    "sqm": 619
+  },
+  "12002": {
+    "beds": 15,
+    "gh": true,
+    "name": "Guildhall of the Red Rose",
+    "rent": 250000,
+    "sqm": 396
+  },
+  "12003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Fibula Village 1",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "12004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Fibula Village 2",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "12005": {
+    "beds": 4,
+    "gh": false,
+    "name": "Fibula Village 3",
+    "rent": 80000,
+    "sqm": 60
+  },
+  "12006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fibula Village 4",
+    "rent": 25000,
+    "sqm": 27
+  },
+  "12007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fibula Village 5",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "12008": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fibula Village, Tower Flat",
+    "rent": 100000,
+    "sqm": 94
+  },
+  "12009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fibula Village, Bar (Shop)",
+    "rent": 100000,
+    "sqm": 74
+  },
+  "12010": {
+    "beds": 10,
+    "gh": true,
+    "name": "Fibula Clanhall",
+    "rent": 250000,
+    "sqm": 178
+  },
+  "12100": {
+    "beds": 7,
+    "gh": false,
+    "name": "Fibula Village, Villa",
+    "rent": 200000,
+    "sqm": 264
+  },
+  "14001": {
+    "beds": 22,
+    "gh": true,
+    "name": "The Tibianic",
+    "rent": 500000,
+    "sqm": 809
+  },
+  "14002": {
+    "beds": 12,
+    "gh": true,
+    "name": "Castle of Greenshore",
+    "rent": 250000,
+    "sqm": 325
+  },
+  "14003": {
+    "beds": 4,
+    "gh": false,
+    "name": "Greenshore Village, Villa",
+    "rent": 300000,
+    "sqm": 178
+  },
+  "14004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Greenshore Village, Shop",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "14005": {
+    "beds": 3,
+    "gh": false,
+    "name": "Greenshore Village 1",
+    "rent": 80000,
+    "sqm": 39
+  },
+  "14006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Greenshore Village 2",
+    "rent": 50000,
+    "sqm": 30
+  },
+  "14008": {
+    "beds": 2,
+    "gh": false,
+    "name": "Greenshore Village 3",
+    "rent": 50000,
+    "sqm": 30
+  },
+  "14010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Greenshore Village 6",
+    "rent": 150000,
+    "sqm": 79
+  },
+  "14011": {
+    "beds": 1,
+    "gh": false,
+    "name": "Greenshore Village 7",
+    "rent": 25000,
+    "sqm": 23
+  },
+  "14012": {
+    "beds": 10,
+    "gh": true,
+    "name": "Greenshore Clanhall",
+    "rent": 250000,
+    "sqm": 176
+  },
+  "15001": {
+    "beds": 4,
+    "gh": false,
+    "name": "Caveman Shelter",
+    "rent": 150000,
+    "sqm": 137
+  },
+  "15002": {
+    "beds": 5,
+    "gh": false,
+    "name": "Eastern House of Tranquility",
+    "rent": 200000,
+    "sqm": 313
+  },
+  "17001": {
+    "beds": 6,
+    "gh": false,
+    "name": "Old Sanctuary of God King Qjell",
+    "rent": 300000,
+    "sqm": 699
+  },
+  "19001": {
+    "beds": 4,
+    "gh": false,
+    "name": "Wallside Residence",
+    "rent": 400000,
+    "sqm": 182
+  },
+  "19002": {
+    "beds": 13,
+    "gh": true,
+    "name": "Rathleton Hills Estate",
+    "rent": 1000000,
+    "sqm": 534
+  },
+  "19003": {
+    "beds": 3,
+    "gh": false,
+    "name": "Rathleton Hills Residence",
+    "rent": 400000,
+    "sqm": 186
+  },
+  "19004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathleton Plaza 1",
+    "rent": 300000,
+    "sqm": 80
+  },
+  "19005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathleton Plaza 2",
+    "rent": 400000,
+    "sqm": 77
+  },
+  "19006": {
+    "beds": 3,
+    "gh": false,
+    "name": "Rathleton Plaza 3",
+    "rent": 400000,
+    "sqm": 157
+  },
+  "19007": {
+    "beds": 16,
+    "gh": true,
+    "name": "Bronze Brothers Bastion",
+    "rent": 5000000,
+    "sqm": 976
+  },
+  "19008": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cistern Ave",
+    "rent": 300000,
+    "sqm": 111
+  },
+  "19009": {
+    "beds": 7,
+    "gh": false,
+    "name": "Old Heritage Estate",
+    "rent": 600000,
+    "sqm": 335
+  },
+  "19010": {
+    "beds": 4,
+    "gh": false,
+    "name": "Wallside Lane 1",
+    "rent": 800000,
+    "sqm": 216
+  },
+  "19011": {
+    "beds": 4,
+    "gh": false,
+    "name": "Wallside Lane 2",
+    "rent": 600000,
+    "sqm": 227
+  },
+  "19012": {
+    "beds": 4,
+    "gh": false,
+    "name": "Vanward Flats A",
+    "rent": 400000,
+    "sqm": 189
+  },
+  "19013": {
+    "beds": 4,
+    "gh": false,
+    "name": "Vanward Flats B",
+    "rent": 400000,
+    "sqm": 179
+  },
+  "19014": {
+    "beds": 5,
+    "gh": false,
+    "name": "Antimony Lane 1",
+    "rent": 400000,
+    "sqm": 189
+  },
+  "19015": {
+    "beds": 3,
+    "gh": false,
+    "name": "Antimony Lane 2",
+    "rent": 400000,
+    "sqm": 127
+  },
+  "19016": {
+    "beds": 3,
+    "gh": false,
+    "name": "Antimony Lane 3",
+    "rent": 400000,
+    "sqm": 101
+  },
+  "19017": {
+    "beds": 3,
+    "gh": false,
+    "name": "Antimony Lane 4",
+    "rent": 400000,
+    "sqm": 159
+  },
+  "19018": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathleton Plaza 4",
+    "rent": 400000,
+    "sqm": 144
+  },
+  "20001": {
+    "beds": 16,
+    "gh": true,
+    "name": "Moonkeep",
+    "rent": 250000,
+    "sqm": 298
+  },
+  "20002": {
+    "beds": 16,
+    "gh": true,
+    "name": "House of Recreation",
+    "rent": 500000,
+    "sqm": 469
+  },
+  "20003": {
+    "beds": 21,
+    "gh": true,
+    "name": "Nordic Stronghold",
+    "rent": 250000,
+    "sqm": 536
+  },
+  "20004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Druids Retreat A",
+    "rent": 50000,
+    "sqm": 32
+  },
+  "20005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Druids Retreat B",
+    "rent": 50000,
+    "sqm": 31
+  },
+  "20006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Druids Retreat C",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "20007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Druids Retreat D",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "20008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rosebud A",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "20009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rosebud B",
+    "rent": 80000,
+    "sqm": 29
+  },
+  "20010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rosebud C",
+    "rent": 100000,
+    "sqm": 36
+  },
+  "20011": {
+    "beds": 4,
+    "gh": false,
+    "name": "Nautic Observer",
+    "rent": 200000,
+    "sqm": 220
+  },
+  "20012": {
+    "beds": 6,
+    "gh": false,
+    "name": "Caretaker's Residence",
+    "rent": 600000,
+    "sqm": 298
+  },
+  "20102": {
+    "beds": 1,
+    "gh": false,
+    "name": "Central Plaza 3 (Shop)",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "20103": {
+    "beds": 1,
+    "gh": false,
+    "name": "Central Plaza 2 (Shop)",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "20104": {
+    "beds": 1,
+    "gh": false,
+    "name": "Central Plaza 1 (Shop)",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "20201": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 1a",
+    "rent": 150000,
+    "sqm": 36
+  },
+  "20202": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 1b",
+    "rent": 200000,
+    "sqm": 39
+  },
+  "20203": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 3b",
+    "rent": 100000,
+    "sqm": 29
+  },
+  "20204": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 3a",
+    "rent": 100000,
+    "sqm": 36
+  },
+  "20205": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 4",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "20206": {
+    "beds": 2,
+    "gh": false,
+    "name": "Park Lane 2",
+    "rent": 150000,
+    "sqm": 28
+  },
+  "20301": {
+    "beds": 3,
+    "gh": false,
+    "name": "Theater Avenue, Tower",
+    "rent": 300000,
+    "sqm": 80
+  },
+  "20304": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 6a",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "20305": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 6b",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "20306": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 6c",
+    "rent": 25000,
+    "sqm": 9
+  },
+  "20307": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 6d",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "20308": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 6e",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "20309": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 6f",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "20310": {
+    "beds": 4,
+    "gh": false,
+    "name": "Theater Avenue 5",
+    "rent": 200000,
+    "sqm": 113
+  },
+  "20314": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 8a",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "20315": {
+    "beds": 3,
+    "gh": false,
+    "name": "Theater Avenue 8b",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "20316": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 01",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "20317": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 02",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "20318": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 03",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "20319": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 04",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "20320": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 05",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "20321": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 06",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "20322": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 11",
+    "rent": 50000,
+    "sqm": 21
+  },
+  "20323": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 12",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "20324": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 13",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "20325": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 14",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "20326": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 15",
+    "rent": 25000,
+    "sqm": 12
+  },
+  "20327": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 7, Flat 16",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "20401": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 10",
+    "rent": 100000,
+    "sqm": 29
+  },
+  "20402": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 12",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "20403": {
+    "beds": 1,
+    "gh": false,
+    "name": "Theater Avenue 14 (Shop)",
+    "rent": 200000,
+    "sqm": 54
+  },
+  "20404": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 11a",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "20405": {
+    "beds": 2,
+    "gh": false,
+    "name": "Theater Avenue 11b",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "20501": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 1",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "20502": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 1a",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "20503": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 1b",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "20504": {
+    "beds": 1,
+    "gh": false,
+    "name": "Magician's Alley 1c",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "20505": {
+    "beds": 1,
+    "gh": false,
+    "name": "Magician's Alley 1d",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "20508": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 5b",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "20509": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 5c",
+    "rent": 100000,
+    "sqm": 25
+  },
+  "20510": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 5a",
+    "rent": 50000,
+    "sqm": 30
+  },
+  "20512": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 5f",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "20513": {
+    "beds": 4,
+    "gh": false,
+    "name": "Magician's Alley 4",
+    "rent": 200000,
+    "sqm": 60
+  },
+  "20514": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magician's Alley 8",
+    "rent": 150000,
+    "sqm": 31
+  },
+  "20515": {
+    "beds": 10,
+    "gh": true,
+    "name": "Carlin Clanhall",
+    "rent": 250000,
+    "sqm": 287
+  },
+  "20601": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 1a",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "20602": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 1b",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "20603": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 1c",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "20604": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 3a",
+    "rent": 80000,
+    "sqm": 20
+  },
+  "20605": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 3b",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "20606": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 5",
+    "rent": 200000,
+    "sqm": 52
+  },
+  "20607": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northern Street 7",
+    "rent": 150000,
+    "sqm": 44
+  },
+  "20701": {
+    "beds": 0,
+    "gh": false,
+    "name": "Harbour Lane 1 (Shop)",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "20702": {
+    "beds": 3,
+    "gh": false,
+    "name": "Harbour Lane 3",
+    "rent": 400000,
+    "sqm": 92
+  },
+  "20703": {
+    "beds": 0,
+    "gh": false,
+    "name": "Harbour Lane 2a (Shop)",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "20704": {
+    "beds": 0,
+    "gh": false,
+    "name": "Harbour Lane 2b (Shop)",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "20705": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Flats, Flat 11",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "20706": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harbour Flats, Flat 12",
+    "rent": 50000,
+    "sqm": 33
+  },
+  "20707": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Flats, Flat 13",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "20709": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harbour Flats, Flat 15",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "20710": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harbour Flats, Flat 16",
+    "rent": 50000,
+    "sqm": 35
+  },
+  "20713": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harbour Flats, Flat 21",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "20714": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harbour Flats, Flat 22",
+    "rent": 80000,
+    "sqm": 30
+  },
+  "20715": {
+    "beds": 1,
+    "gh": false,
+    "name": "Harbour Flats, Flat 23",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "20801": {
+    "beds": 2,
+    "gh": false,
+    "name": "East Lane 1a",
+    "rent": 200000,
+    "sqm": 62
+  },
+  "20802": {
+    "beds": 2,
+    "gh": false,
+    "name": "East Lane 1b",
+    "rent": 150000,
+    "sqm": 43
+  },
+  "20803": {
+    "beds": 2,
+    "gh": false,
+    "name": "East Lane 2",
+    "rent": 300000,
+    "sqm": 93
+  },
+  "20901": {
+    "beds": 9,
+    "gh": true,
+    "name": "Suntower",
+    "rent": 500000,
+    "sqm": 306
+  },
+  "20902": {
+    "beds": 8,
+    "gh": false,
+    "name": "Lonely Sea Side Hostel",
+    "rent": 400000,
+    "sqm": 331
+  },
+  "22001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 1",
+    "rent": 50000,
+    "sqm": 28
+  },
+  "22002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 2",
+    "rent": 50000,
+    "sqm": 28
+  },
+  "22003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 3",
+    "rent": 150000,
+    "sqm": 104
+  },
+  "22004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 4",
+    "rent": 100000,
+    "sqm": 50
+  },
+  "22005": {
+    "beds": 19,
+    "gh": true,
+    "name": "Seawatch",
+    "rent": 250000,
+    "sqm": 431
+  },
+  "22006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 5",
+    "rent": 80000,
+    "sqm": 34
+  },
+  "22007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Northport Village 6",
+    "rent": 80000,
+    "sqm": 42
+  },
+  "22008": {
+    "beds": 10,
+    "gh": true,
+    "name": "Northport Clanhall",
+    "rent": 250000,
+    "sqm": 172
+  },
+  "24001": {
+    "beds": 1,
+    "gh": false,
+    "name": "Senja Village 1a",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "24002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 1b",
+    "rent": 50000,
+    "sqm": 38
+  },
+  "24004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 3",
+    "rent": 50000,
+    "sqm": 35
+  },
+  "24005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 4",
+    "rent": 50000,
+    "sqm": 38
+  },
+  "24006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 5",
+    "rent": 50000,
+    "sqm": 28
+  },
+  "24007": {
+    "beds": 1,
+    "gh": false,
+    "name": "Senja Village 6a",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "24008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Senja Village 6b",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "24009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 7",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "24010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 8",
+    "rent": 50000,
+    "sqm": 40
+  },
+  "24011": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 9",
+    "rent": 80000,
+    "sqm": 55
+  },
+  "24012": {
+    "beds": 1,
+    "gh": false,
+    "name": "Senja Village 10",
+    "rent": 50000,
+    "sqm": 36
+  },
+  "24013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Senja Village 11",
+    "rent": 80000,
+    "sqm": 59
+  },
+  "24014": {
+    "beds": 10,
+    "gh": true,
+    "name": "Senja Clanhall",
+    "rent": 250000,
+    "sqm": 228
+  },
+  "30001": {
+    "beds": 23,
+    "gh": true,
+    "name": "Wolftower",
+    "rent": 500000,
+    "sqm": 402
+  },
+  "30002": {
+    "beds": 15,
+    "gh": true,
+    "name": "Hill Hideout",
+    "rent": 250000,
+    "sqm": 247
+  },
+  "30003": {
+    "beds": 19,
+    "gh": true,
+    "name": "Riverspring",
+    "rent": 250000,
+    "sqm": 371
+  },
+  "30101": {
+    "beds": 3,
+    "gh": false,
+    "name": "The Farms 1",
+    "rent": 80000,
+    "sqm": 57
+  },
+  "30102": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Farms 2",
+    "rent": 50000,
+    "sqm": 26
+  },
+  "30103": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Farms 3",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "30104": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Farms 4",
+    "rent": 25000,
+    "sqm": 26
+  },
+  "30105": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Farms 5",
+    "rent": 50000,
+    "sqm": 26
+  },
+  "30106": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Farms 6, Fishing Hut",
+    "rent": 50000,
+    "sqm": 26
+  },
+  "30107": {
+    "beds": 8,
+    "gh": false,
+    "name": "Dwarven Magnate's Estate",
+    "rent": 300000,
+    "sqm": 269
+  },
+  "30201": {
+    "beds": 3,
+    "gh": false,
+    "name": "Nobility Quarter 1",
+    "rent": 80000,
+    "sqm": 63
+  },
+  "30202": {
+    "beds": 3,
+    "gh": false,
+    "name": "Nobility Quarter 2",
+    "rent": 50000,
+    "sqm": 58
+  },
+  "30203": {
+    "beds": 3,
+    "gh": false,
+    "name": "Nobility Quarter 3",
+    "rent": 80000,
+    "sqm": 51
+  },
+  "30204": {
+    "beds": 3,
+    "gh": false,
+    "name": "Nobility Quarter 4",
+    "rent": 50000,
+    "sqm": 65
+  },
+  "30206": {
+    "beds": 5,
+    "gh": false,
+    "name": "Nobility Quarter 5",
+    "rent": 100000,
+    "sqm": 141
+  },
+  "30301": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 1",
+    "rent": 50000,
+    "sqm": 16
+  },
+  "30304": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 2",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30307": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 3",
+    "rent": 80000,
+    "sqm": 16
+  },
+  "30308": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 4",
+    "rent": 50000,
+    "sqm": 16
+  },
+  "30312": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 5",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30313": {
+    "beds": 2,
+    "gh": false,
+    "name": "Upper Barracks 13",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "30401": {
+    "beds": 1,
+    "gh": false,
+    "name": "The Market 1 (Shop)",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "30402": {
+    "beds": 1,
+    "gh": false,
+    "name": "The Market 2 (Shop)",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "30403": {
+    "beds": 1,
+    "gh": false,
+    "name": "The Market 3 (Shop)",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "30404": {
+    "beds": 1,
+    "gh": false,
+    "name": "The Market 4 (Shop)",
+    "rent": 80000,
+    "sqm": 32
+  },
+  "30405": {
+    "beds": 10,
+    "gh": false,
+    "name": "Forge Master's Quarters",
+    "rent": 300000,
+    "sqm": 79
+  },
+  "30501": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 1",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30502": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 4",
+    "rent": 50000,
+    "sqm": 28
+  },
+  "30504": {
+    "beds": 4,
+    "gh": false,
+    "name": "Lower Barracks 5",
+    "rent": 100000,
+    "sqm": 63
+  },
+  "30507": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 2",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30510": {
+    "beds": 4,
+    "gh": false,
+    "name": "Lower Barracks 6",
+    "rent": 100000,
+    "sqm": 63
+  },
+  "30511": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 3",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30512": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 7",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "30513": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 10",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "30517": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 9",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "30523": {
+    "beds": 2,
+    "gh": false,
+    "name": "Lower Barracks 8",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "30601": {
+    "beds": 3,
+    "gh": false,
+    "name": "Tunnel Gardens 1",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30602": {
+    "beds": 3,
+    "gh": false,
+    "name": "Tunnel Gardens 2",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "30603": {
+    "beds": 3,
+    "gh": false,
+    "name": "Tunnel Gardens 3",
+    "rent": 80000,
+    "sqm": 33
+  },
+  "30604": {
+    "beds": 3,
+    "gh": false,
+    "name": "Tunnel Gardens 4",
+    "rent": 80000,
+    "sqm": 33
+  },
+  "30605": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tunnel Gardens 5",
+    "rent": 25000,
+    "sqm": 21
+  },
+  "30606": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tunnel Gardens 6",
+    "rent": 25000,
+    "sqm": 21
+  },
+  "30607": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tunnel Gardens 7",
+    "rent": 50000,
+    "sqm": 21
+  },
+  "30608": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tunnel Gardens 8",
+    "rent": 25000,
+    "sqm": 24
+  },
+  "30610": {
+    "beds": 4,
+    "gh": false,
+    "name": "Tunnel Gardens 9",
+    "rent": 150000,
+    "sqm": 74
+  },
+  "30701": {
+    "beds": 17,
+    "gh": true,
+    "name": "Marble Guildhall",
+    "rent": 250000,
+    "sqm": 410
+  },
+  "30702": {
+    "beds": 18,
+    "gh": true,
+    "name": "Iron Guildhall",
+    "rent": 250000,
+    "sqm": 379
+  },
+  "30703": {
+    "beds": 17,
+    "gh": true,
+    "name": "Granite Guildhall",
+    "rent": 250000,
+    "sqm": 506
+  },
+  "32001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Outlaw Camp 1",
+    "rent": 80000,
+    "sqm": 47
+  },
+  "32002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Outlaw Camp 2",
+    "rent": 50000,
+    "sqm": 33
+  },
+  "32003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Outlaw Camp 3",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "32004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Outlaw Camp 4",
+    "rent": 50000,
+    "sqm": 31
+  },
+  "32007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Outlaw Camp 7",
+    "rent": 25000,
+    "sqm": 33
+  },
+  "32009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Outlaw Camp 9",
+    "rent": 80000,
+    "sqm": 36
+  },
+  "32013": {
+    "beds": 1,
+    "gh": false,
+    "name": "Outlaw Camp 13 (Shop)",
+    "rent": 50000,
+    "sqm": 33
+  },
+  "32014": {
+    "beds": 1,
+    "gh": false,
+    "name": "Outlaw Camp 14 (Shop)",
+    "rent": 25000,
+    "sqm": 31
+  },
+  "32015": {
+    "beds": 9,
+    "gh": true,
+    "name": "Outlaw Castle",
+    "rent": 250000,
+    "sqm": 302
+  },
+  "32016": {
+    "beds": 4,
+    "gh": false,
+    "name": "Hare's Den",
+    "rent": 150000,
+    "sqm": 304
+  },
+  "33001": {
+    "beds": 7,
+    "gh": false,
+    "name": "Lost Cavern",
+    "rent": 200000,
+    "sqm": 705
+  },
+  "35001": {
+    "beds": 9,
+    "gh": true,
+    "name": "Blessed Shield Guildhall",
+    "rent": 500000,
+    "sqm": 250
+  },
+  "35002": {
+    "beds": 13,
+    "gh": true,
+    "name": "Steel Home",
+    "rent": 500000,
+    "sqm": 388
+  },
+  "35003": {
+    "beds": 12,
+    "gh": true,
+    "name": "Swamp Watch",
+    "rent": 500000,
+    "sqm": 379
+  },
+  "35004": {
+    "beds": 10,
+    "gh": true,
+    "name": "Golden Axe Guildhall",
+    "rent": 500000,
+    "sqm": 344
+  },
+  "35005": {
+    "beds": 9,
+    "gh": true,
+    "name": "Valorous Venore",
+    "rent": 500000,
+    "sqm": 457
+  },
+  "35006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Dagger Alley 1",
+    "rent": 200000,
+    "sqm": 103
+  },
+  "35007": {
+    "beds": 4,
+    "gh": false,
+    "name": "Iron Alley 1",
+    "rent": 300000,
+    "sqm": 101
+  },
+  "35008": {
+    "beds": 4,
+    "gh": false,
+    "name": "Iron Alley 2",
+    "rent": 300000,
+    "sqm": 128
+  },
+  "35009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Dream Street 1 (Shop)",
+    "rent": 600000,
+    "sqm": 149
+  },
+  "35010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Dream Street 2",
+    "rent": 400000,
+    "sqm": 113
+  },
+  "35011": {
+    "beds": 2,
+    "gh": false,
+    "name": "Dream Street 3",
+    "rent": 300000,
+    "sqm": 104
+  },
+  "35012": {
+    "beds": 4,
+    "gh": false,
+    "name": "Dream Street 4",
+    "rent": 400000,
+    "sqm": 128
+  },
+  "35013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Elm Street 1",
+    "rent": 300000,
+    "sqm": 99
+  },
+  "35014": {
+    "beds": 2,
+    "gh": false,
+    "name": "Elm Street 2",
+    "rent": 300000,
+    "sqm": 98
+  },
+  "35015": {
+    "beds": 3,
+    "gh": false,
+    "name": "Elm Street 3",
+    "rent": 300000,
+    "sqm": 107
+  },
+  "35016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Elm Street 4",
+    "rent": 300000,
+    "sqm": 108
+  },
+  "35017": {
+    "beds": 2,
+    "gh": false,
+    "name": "Seagull Walk 1",
+    "rent": 800000,
+    "sqm": 169
+  },
+  "35018": {
+    "beds": 3,
+    "gh": false,
+    "name": "Seagull Walk 2",
+    "rent": 300000,
+    "sqm": 102
+  },
+  "35019": {
+    "beds": 4,
+    "gh": false,
+    "name": "Lucky Lane 1 (Shop)",
+    "rent": 800000,
+    "sqm": 220
+  },
+  "35020": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 01",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "35021": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 02",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "35022": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 03",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "35023": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 04",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "35024": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 05",
+    "rent": 25000,
+    "sqm": 9
+  },
+  "35025": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 06",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "35026": {
+    "beds": 2,
+    "gh": false,
+    "name": "Paupers Palace, Flat 07",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "35027": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 11",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "35028": {
+    "beds": 2,
+    "gh": false,
+    "name": "Paupers Palace, Flat 12",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "35029": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 13",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "35030": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 14",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "35031": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 15",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "35032": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 16",
+    "rent": 50000,
+    "sqm": 30
+  },
+  "35033": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 17",
+    "rent": 25000,
+    "sqm": 20
+  },
+  "35034": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 18",
+    "rent": 25000,
+    "sqm": 20
+  },
+  "35035": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 21",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "35036": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 22",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "35037": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 23",
+    "rent": 50000,
+    "sqm": 29
+  },
+  "35038": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 24",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "35039": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 25",
+    "rent": 50000,
+    "sqm": 24
+  },
+  "35040": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 26",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "35041": {
+    "beds": 2,
+    "gh": false,
+    "name": "Paupers Palace, Flat 27",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "35042": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 28",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "35043": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 31",
+    "rent": 80000,
+    "sqm": 40
+  },
+  "35044": {
+    "beds": 2,
+    "gh": false,
+    "name": "Paupers Palace, Flat 32",
+    "rent": 100000,
+    "sqm": 50
+  },
+  "35045": {
+    "beds": 1,
+    "gh": false,
+    "name": "Paupers Palace, Flat 33",
+    "rent": 50000,
+    "sqm": 35
+  },
+  "35046": {
+    "beds": 2,
+    "gh": false,
+    "name": "Paupers Palace, Flat 34",
+    "rent": 100000,
+    "sqm": 59
+  },
+  "35047": {
+    "beds": 4,
+    "gh": false,
+    "name": "Salvation Street 1 (Shop)",
+    "rent": 600000,
+    "sqm": 215
+  },
+  "35048": {
+    "beds": 2,
+    "gh": false,
+    "name": "Salvation Street 2",
+    "rent": 300000,
+    "sqm": 113
+  },
+  "35049": {
+    "beds": 2,
+    "gh": false,
+    "name": "Salvation Street 3",
+    "rent": 300000,
+    "sqm": 143
+  },
+  "35050": {
+    "beds": 3,
+    "gh": false,
+    "name": "Mystic Lane 1",
+    "rent": 300000,
+    "sqm": 92
+  },
+  "35051": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mystic Lane 2",
+    "rent": 200000,
+    "sqm": 119
+  },
+  "35052": {
+    "beds": 1,
+    "gh": false,
+    "name": "Silver Street 1",
+    "rent": 200000,
+    "sqm": 108
+  },
+  "35053": {
+    "beds": 1,
+    "gh": false,
+    "name": "Silver Street 2",
+    "rent": 200000,
+    "sqm": 76
+  },
+  "35054": {
+    "beds": 1,
+    "gh": false,
+    "name": "Silver Street 3",
+    "rent": 200000,
+    "sqm": 82
+  },
+  "35055": {
+    "beds": 2,
+    "gh": false,
+    "name": "Silver Street 4",
+    "rent": 300000,
+    "sqm": 119
+  },
+  "35056": {
+    "beds": 3,
+    "gh": false,
+    "name": "Loot Lane 1 (Shop)",
+    "rent": 600000,
+    "sqm": 159
+  },
+  "35057": {
+    "beds": 2,
+    "gh": false,
+    "name": "Old Lighthouse",
+    "rent": 200000,
+    "sqm": 157
+  },
+  "35058": {
+    "beds": 3,
+    "gh": false,
+    "name": "Market Street 1",
+    "rent": 600000,
+    "sqm": 220
+  },
+  "35059": {
+    "beds": 3,
+    "gh": false,
+    "name": "Market Street 2",
+    "rent": 600000,
+    "sqm": 173
+  },
+  "35060": {
+    "beds": 2,
+    "gh": false,
+    "name": "Market Street 3",
+    "rent": 600000,
+    "sqm": 127
+  },
+  "35061": {
+    "beds": 3,
+    "gh": false,
+    "name": "Market Street 4 (Shop)",
+    "rent": 800000,
+    "sqm": 176
+  },
+  "35062": {
+    "beds": 4,
+    "gh": false,
+    "name": "Market Street 5 (Shop)",
+    "rent": 800000,
+    "sqm": 230
+  },
+  "35063": {
+    "beds": 5,
+    "gh": false,
+    "name": "Market Street 6",
+    "rent": 600000,
+    "sqm": 186
+  },
+  "35064": {
+    "beds": 2,
+    "gh": false,
+    "name": "Market Street 7",
+    "rent": 200000,
+    "sqm": 90
+  },
+  "35065": {
+    "beds": 3,
+    "gh": false,
+    "name": "The Lair",
+    "rent": 200000,
+    "sqm": 259
+  },
+  "35066": {
+    "beds": 5,
+    "gh": false,
+    "name": "Mystic Lane 3 (Tower)",
+    "rent": 800000,
+    "sqm": 214
+  },
+  "35067": {
+    "beds": 5,
+    "gh": false,
+    "name": "Lucky Lane 2 (Tower)",
+    "rent": 600000,
+    "sqm": 216
+  },
+  "35068": {
+    "beds": 5,
+    "gh": false,
+    "name": "Lucky Lane 3 (Tower)",
+    "rent": 600000,
+    "sqm": 216
+  },
+  "35069": {
+    "beds": 5,
+    "gh": false,
+    "name": "Iron Alley Watch, Upper",
+    "rent": 600000,
+    "sqm": 215
+  },
+  "35070": {
+    "beds": 5,
+    "gh": false,
+    "name": "Iron Alley Watch, Lower",
+    "rent": 600000,
+    "sqm": 217
+  },
+  "37001": {
+    "beds": 3,
+    "gh": false,
+    "name": "Aureate Court 1",
+    "rent": 600000,
+    "sqm": 131
+  },
+  "37002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Aureate Court 2",
+    "rent": 400000,
+    "sqm": 125
+  },
+  "37003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Aureate Court 3",
+    "rent": 400000,
+    "sqm": 131
+  },
+  "37004": {
+    "beds": 4,
+    "gh": false,
+    "name": "Aureate Court 4",
+    "rent": 400000,
+    "sqm": 104
+  },
+  "37005": {
+    "beds": 4,
+    "gh": false,
+    "name": "Fortune Wing 1",
+    "rent": 800000,
+    "sqm": 254
+  },
+  "37006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fortune Wing 2",
+    "rent": 600000,
+    "sqm": 148
+  },
+  "37007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fortune Wing 3",
+    "rent": 600000,
+    "sqm": 148
+  },
+  "37008": {
+    "beds": 4,
+    "gh": false,
+    "name": "Fortune Wing 4",
+    "rent": 600000,
+    "sqm": 147
+  },
+  "37009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Luminous Arc 1",
+    "rent": 800000,
+    "sqm": 167
+  },
+  "37010": {
+    "beds": 4,
+    "gh": false,
+    "name": "Luminous Arc 2",
+    "rent": 600000,
+    "sqm": 161
+  },
+  "37011": {
+    "beds": 3,
+    "gh": false,
+    "name": "Luminous Arc 3",
+    "rent": 600000,
+    "sqm": 139
+  },
+  "37012": {
+    "beds": 5,
+    "gh": false,
+    "name": "Luminous Arc 4",
+    "rent": 800000,
+    "sqm": 200
+  },
+  "37013": {
+    "beds": 4,
+    "gh": false,
+    "name": "Radiant Plaza 1",
+    "rent": 800000,
+    "sqm": 138
+  },
+  "37014": {
+    "beds": 2,
+    "gh": false,
+    "name": "Radiant Plaza 2",
+    "rent": 600000,
+    "sqm": 99
+  },
+  "37015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Radiant Plaza 3",
+    "rent": 800000,
+    "sqm": 126
+  },
+  "37016": {
+    "beds": 3,
+    "gh": false,
+    "name": "Radiant Plaza 4",
+    "rent": 800000,
+    "sqm": 197
+  },
+  "37017": {
+    "beds": 5,
+    "gh": false,
+    "name": "Harbour Promenade 1",
+    "rent": 800000,
+    "sqm": 137
+  },
+  "37018": {
+    "beds": 6,
+    "gh": false,
+    "name": "Luminous Arc 5",
+    "rent": 800000,
+    "sqm": 145
+  },
+  "37019": {
+    "beds": 6,
+    "gh": false,
+    "name": "Aureate Court 5",
+    "rent": 600000,
+    "sqm": 138
+  },
+  "37020": {
+    "beds": 6,
+    "gh": false,
+    "name": "Mad Scientist's Lab",
+    "rent": 600000,
+    "sqm": 63
+  },
+  "38001": {
+    "beds": 33,
+    "gh": true,
+    "name": "Halls of Serenity",
+    "rent": 5000000,
+    "sqm": 517
+  },
+  "38002": {
+    "beds": 34,
+    "gh": true,
+    "name": "Cascade Towers",
+    "rent": 5000000,
+    "sqm": 419
+  },
+  "38003": {
+    "beds": 27,
+    "gh": true,
+    "name": "Sun Palace",
+    "rent": 5000000,
+    "sqm": 533
+  },
+  "40001": {
+    "beds": 18,
+    "gh": true,
+    "name": "Shadow Towers",
+    "rent": 250000,
+    "sqm": 429
+  },
+  "40002": {
+    "beds": 20,
+    "gh": true,
+    "name": "The Hideout",
+    "rent": 250000,
+    "sqm": 449
+  },
+  "40101": {
+    "beds": 2,
+    "gh": false,
+    "name": "Underwood 1",
+    "rent": 100000,
+    "sqm": 39
+  },
+  "40102": {
+    "beds": 2,
+    "gh": false,
+    "name": "Underwood 2",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "40103": {
+    "beds": 3,
+    "gh": false,
+    "name": "Underwood 3",
+    "rent": 100000,
+    "sqm": 39
+  },
+  "40104": {
+    "beds": 4,
+    "gh": false,
+    "name": "Underwood 4",
+    "rent": 100000,
+    "sqm": 50
+  },
+  "40105": {
+    "beds": 3,
+    "gh": false,
+    "name": "Underwood 5",
+    "rent": 80000,
+    "sqm": 33
+  },
+  "40106": {
+    "beds": 3,
+    "gh": false,
+    "name": "Underwood 6",
+    "rent": 100000,
+    "sqm": 40
+  },
+  "40107": {
+    "beds": 3,
+    "gh": false,
+    "name": "Underwood 7",
+    "rent": 200000,
+    "sqm": 34
+  },
+  "40108": {
+    "beds": 2,
+    "gh": false,
+    "name": "Underwood 8",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "40109": {
+    "beds": 1,
+    "gh": false,
+    "name": "Underwood 9",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "40110": {
+    "beds": 1,
+    "gh": false,
+    "name": "Underwood 10",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "40111": {
+    "beds": 10,
+    "gh": true,
+    "name": "Ab'Dendriel Clanhall",
+    "rent": 250000,
+    "sqm": 326
+  },
+  "40112": {
+    "beds": 18,
+    "gh": true,
+    "name": "Castle of the Winds",
+    "rent": 500000,
+    "sqm": 514
+  },
+  "40211": {
+    "beds": 4,
+    "gh": false,
+    "name": "Great Willow Western Wing",
+    "rent": 100000,
+    "sqm": 61
+  },
+  "40212": {
+    "beds": 2,
+    "gh": false,
+    "name": "Great Willow 1",
+    "rent": 100000,
+    "sqm": 35
+  },
+  "40222": {
+    "beds": 1,
+    "gh": false,
+    "name": "Great Willow 2b",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "40224": {
+    "beds": 1,
+    "gh": false,
+    "name": "Great Willow 2a",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "40234": {
+    "beds": 1,
+    "gh": false,
+    "name": "Great Willow 3a",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "40242": {
+    "beds": 2,
+    "gh": false,
+    "name": "Great Willow 4a",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "40243": {
+    "beds": 2,
+    "gh": false,
+    "name": "Great Willow 4b",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "40244": {
+    "beds": 1,
+    "gh": false,
+    "name": "Great Willow 3b",
+    "rent": 80000,
+    "sqm": 40
+  },
+  "40301": {
+    "beds": 3,
+    "gh": false,
+    "name": "Mangrove 1",
+    "rent": 80000,
+    "sqm": 39
+  },
+  "40302": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mangrove 2",
+    "rent": 50000,
+    "sqm": 32
+  },
+  "40303": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mangrove 3",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "40304": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mangrove 4",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "40401": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 1",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "40402": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 2",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "40403": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 3 (Shop)",
+    "rent": 80000,
+    "sqm": 36
+  },
+  "40404": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 4 (Shop)",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "40405": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 5 (Shop)",
+    "rent": 80000,
+    "sqm": 36
+  },
+  "40406": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 6",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "40407": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 7",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "40408": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 8",
+    "rent": 25000,
+    "sqm": 22
+  },
+  "40409": {
+    "beds": 2,
+    "gh": false,
+    "name": "Treetop 9",
+    "rent": 50000,
+    "sqm": 24
+  },
+  "40410": {
+    "beds": 2,
+    "gh": false,
+    "name": "Treetop 10",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "40411": {
+    "beds": 2,
+    "gh": false,
+    "name": "Treetop 11",
+    "rent": 50000,
+    "sqm": 24
+  },
+  "40412": {
+    "beds": 1,
+    "gh": false,
+    "name": "Treetop 12 (Shop)",
+    "rent": 100000,
+    "sqm": 39
+  },
+  "40413": {
+    "beds": 2,
+    "gh": false,
+    "name": "Treetop 13",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "40414": {
+    "beds": 6,
+    "gh": false,
+    "name": "Prima Arbor",
+    "rent": 400000,
+    "sqm": 200
+  },
+  "40501": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 1",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "40502": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 2",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "40503": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 3",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "40504": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 4",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "40505": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 5",
+    "rent": 50000,
+    "sqm": 33
+  },
+  "40506": {
+    "beds": 1,
+    "gh": false,
+    "name": "Coastwood 6 (Shop)",
+    "rent": 80000,
+    "sqm": 32
+  },
+  "40507": {
+    "beds": 1,
+    "gh": false,
+    "name": "Coastwood 7",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "40508": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coastwood 8",
+    "rent": 50000,
+    "sqm": 30
+  },
+  "40509": {
+    "beds": 1,
+    "gh": false,
+    "name": "Coastwood 9",
+    "rent": 50000,
+    "sqm": 25
+  },
+  "40510": {
+    "beds": 3,
+    "gh": false,
+    "name": "Coastwood 10",
+    "rent": 80000,
+    "sqm": 32
+  },
+  "40611": {
+    "beds": 2,
+    "gh": false,
+    "name": "Shadow Caves 1",
+    "rent": 50000,
+    "sqm": 32
+  },
+  "40614": {
+    "beds": 2,
+    "gh": false,
+    "name": "Shadow Caves 2",
+    "rent": 50000,
+    "sqm": 37
+  },
+  "40621": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shadow Caves 3",
+    "rent": 100000,
+    "sqm": 61
+  },
+  "40622": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shadow Caves 4",
+    "rent": 100000,
+    "sqm": 53
+  },
+  "40625": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shadow Caves 5",
+    "rent": 100000,
+    "sqm": 61
+  },
+  "40638": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shadow Caves 6",
+    "rent": 100000,
+    "sqm": 50
+  },
+  "45001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Haggler's Hangout 1",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "45002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Haggler's Hangout 2",
+    "rent": 100000,
+    "sqm": 35
+  },
+  "45003": {
+    "beds": 4,
+    "gh": false,
+    "name": "Haggler's Hangout 3",
+    "rent": 300000,
+    "sqm": 186
+  },
+  "45004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Haggler's Hangout 4a (Shop)",
+    "rent": 200000,
+    "sqm": 44
+  },
+  "45005": {
+    "beds": 1,
+    "gh": false,
+    "name": "Haggler's Hangout 4b (Shop)",
+    "rent": 150000,
+    "sqm": 34
+  },
+  "45006": {
+    "beds": 1,
+    "gh": false,
+    "name": "Haggler's Hangout 5 (Shop)",
+    "rent": 200000,
+    "sqm": 42
+  },
+  "45007": {
+    "beds": 4,
+    "gh": false,
+    "name": "Haggler's Hangout 6",
+    "rent": 400000,
+    "sqm": 143
+  },
+  "45008": {
+    "beds": 7,
+    "gh": false,
+    "name": "Haggler's Hangout 7",
+    "rent": 400000,
+    "sqm": 155
+  },
+  "45009": {
+    "beds": 8,
+    "gh": false,
+    "name": "Big Game Hunter's Lodge",
+    "rent": 600000,
+    "sqm": 164
+  },
+  "46001": {
+    "beds": 1,
+    "gh": false,
+    "name": "Banana Bay 1",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "46002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Banana Bay 2",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "46003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Banana Bay 3",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "46004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Banana Bay 4",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "46005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Crocodile Bridge 1",
+    "rent": 80000,
+    "sqm": 29
+  },
+  "46006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Crocodile Bridge 2",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "46007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Crocodile Bridge 3",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "46008": {
+    "beds": 4,
+    "gh": false,
+    "name": "Crocodile Bridge 4",
+    "rent": 300000,
+    "sqm": 119
+  },
+  "46009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Crocodile Bridge 5",
+    "rent": 200000,
+    "sqm": 102
+  },
+  "46010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Woodway 1",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "46011": {
+    "beds": 1,
+    "gh": false,
+    "name": "Woodway 2",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "46012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Woodway 3",
+    "rent": 150000,
+    "sqm": 42
+  },
+  "46013": {
+    "beds": 1,
+    "gh": false,
+    "name": "Woodway 4",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "46014": {
+    "beds": 2,
+    "gh": false,
+    "name": "Flamingo Flats 1",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "46015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Flamingo Flats 2",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "46016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Flamingo Flats 3",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "46017": {
+    "beds": 2,
+    "gh": false,
+    "name": "Flamingo Flats 4",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "46018": {
+    "beds": 1,
+    "gh": false,
+    "name": "Flamingo Flats 5",
+    "rent": 150000,
+    "sqm": 53
+  },
+  "46019": {
+    "beds": 3,
+    "gh": false,
+    "name": "Bamboo Garden 1",
+    "rent": 100000,
+    "sqm": 44
+  },
+  "46020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Bamboo Garden 2",
+    "rent": 80000,
+    "sqm": 30
+  },
+  "46021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Bamboo Garden 3",
+    "rent": 150000,
+    "sqm": 44
+  },
+  "46022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coconut Quay 1",
+    "rent": 150000,
+    "sqm": 47
+  },
+  "46023": {
+    "beds": 2,
+    "gh": false,
+    "name": "Coconut Quay 2",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "46024": {
+    "beds": 4,
+    "gh": false,
+    "name": "Coconut Quay 3",
+    "rent": 200000,
+    "sqm": 50
+  },
+  "46025": {
+    "beds": 3,
+    "gh": false,
+    "name": "Coconut Quay 4",
+    "rent": 150000,
+    "sqm": 52
+  },
+  "46026": {
+    "beds": 3,
+    "gh": false,
+    "name": "River Homes 1",
+    "rent": 300000,
+    "sqm": 96
+  },
+  "46027": {
+    "beds": 2,
+    "gh": false,
+    "name": "River Homes 2a",
+    "rent": 100000,
+    "sqm": 33
+  },
+  "46028": {
+    "beds": 3,
+    "gh": false,
+    "name": "River Homes 2b",
+    "rent": 150000,
+    "sqm": 37
+  },
+  "46029": {
+    "beds": 7,
+    "gh": false,
+    "name": "River Homes 3",
+    "rent": 200000,
+    "sqm": 111
+  },
+  "46030": {
+    "beds": 3,
+    "gh": false,
+    "name": "Jungle Edge 1",
+    "rent": 200000,
+    "sqm": 63
+  },
+  "46031": {
+    "beds": 3,
+    "gh": false,
+    "name": "Jungle Edge 2",
+    "rent": 200000,
+    "sqm": 89
+  },
+  "46032": {
+    "beds": 2,
+    "gh": false,
+    "name": "Jungle Edge 3",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "46033": {
+    "beds": 2,
+    "gh": false,
+    "name": "Jungle Edge 4",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "46034": {
+    "beds": 2,
+    "gh": false,
+    "name": "Jungle Edge 5",
+    "rent": 80000,
+    "sqm": 27
+  },
+  "46035": {
+    "beds": 1,
+    "gh": false,
+    "name": "Jungle Edge 6",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "46040": {
+    "beds": 15,
+    "gh": true,
+    "name": "Shark Manor",
+    "rent": 250000,
+    "sqm": 173
+  },
+  "46041": {
+    "beds": 20,
+    "gh": true,
+    "name": "Bamboo Fortress",
+    "rent": 500000,
+    "sqm": 531
+  },
+  "47001": {
+    "beds": 23,
+    "gh": true,
+    "name": "The Treehouse",
+    "rent": 250000,
+    "sqm": 972
+  },
+  "48001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Marketplace 1",
+    "rent": 400000,
+    "sqm": 79
+  },
+  "48002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Marketplace 2",
+    "rent": 400000,
+    "sqm": 92
+  },
+  "48003": {
+    "beds": 4,
+    "gh": false,
+    "name": "Quay 1",
+    "rent": 200000,
+    "sqm": 81
+  },
+  "48004": {
+    "beds": 3,
+    "gh": false,
+    "name": "Quay 2",
+    "rent": 200000,
+    "sqm": 130
+  },
+  "48005": {
+    "beds": 6,
+    "gh": false,
+    "name": "Wave Tower",
+    "rent": 400000,
+    "sqm": 212
+  },
+  "48006": {
+    "beds": 4,
+    "gh": false,
+    "name": "Palace Vicinity",
+    "rent": 200000,
+    "sqm": 132
+  },
+  "48007": {
+    "beds": 15,
+    "gh": true,
+    "name": "Halls of Sun and Sea",
+    "rent": 1000000,
+    "sqm": 423
+  },
+  "48008": {
+    "beds": 3,
+    "gh": false,
+    "name": "Marketplace 3",
+    "rent": 400000,
+    "sqm": 130
+  },
+  "48009": {
+    "beds": 5,
+    "gh": false,
+    "name": "Hanging Gardens 1",
+    "rent": 400000,
+    "sqm": 178
+  },
+  "49001": {
+    "beds": 4,
+    "gh": false,
+    "name": "Centre 1",
+    "rent": 600000,
+    "sqm": 126
+  },
+  "49002": {
+    "beds": 4,
+    "gh": false,
+    "name": "Centre 2",
+    "rent": 600000,
+    "sqm": 139
+  },
+  "50101": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle Shop 1",
+    "rent": 400000,
+    "sqm": 38
+  },
+  "50102": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle Shop 2",
+    "rent": 400000,
+    "sqm": 38
+  },
+  "50103": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle Shop 3",
+    "rent": 300000,
+    "sqm": 38
+  },
+  "50104": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 01",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "50105": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 02",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "50106": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 03",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50107": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 04",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "50108": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 05",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "50109": {
+    "beds": 2,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 06",
+    "rent": 100000,
+    "sqm": 22
+  },
+  "50110": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 3rd Floor, Flat 07",
+    "rent": 80000,
+    "sqm": 17
+  },
+  "50111": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 01",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "50112": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 02",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "50113": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 03",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "50114": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 04",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "50115": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 05",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "50116": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 06",
+    "rent": 100000,
+    "sqm": 21
+  },
+  "50117": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 07",
+    "rent": 80000,
+    "sqm": 17
+  },
+  "50118": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 08",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "50119": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, 4th Floor, Flat 09",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "50120": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 01",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50121": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 02",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50122": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 03",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50123": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 04",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50124": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 05",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50125": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 06",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50126": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 07",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50127": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 08",
+    "rent": 50000,
+    "sqm": 13
+  },
+  "50128": {
+    "beds": 1,
+    "gh": false,
+    "name": "Castle, Basement, Flat 09",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "50129": {
+    "beds": 6,
+    "gh": false,
+    "name": "Castle, Residence",
+    "rent": 600000,
+    "sqm": 104
+  },
+  "50201": {
+    "beds": 3,
+    "gh": false,
+    "name": "Castle Street 1",
+    "rent": 300000,
+    "sqm": 71
+  },
+  "50202": {
+    "beds": 2,
+    "gh": false,
+    "name": "Castle Street 2",
+    "rent": 150000,
+    "sqm": 35
+  },
+  "50203": {
+    "beds": 2,
+    "gh": false,
+    "name": "Castle Street 3",
+    "rent": 150000,
+    "sqm": 41
+  },
+  "50204": {
+    "beds": 2,
+    "gh": false,
+    "name": "Castle Street 4",
+    "rent": 150000,
+    "sqm": 40
+  },
+  "50205": {
+    "beds": 2,
+    "gh": false,
+    "name": "Castle Street 5",
+    "rent": 150000,
+    "sqm": 40
+  },
+  "50301": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 01",
+    "rent": 50000,
+    "sqm": 11
+  },
+  "50302": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 02",
+    "rent": 100000,
+    "sqm": 20
+  },
+  "50303": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 03",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "50304": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 04",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "50305": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 05",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "50306": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 06",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "50307": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 07",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "50308": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 08",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "50309": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 11",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "50311": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 12",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "50312": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 13",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "50315": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 14",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "50317": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 21",
+    "rent": 80000,
+    "sqm": 20
+  },
+  "50318": {
+    "beds": 1,
+    "gh": false,
+    "name": "Edron Flats, Flat 22",
+    "rent": 50000,
+    "sqm": 12
+  },
+  "50319": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 23",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "50321": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 24",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "50323": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Flat 25",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "50325": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Basement Flat 1",
+    "rent": 100000,
+    "sqm": 36
+  },
+  "50326": {
+    "beds": 2,
+    "gh": false,
+    "name": "Edron Flats, Basement Flat 2",
+    "rent": 100000,
+    "sqm": 36
+  },
+  "50401": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 1",
+    "rent": 800000,
+    "sqm": 76
+  },
+  "50402": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 2",
+    "rent": 800000,
+    "sqm": 90
+  },
+  "50403": {
+    "beds": 5,
+    "gh": false,
+    "name": "Central Circle 3",
+    "rent": 800000,
+    "sqm": 99
+  },
+  "50404": {
+    "beds": 5,
+    "gh": false,
+    "name": "Central Circle 4",
+    "rent": 800000,
+    "sqm": 97
+  },
+  "50405": {
+    "beds": 5,
+    "gh": false,
+    "name": "Central Circle 5",
+    "rent": 800000,
+    "sqm": 99
+  },
+  "50406": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 6 (Shop)",
+    "rent": 400000,
+    "sqm": 101
+  },
+  "50407": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 7 (Shop)",
+    "rent": 400000,
+    "sqm": 101
+  },
+  "50408": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 8 (Shop)",
+    "rent": 400000,
+    "sqm": 101
+  },
+  "50409": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 9a",
+    "rent": 150000,
+    "sqm": 23
+  },
+  "50410": {
+    "beds": 2,
+    "gh": false,
+    "name": "Central Circle 9b",
+    "rent": 150000,
+    "sqm": 23
+  },
+  "50501": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 1",
+    "rent": 200000,
+    "sqm": 41
+  },
+  "50502": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 2",
+    "rent": 200000,
+    "sqm": 39
+  },
+  "50503": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 3",
+    "rent": 200000,
+    "sqm": 39
+  },
+  "50504": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 4",
+    "rent": 200000,
+    "sqm": 40
+  },
+  "50505": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 5",
+    "rent": 300000,
+    "sqm": 40
+  },
+  "50506": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 6a",
+    "rent": 300000,
+    "sqm": 34
+  },
+  "50507": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 6b",
+    "rent": 200000,
+    "sqm": 35
+  },
+  "50508": {
+    "beds": 3,
+    "gh": false,
+    "name": "Wood Avenue 7",
+    "rent": 800000,
+    "sqm": 145
+  },
+  "50509": {
+    "beds": 3,
+    "gh": false,
+    "name": "Wood Avenue 8",
+    "rent": 800000,
+    "sqm": 147
+  },
+  "50510": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 9a",
+    "rent": 200000,
+    "sqm": 33
+  },
+  "50511": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 9b",
+    "rent": 200000,
+    "sqm": 33
+  },
+  "50512": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 10a",
+    "rent": 200000,
+    "sqm": 35
+  },
+  "50513": {
+    "beds": 3,
+    "gh": false,
+    "name": "Wood Avenue 10b",
+    "rent": 200000,
+    "sqm": 35
+  },
+  "50514": {
+    "beds": 6,
+    "gh": false,
+    "name": "Wood Avenue 11",
+    "rent": 600000,
+    "sqm": 165
+  },
+  "50515": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 4a",
+    "rent": 150000,
+    "sqm": 33
+  },
+  "50516": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 4b",
+    "rent": 150000,
+    "sqm": 35
+  },
+  "50517": {
+    "beds": 2,
+    "gh": false,
+    "name": "Wood Avenue 4c",
+    "rent": 200000,
+    "sqm": 41
+  },
+  "50518": {
+    "beds": 6,
+    "gh": false,
+    "name": "Stronghold",
+    "rent": 800000,
+    "sqm": 194
+  },
+  "50601": {
+    "beds": 23,
+    "gh": true,
+    "name": "Sky Lane, Guild 1",
+    "rent": 1000000,
+    "sqm": 459
+  },
+  "50602": {
+    "beds": 14,
+    "gh": true,
+    "name": "Sky Lane, Guild 2",
+    "rent": 1000000,
+    "sqm": 440
+  },
+  "50603": {
+    "beds": 18,
+    "gh": true,
+    "name": "Sky Lane, Guild 3",
+    "rent": 1000000,
+    "sqm": 391
+  },
+  "50604": {
+    "beds": 6,
+    "gh": false,
+    "name": "Sky Lane, Sea Tower",
+    "rent": 300000,
+    "sqm": 106
+  },
+  "50701": {
+    "beds": 14,
+    "gh": true,
+    "name": "Magic Academy, Guild",
+    "rent": 500000,
+    "sqm": 195
+  },
+  "50702": {
+    "beds": 1,
+    "gh": false,
+    "name": "Magic Academy, Shop",
+    "rent": 150000,
+    "sqm": 23
+  },
+  "50703": {
+    "beds": 3,
+    "gh": false,
+    "name": "Magic Academy, Flat 1",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "50704": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magic Academy, Flat 2",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "50705": {
+    "beds": 1,
+    "gh": false,
+    "name": "Magic Academy, Flat 3",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "50706": {
+    "beds": 2,
+    "gh": false,
+    "name": "Magic Academy, Flat 4",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "50707": {
+    "beds": 1,
+    "gh": false,
+    "name": "Magic Academy, Flat 5",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "52001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Village 1",
+    "rent": 150000,
+    "sqm": 45
+  },
+  "52002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Stonehome Village 2",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "52003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Stonehome Village 3",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "52004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Village 4",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "52005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Village 5",
+    "rent": 80000,
+    "sqm": 29
+  },
+  "52006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Village 6",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "52007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Village 7",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "52008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Stonehome Village 8",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "52009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Stonehome Village 9",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "52010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 01",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "52011": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 02",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "52012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 03",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "52013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 04",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "52016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 11",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "52017": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 12",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "52020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 13",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "52021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Stonehome Flats, Flat 14",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "52022": {
+    "beds": 10,
+    "gh": true,
+    "name": "Stonehome Clanhall",
+    "rent": 250000,
+    "sqm": 205
+  },
+  "53001": {
+    "beds": 6,
+    "gh": false,
+    "name": "Cliffside",
+    "rent": 600000,
+    "sqm": 203
+  },
+  "53002": {
+    "beds": 12,
+    "gh": true,
+    "name": "House of the Rising Moon",
+    "rent": 1000000,
+    "sqm": 340
+  },
+  "53501": {
+    "beds": 4,
+    "gh": false,
+    "name": "Blueberry Bay",
+    "rent": 600000,
+    "sqm": 130
+  },
+  "53502": {
+    "beds": 4,
+    "gh": false,
+    "name": "Vanilla Beach",
+    "rent": 600000,
+    "sqm": 129
+  },
+  "53503": {
+    "beds": 7,
+    "gh": false,
+    "name": "Cherry Cake Tower",
+    "rent": 800000,
+    "sqm": 189
+  },
+  "54001": {
+    "beds": 1,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 01",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "54002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 02",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "54003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 03",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "54004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 04",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "54005": {
+    "beds": 1,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 05",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "54006": {
+    "beds": 1,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 06",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "54007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 11",
+    "rent": 100000,
+    "sqm": 24
+  },
+  "54009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 13",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "54010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 14",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "54012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya Flats, Flat 12",
+    "rent": 100000,
+    "sqm": 24
+  },
+  "54013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 1",
+    "rent": 150000,
+    "sqm": 30
+  },
+  "54014": {
+    "beds": 3,
+    "gh": false,
+    "name": "Cormaya 2",
+    "rent": 300000,
+    "sqm": 84
+  },
+  "54015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 3",
+    "rent": 200000,
+    "sqm": 47
+  },
+  "54016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 4",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "54017": {
+    "beds": 3,
+    "gh": false,
+    "name": "Cormaya 5",
+    "rent": 300000,
+    "sqm": 123
+  },
+  "54018": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 6",
+    "rent": 200000,
+    "sqm": 56
+  },
+  "54019": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 7",
+    "rent": 200000,
+    "sqm": 54
+  },
+  "54020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 8",
+    "rent": 200000,
+    "sqm": 65
+  },
+  "54021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 9a",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "54022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 9b",
+    "rent": 150000,
+    "sqm": 58
+  },
+  "54023": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 9c",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "54024": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 9d",
+    "rent": 150000,
+    "sqm": 60
+  },
+  "54025": {
+    "beds": 3,
+    "gh": false,
+    "name": "Cormaya 10",
+    "rent": 300000,
+    "sqm": 85
+  },
+  "54026": {
+    "beds": 2,
+    "gh": false,
+    "name": "Cormaya 11",
+    "rent": 150000,
+    "sqm": 47
+  },
+  "54027": {
+    "beds": 19,
+    "gh": true,
+    "name": "Castle of the White Dragon",
+    "rent": 1000000,
+    "sqm": 532
+  },
+  "55001": {
+    "beds": 3,
+    "gh": false,
+    "name": "Shelf Site",
+    "rent": 300000,
+    "sqm": 98
+  },
+  "55002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Glacier Side 1",
+    "rent": 150000,
+    "sqm": 34
+  },
+  "55003": {
+    "beds": 3,
+    "gh": false,
+    "name": "Glacier Side 2",
+    "rent": 300000,
+    "sqm": 102
+  },
+  "55004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Glacier Side 3",
+    "rent": 150000,
+    "sqm": 41
+  },
+  "55005": {
+    "beds": 1,
+    "gh": false,
+    "name": "Glacier Side 4",
+    "rent": 150000,
+    "sqm": 46
+  },
+  "55006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Spirit Homes 1",
+    "rent": 150000,
+    "sqm": 35
+  },
+  "55007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Spirit Homes 2",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "55008": {
+    "beds": 3,
+    "gh": false,
+    "name": "Spirit Homes 3",
+    "rent": 300000,
+    "sqm": 90
+  },
+  "55009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Spirit Homes 4",
+    "rent": 80000,
+    "sqm": 24
+  },
+  "55010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Spirit Homes 5",
+    "rent": 150000,
+    "sqm": 29
+  },
+  "55011": {
+    "beds": 3,
+    "gh": false,
+    "name": "Arena Walk 1",
+    "rent": 300000,
+    "sqm": 67
+  },
+  "55012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Arena Walk 2",
+    "rent": 150000,
+    "sqm": 29
+  },
+  "55013": {
+    "beds": 3,
+    "gh": false,
+    "name": "Arena Walk 3",
+    "rent": 300000,
+    "sqm": 74
+  },
+  "55014": {
+    "beds": 6,
+    "gh": false,
+    "name": "Mammoth House",
+    "rent": 300000,
+    "sqm": 280
+  },
+  "55015": {
+    "beds": 5,
+    "gh": false,
+    "name": "Lakeside Mansion",
+    "rent": 300000,
+    "sqm": 136
+  },
+  "55101": {
+    "beds": 2,
+    "gh": false,
+    "name": "Bears Paw 1",
+    "rent": 200000,
+    "sqm": 42
+  },
+  "55102": {
+    "beds": 2,
+    "gh": false,
+    "name": "Bears Paw 2",
+    "rent": 300000,
+    "sqm": 54
+  },
+  "55103": {
+    "beds": 3,
+    "gh": false,
+    "name": "Bears Paw 3",
+    "rent": 200000,
+    "sqm": 47
+  },
+  "55104": {
+    "beds": 4,
+    "gh": false,
+    "name": "Bears Paw 4",
+    "rent": 400000,
+    "sqm": 119
+  },
+  "55105": {
+    "beds": 3,
+    "gh": false,
+    "name": "Bears Paw 5",
+    "rent": 200000,
+    "sqm": 45
+  },
+  "55106": {
+    "beds": 1,
+    "gh": false,
+    "name": "Raven Corner 1",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "55107": {
+    "beds": 3,
+    "gh": false,
+    "name": "Raven Corner 2",
+    "rent": 150000,
+    "sqm": 36
+  },
+  "55108": {
+    "beds": 1,
+    "gh": false,
+    "name": "Raven Corner 3",
+    "rent": 100000,
+    "sqm": 22
+  },
+  "55109": {
+    "beds": 2,
+    "gh": false,
+    "name": "Skiffs End 1",
+    "rent": 100000,
+    "sqm": 35
+  },
+  "55110": {
+    "beds": 2,
+    "gh": false,
+    "name": "Skiffs End 2",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "55111": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trout Plaza 1",
+    "rent": 200000,
+    "sqm": 56
+  },
+  "55112": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trout Plaza 2",
+    "rent": 150000,
+    "sqm": 36
+  },
+  "55113": {
+    "beds": 1,
+    "gh": false,
+    "name": "Trout Plaza 3",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "55114": {
+    "beds": 1,
+    "gh": false,
+    "name": "Trout Plaza 4",
+    "rent": 80000,
+    "sqm": 22
+  },
+  "55115": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trout Plaza 5 (Shop)",
+    "rent": 300000,
+    "sqm": 89
+  },
+  "55116": {
+    "beds": 2,
+    "gh": false,
+    "name": "Pilchard Bin 1",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "55117": {
+    "beds": 2,
+    "gh": false,
+    "name": "Pilchard Bin 2",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "55118": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 3",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "55119": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 4",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "55120": {
+    "beds": 2,
+    "gh": false,
+    "name": "Pilchard Bin 5",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "55121": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 6",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "55122": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 7",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "55123": {
+    "beds": 2,
+    "gh": false,
+    "name": "Pilchard Bin 8",
+    "rent": 25000,
+    "sqm": 11
+  },
+  "55124": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 9",
+    "rent": 50000,
+    "sqm": 11
+  },
+  "55125": {
+    "beds": 1,
+    "gh": false,
+    "name": "Pilchard Bin 10",
+    "rent": 50000,
+    "sqm": 11
+  },
+  "55126": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shady Rocks 1",
+    "rent": 300000,
+    "sqm": 79
+  },
+  "55127": {
+    "beds": 4,
+    "gh": false,
+    "name": "Shady Rocks 2",
+    "rent": 200000,
+    "sqm": 41
+  },
+  "55128": {
+    "beds": 3,
+    "gh": false,
+    "name": "Shady Rocks 3",
+    "rent": 300000,
+    "sqm": 94
+  },
+  "55129": {
+    "beds": 2,
+    "gh": false,
+    "name": "Shady Rocks 4 (Shop)",
+    "rent": 200000,
+    "sqm": 61
+  },
+  "55130": {
+    "beds": 2,
+    "gh": false,
+    "name": "Shady Rocks 5",
+    "rent": 300000,
+    "sqm": 66
+  },
+  "55131": {
+    "beds": 2,
+    "gh": false,
+    "name": "Corner Shop (Shop)",
+    "rent": 200000,
+    "sqm": 50
+  },
+  "55201": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tusk Flats 1",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "55202": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tusk Flats 2",
+    "rent": 80000,
+    "sqm": 28
+  },
+  "55203": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tusk Flats 3",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "55204": {
+    "beds": 1,
+    "gh": false,
+    "name": "Tusk Flats 4",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "55205": {
+    "beds": 1,
+    "gh": false,
+    "name": "Tusk Flats 5",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "55206": {
+    "beds": 2,
+    "gh": false,
+    "name": "Tusk Flats 6",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "55207": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fimbul Shelf 1",
+    "rent": 80000,
+    "sqm": 36
+  },
+  "55208": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fimbul Shelf 2",
+    "rent": 100000,
+    "sqm": 43
+  },
+  "55209": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fimbul Shelf 3",
+    "rent": 100000,
+    "sqm": 49
+  },
+  "55210": {
+    "beds": 2,
+    "gh": false,
+    "name": "Fimbul Shelf 4",
+    "rent": 100000,
+    "sqm": 42
+  },
+  "55211": {
+    "beds": 3,
+    "gh": false,
+    "name": "Furrier Quarter 1",
+    "rent": 150000,
+    "sqm": 53
+  },
+  "55212": {
+    "beds": 2,
+    "gh": false,
+    "name": "Furrier Quarter 2",
+    "rent": 80000,
+    "sqm": 37
+  },
+  "55213": {
+    "beds": 2,
+    "gh": false,
+    "name": "Furrier Quarter 3",
+    "rent": 100000,
+    "sqm": 40
+  },
+  "55301": {
+    "beds": 30,
+    "gh": true,
+    "name": "Mammoth Belly",
+    "rent": 1000000,
+    "sqm": 404
+  },
+  "55302": {
+    "beds": 24,
+    "gh": true,
+    "name": "Crystal Glance",
+    "rent": 1000000,
+    "sqm": 321
+  },
+  "55303": {
+    "beds": 26,
+    "gh": true,
+    "name": "Frost Manor",
+    "rent": 500000,
+    "sqm": 505
+  },
+  "57001": {
+    "beds": 5,
+    "gh": false,
+    "name": "Low Waters Observatory",
+    "rent": 400000,
+    "sqm": 525
+  },
+  "58000": {
+    "beds": 1,
+    "gh": false,
+    "name": "Chameken I",
+    "rent": 100000,
+    "sqm": 17
+  },
+  "58001": {
+    "beds": 1,
+    "gh": false,
+    "name": "Chameken II",
+    "rent": 80000,
+    "sqm": 17
+  },
+  "58002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah I a",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "58003": {
+    "beds": 3,
+    "gh": false,
+    "name": "Thanah I b",
+    "rent": 150000,
+    "sqm": 56
+  },
+  "58004": {
+    "beds": 3,
+    "gh": false,
+    "name": "Thanah I c",
+    "rent": 200000,
+    "sqm": 61
+  },
+  "58005": {
+    "beds": 4,
+    "gh": false,
+    "name": "Thanah I d",
+    "rent": 200000,
+    "sqm": 52
+  },
+  "58006": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah II a",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "58007": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah II b",
+    "rent": 50000,
+    "sqm": 9
+  },
+  "58008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah II c",
+    "rent": 25000,
+    "sqm": 9
+  },
+  "58009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah II d",
+    "rent": 50000,
+    "sqm": 7
+  },
+  "58010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thanah II e",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "58011": {
+    "beds": 3,
+    "gh": false,
+    "name": "Thanah II f",
+    "rent": 150000,
+    "sqm": 53
+  },
+  "58012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Thanah II g",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "58013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Thanah II h",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "58014": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thrarhor I a (Shop)",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "58015": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thrarhor I b (Shop)",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "58016": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thrarhor I c (Shop)",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "58017": {
+    "beds": 1,
+    "gh": false,
+    "name": "Thrarhor I d (Shop)",
+    "rent": 80000,
+    "sqm": 15
+  },
+  "58018": {
+    "beds": 1,
+    "gh": false,
+    "name": "Botham I a",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "58019": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham I b",
+    "rent": 150000,
+    "sqm": 56
+  },
+  "58020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham I c",
+    "rent": 150000,
+    "sqm": 32
+  },
+  "58021": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham I d",
+    "rent": 150000,
+    "sqm": 57
+  },
+  "58022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham I e",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "58023": {
+    "beds": 1,
+    "gh": false,
+    "name": "Botham II a",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "58024": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II b",
+    "rent": 100000,
+    "sqm": 30
+  },
+  "58025": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II c",
+    "rent": 100000,
+    "sqm": 23
+  },
+  "58026": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II d",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "58027": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II e",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "58028": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II f",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "58029": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham II g",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "58030": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham III a",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "58031": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham III b",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "58032": {
+    "beds": 1,
+    "gh": false,
+    "name": "Botham III c",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "58034": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham III e",
+    "rent": 100000,
+    "sqm": 38
+  },
+  "58035": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham III f",
+    "rent": 150000,
+    "sqm": 43
+  },
+  "58036": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham III g",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "58037": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham III h",
+    "rent": 200000,
+    "sqm": 71
+  },
+  "58038": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham IV a",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "58042": {
+    "beds": 5,
+    "gh": false,
+    "name": "Botham IV e",
+    "rent": 100000,
+    "sqm": 85
+  },
+  "58043": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham IV f",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "58044": {
+    "beds": 2,
+    "gh": false,
+    "name": "Botham IV g",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "58045": {
+    "beds": 1,
+    "gh": false,
+    "name": "Botham IV h",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "58046": {
+    "beds": 3,
+    "gh": false,
+    "name": "Botham IV i",
+    "rent": 150000,
+    "sqm": 32
+  },
+  "58047": {
+    "beds": 16,
+    "gh": true,
+    "name": "Ramen Tah",
+    "rent": 250000,
+    "sqm": 125
+  },
+  "59000": {
+    "beds": 1,
+    "gh": false,
+    "name": "Charsirakh I a",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "59001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Charsirakh I b",
+    "rent": 150000,
+    "sqm": 37
+  },
+  "59002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Charsirakh II",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "59003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Charsirakh III",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep I a",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "59005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Othehothep I b",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "59006": {
+    "beds": 3,
+    "gh": false,
+    "name": "Othehothep I c",
+    "rent": 150000,
+    "sqm": 38
+  },
+  "59007": {
+    "beds": 4,
+    "gh": false,
+    "name": "Othehothep I d",
+    "rent": 150000,
+    "sqm": 43
+  },
+  "59008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep II a",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "59009": {
+    "beds": 3,
+    "gh": false,
+    "name": "Othehothep II b",
+    "rent": 150000,
+    "sqm": 43
+  },
+  "59010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep II c",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59011": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep II d",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Othehothep II e",
+    "rent": 150000,
+    "sqm": 31
+  },
+  "59013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Othehothep II f",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "59014": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep III a",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "59015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Othehothep III b",
+    "rent": 80000,
+    "sqm": 31
+  },
+  "59016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Othehothep III c",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59017": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep III d",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "59018": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep III e",
+    "rent": 50000,
+    "sqm": 21
+  },
+  "59019": {
+    "beds": 1,
+    "gh": false,
+    "name": "Othehothep III f",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59020": {
+    "beds": 10,
+    "gh": true,
+    "name": "Harrah I",
+    "rent": 250000,
+    "sqm": 124
+  },
+  "59021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Murkhol I a",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "59022": {
+    "beds": 1,
+    "gh": false,
+    "name": "Murkhol I b",
+    "rent": 50000,
+    "sqm": 11
+  },
+  "59023": {
+    "beds": 1,
+    "gh": false,
+    "name": "Murkhol I c",
+    "rent": 50000,
+    "sqm": 11
+  },
+  "59025": {
+    "beds": 2,
+    "gh": false,
+    "name": "Oskahl I a",
+    "rent": 150000,
+    "sqm": 37
+  },
+  "59026": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I b",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59027": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I c",
+    "rent": 80000,
+    "sqm": 17
+  },
+  "59028": {
+    "beds": 2,
+    "gh": false,
+    "name": "Oskahl I d",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "59029": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I e",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59030": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I f",
+    "rent": 100000,
+    "sqm": 21
+  },
+  "59031": {
+    "beds": 2,
+    "gh": false,
+    "name": "Oskahl I g",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "59032": {
+    "beds": 3,
+    "gh": false,
+    "name": "Oskahl I h",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "59033": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I i",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59034": {
+    "beds": 1,
+    "gh": false,
+    "name": "Oskahl I j",
+    "rent": 80000,
+    "sqm": 17
+  },
+  "59035": {
+    "beds": 2,
+    "gh": false,
+    "name": "Mothrem I",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "59036": {
+    "beds": 3,
+    "gh": false,
+    "name": "Arakmehn I",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "59037": {
+    "beds": 1,
+    "gh": false,
+    "name": "Arakmehn II",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "59038": {
+    "beds": 2,
+    "gh": false,
+    "name": "Arakmehn III",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "59039": {
+    "beds": 2,
+    "gh": false,
+    "name": "Arakmehn IV",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "59040": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath I a",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "59041": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath I b",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "59042": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath I c",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "59043": {
+    "beds": 3,
+    "gh": false,
+    "name": "Unklath I d",
+    "rent": 150000,
+    "sqm": 37
+  },
+  "59044": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath I e",
+    "rent": 150000,
+    "sqm": 37
+  },
+  "59045": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath I f",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "59046": {
+    "beds": 1,
+    "gh": false,
+    "name": "Unklath I g",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "59047": {
+    "beds": 1,
+    "gh": false,
+    "name": "Unklath II a",
+    "rent": 50000,
+    "sqm": 26
+  },
+  "59048": {
+    "beds": 1,
+    "gh": false,
+    "name": "Unklath II b",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59049": {
+    "beds": 1,
+    "gh": false,
+    "name": "Unklath II c",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59050": {
+    "beds": 2,
+    "gh": false,
+    "name": "Unklath II d",
+    "rent": 100000,
+    "sqm": 37
+  },
+  "59051": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathal I a",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "59052": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rathal I b",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59053": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rathal I c",
+    "rent": 25000,
+    "sqm": 17
+  },
+  "59054": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathal I d",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59055": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathal I e",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59056": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rathal II a",
+    "rent": 80000,
+    "sqm": 26
+  },
+  "59057": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rathal II b",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59058": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rathal II c",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59059": {
+    "beds": 2,
+    "gh": false,
+    "name": "Rathal II d",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "59060": {
+    "beds": 1,
+    "gh": false,
+    "name": "Uthemath I a",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "59061": {
+    "beds": 1,
+    "gh": false,
+    "name": "Uthemath I b",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "59062": {
+    "beds": 2,
+    "gh": false,
+    "name": "Uthemath I c",
+    "rent": 80000,
+    "sqm": 20
+  },
+  "59063": {
+    "beds": 1,
+    "gh": false,
+    "name": "Uthemath I d",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59064": {
+    "beds": 2,
+    "gh": false,
+    "name": "Uthemath I e",
+    "rent": 80000,
+    "sqm": 21
+  },
+  "59065": {
+    "beds": 3,
+    "gh": false,
+    "name": "Uthemath I f",
+    "rent": 150000,
+    "sqm": 56
+  },
+  "59066": {
+    "beds": 8,
+    "gh": true,
+    "name": "Uthemath II",
+    "rent": 250000,
+    "sqm": 93
+  },
+  "59067": {
+    "beds": 1,
+    "gh": false,
+    "name": "Esuph I",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "59068": {
+    "beds": 1,
+    "gh": false,
+    "name": "Esuph II a",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "59069": {
+    "beds": 2,
+    "gh": false,
+    "name": "Esuph II b",
+    "rent": 100000,
+    "sqm": 32
+  },
+  "59070": {
+    "beds": 1,
+    "gh": false,
+    "name": "Esuph III a",
+    "rent": 25000,
+    "sqm": 7
+  },
+  "59071": {
+    "beds": 2,
+    "gh": false,
+    "name": "Esuph III b",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "59072": {
+    "beds": 1,
+    "gh": false,
+    "name": "Esuph IV a",
+    "rent": 25000,
+    "sqm": 10
+  },
+  "59074": {
+    "beds": 2,
+    "gh": false,
+    "name": "Esuph IV c",
+    "rent": 80000,
+    "sqm": 23
+  },
+  "59075": {
+    "beds": 1,
+    "gh": false,
+    "name": "Esuph IV d",
+    "rent": 25000,
+    "sqm": 20
+  },
+  "59076": {
+    "beds": 14,
+    "gh": true,
+    "name": "Horakhal",
+    "rent": 250000,
+    "sqm": 205
+  },
+  "61000": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 1, Flat 01",
+    "rent": 100000,
+    "sqm": 29
+  },
+  "61001": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 1, Flat 02",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "61002": {
+    "beds": 4,
+    "gh": false,
+    "name": "Darashia 1, Flat 03",
+    "rent": 300000,
+    "sqm": 65
+  },
+  "61003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 1, Flat 04",
+    "rent": 100000,
+    "sqm": 28
+  },
+  "61004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 1, Flat 05",
+    "rent": 100000,
+    "sqm": 29
+  },
+  "61005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 1, Flat 11",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "61006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 1, Flat 12",
+    "rent": 150000,
+    "sqm": 46
+  },
+  "61007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 1, Flat 13",
+    "rent": 150000,
+    "sqm": 50
+  },
+  "61008": {
+    "beds": 5,
+    "gh": false,
+    "name": "Darashia 1, Flat 14",
+    "rent": 200000,
+    "sqm": 69
+  },
+  "61009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 01",
+    "rent": 150000,
+    "sqm": 29
+  },
+  "61010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 02",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "61011": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 03",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "61012": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 04",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "61013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 2, Flat 05",
+    "rent": 150000,
+    "sqm": 31
+  },
+  "61014": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 06",
+    "rent": 80000,
+    "sqm": 14
+  },
+  "61015": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 07",
+    "rent": 150000,
+    "sqm": 29
+  },
+  "61016": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 11",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "61017": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 12",
+    "rent": 80000,
+    "sqm": 13
+  },
+  "61018": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 13",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "61019": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 14",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "61020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 2, Flat 15",
+    "rent": 100000,
+    "sqm": 30
+  },
+  "61021": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 16",
+    "rent": 80000,
+    "sqm": 18
+  },
+  "61022": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 17",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "61023": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 2, Flat 18",
+    "rent": 100000,
+    "sqm": 17
+  },
+  "61024": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 3, Flat 01",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "61025": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 3, Flat 02",
+    "rent": 200000,
+    "sqm": 41
+  },
+  "61026": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 3, Flat 03",
+    "rent": 150000,
+    "sqm": 28
+  },
+  "61027": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 3, Flat 04",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "61028": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 3, Flat 05",
+    "rent": 150000,
+    "sqm": 26
+  },
+  "61029": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 3, Flat 11",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "61030": {
+    "beds": 5,
+    "gh": false,
+    "name": "Darashia 3, Flat 12",
+    "rent": 200000,
+    "sqm": 56
+  },
+  "61031": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 3, Flat 13",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "61032": {
+    "beds": 3,
+    "gh": false,
+    "name": "Darashia 3, Flat 14",
+    "rent": 200000,
+    "sqm": 59
+  },
+  "61033": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 4, Flat 01",
+    "rent": 100000,
+    "sqm": 31
+  },
+  "61034": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 4, Flat 02",
+    "rent": 200000,
+    "sqm": 44
+  },
+  "61035": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 4, Flat 03",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "61036": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 4, Flat 04",
+    "rent": 200000,
+    "sqm": 45
+  },
+  "61037": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 4, Flat 05",
+    "rent": 150000,
+    "sqm": 30
+  },
+  "61038": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 4, Flat 11",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "61039": {
+    "beds": 3,
+    "gh": false,
+    "name": "Darashia 4, Flat 12",
+    "rent": 200000,
+    "sqm": 64
+  },
+  "61040": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 4, Flat 13",
+    "rent": 200000,
+    "sqm": 44
+  },
+  "61041": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 4, Flat 14",
+    "rent": 150000,
+    "sqm": 46
+  },
+  "61042": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 5, Flat 01",
+    "rent": 150000,
+    "sqm": 29
+  },
+  "61043": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 02",
+    "rent": 150000,
+    "sqm": 41
+  },
+  "61044": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 5, Flat 03",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "61045": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 04",
+    "rent": 150000,
+    "sqm": 42
+  },
+  "61046": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 5, Flat 05",
+    "rent": 100000,
+    "sqm": 29
+  },
+  "61047": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 11",
+    "rent": 150000,
+    "sqm": 46
+  },
+  "61048": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 12",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "61049": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 13",
+    "rent": 150000,
+    "sqm": 42
+  },
+  "61050": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 5, Flat 14",
+    "rent": 150000,
+    "sqm": 38
+  },
+  "62000": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 6a",
+    "rent": 300000,
+    "sqm": 67
+  },
+  "62001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 6b",
+    "rent": 300000,
+    "sqm": 80
+  },
+  "62002": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 7, Flat 01",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "62003": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 7, Flat 02",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "62004": {
+    "beds": 4,
+    "gh": false,
+    "name": "Darashia 7, Flat 03",
+    "rent": 200000,
+    "sqm": 65
+  },
+  "62005": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 7, Flat 04",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "62006": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 7, Flat 05",
+    "rent": 150000,
+    "sqm": 27
+  },
+  "62007": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 7, Flat 11",
+    "rent": 100000,
+    "sqm": 26
+  },
+  "62008": {
+    "beds": 4,
+    "gh": false,
+    "name": "Darashia 7, Flat 12",
+    "rent": 200000,
+    "sqm": 60
+  },
+  "62009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Darashia 7, Flat 13",
+    "rent": 100000,
+    "sqm": 25
+  },
+  "62010": {
+    "beds": 4,
+    "gh": false,
+    "name": "Darashia 7, Flat 14",
+    "rent": 200000,
+    "sqm": 60
+  },
+  "62011": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 01",
+    "rent": 300000,
+    "sqm": 55
+  },
+  "62012": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 02",
+    "rent": 300000,
+    "sqm": 76
+  },
+  "62013": {
+    "beds": 3,
+    "gh": false,
+    "name": "Darashia 8, Flat 03",
+    "rent": 300000,
+    "sqm": 105
+  },
+  "62014": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 04",
+    "rent": 200000,
+    "sqm": 63
+  },
+  "62015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 05",
+    "rent": 300000,
+    "sqm": 58
+  },
+  "62016": {
+    "beds": 4,
+    "gh": false,
+    "name": "Darashia, Villa",
+    "rent": 800000,
+    "sqm": 120
+  },
+  "62017": {
+    "beds": 14,
+    "gh": true,
+    "name": "Darashia, Western Guildhall",
+    "rent": 500000,
+    "sqm": 223
+  },
+  "62018": {
+    "beds": 16,
+    "gh": true,
+    "name": "Darashia, Eastern Guildhall",
+    "rent": 1000000,
+    "sqm": 272
+  },
+  "62019": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 11",
+    "rent": 200000,
+    "sqm": 46
+  },
+  "62020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 12",
+    "rent": 150000,
+    "sqm": 39
+  },
+  "62021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 13",
+    "rent": 150000,
+    "sqm": 46
+  },
+  "62022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Darashia 8, Flat 14",
+    "rent": 150000,
+    "sqm": 42
+  },
+  "62023": {
+    "beds": 6,
+    "gh": false,
+    "name": "Pirate Shipwreck 1",
+    "rent": 800000,
+    "sqm": 187
+  },
+  "62024": {
+    "beds": 8,
+    "gh": false,
+    "name": "Pirate Shipwreck 2",
+    "rent": 800000,
+    "sqm": 276
+  },
+  "63001": {
+    "beds": 6,
+    "gh": false,
+    "name": "Marble Lane 1",
+    "rent": 600000,
+    "sqm": 228
+  },
+  "63002": {
+    "beds": 3,
+    "gh": false,
+    "name": "Marble Lane 2",
+    "rent": 400000,
+    "sqm": 141
+  },
+  "63003": {
+    "beds": 4,
+    "gh": false,
+    "name": "Marble Lane 3",
+    "rent": 600000,
+    "sqm": 163
+  },
+  "63004": {
+    "beds": 4,
+    "gh": false,
+    "name": "Marble Lane 4",
+    "rent": 400000,
+    "sqm": 134
+  },
+  "63005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Admiral's Avenue 1",
+    "rent": 400000,
+    "sqm": 97
+  },
+  "63006": {
+    "beds": 4,
+    "gh": false,
+    "name": "Admiral's Avenue 2",
+    "rent": 400000,
+    "sqm": 111
+  },
+  "63007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Admiral's Avenue 3",
+    "rent": 300000,
+    "sqm": 99
+  },
+  "63008": {
+    "beds": 2,
+    "gh": false,
+    "name": "Ivory Circle 1",
+    "rent": 400000,
+    "sqm": 101
+  },
+  "63009": {
+    "beds": 2,
+    "gh": false,
+    "name": "Ivory Circle 2",
+    "rent": 400000,
+    "sqm": 142
+  },
+  "63010": {
+    "beds": 3,
+    "gh": false,
+    "name": "Meriana Beach",
+    "rent": 150000,
+    "sqm": 172
+  },
+  "63011": {
+    "beds": 3,
+    "gh": false,
+    "name": "The Yeah Beach Project",
+    "rent": 150000,
+    "sqm": 155
+  },
+  "63012": {
+    "beds": 7,
+    "gh": false,
+    "name": "Ivory Mansion",
+    "rent": 800000,
+    "sqm": 319
+  },
+  "63013": {
+    "beds": 5,
+    "gh": false,
+    "name": "Lion's Head Reef",
+    "rent": 400000,
+    "sqm": 166
+  },
+  "64001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Freedom Street 1",
+    "rent": 200000,
+    "sqm": 47
+  },
+  "64002": {
+    "beds": 4,
+    "gh": false,
+    "name": "Freedom Street 2",
+    "rent": 400000,
+    "sqm": 123
+  },
+  "64003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trader's Point 1",
+    "rent": 200000,
+    "sqm": 42
+  },
+  "64004": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trader's Point 2 (Shop)",
+    "rent": 600000,
+    "sqm": 122
+  },
+  "64005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Trader's Point 3 (Shop)",
+    "rent": 600000,
+    "sqm": 130
+  },
+  "64006": {
+    "beds": 3,
+    "gh": false,
+    "name": "Sugar Street 1",
+    "rent": 200000,
+    "sqm": 60
+  },
+  "64007": {
+    "beds": 3,
+    "gh": false,
+    "name": "Sugar Street 2",
+    "rent": 150000,
+    "sqm": 51
+  },
+  "64008": {
+    "beds": 3,
+    "gh": false,
+    "name": "Sugar Street 3a",
+    "rent": 100000,
+    "sqm": 33
+  },
+  "64009": {
+    "beds": 3,
+    "gh": false,
+    "name": "Sugar Street 3b",
+    "rent": 150000,
+    "sqm": 41
+  },
+  "64010": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sugar Street 4a",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "64011": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sugar Street 4b",
+    "rent": 100000,
+    "sqm": 19
+  },
+  "64012": {
+    "beds": 1,
+    "gh": false,
+    "name": "Sugar Street 4c",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "64013": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sugar Street 4d",
+    "rent": 50000,
+    "sqm": 15
+  },
+  "64014": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 01",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 02",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 03",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64017": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 04",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64018": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 05",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64019": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 06",
+    "rent": 50000,
+    "sqm": 17
+  },
+  "64020": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 07",
+    "rent": 80000,
+    "sqm": 19
+  },
+  "64021": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 08",
+    "rent": 50000,
+    "sqm": 19
+  },
+  "64022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 09",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "64023": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 10",
+    "rent": 50000,
+    "sqm": 18
+  },
+  "64024": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 11",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "64025": {
+    "beds": 2,
+    "gh": false,
+    "name": "Harvester's Haven, Flat 12",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "64026": {
+    "beds": 26,
+    "gh": true,
+    "name": "Ivy Cottage",
+    "rent": 500000,
+    "sqm": 587
+  },
+  "64027": {
+    "beds": 2,
+    "gh": false,
+    "name": "Sugar Street 5",
+    "rent": 150000,
+    "sqm": 25
+  },
+  "64028": {
+    "beds": 17,
+    "gh": true,
+    "name": "Mountain Hideout",
+    "rent": 500000,
+    "sqm": 321
+  },
+  "64029": {
+    "beds": 4,
+    "gh": false,
+    "name": "The Tavern 1a",
+    "rent": 150000,
+    "sqm": 52
+  },
+  "64030": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Tavern 1b",
+    "rent": 100000,
+    "sqm": 38
+  },
+  "64031": {
+    "beds": 3,
+    "gh": false,
+    "name": "The Tavern 1c",
+    "rent": 200000,
+    "sqm": 85
+  },
+  "64032": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Tavern 1d",
+    "rent": 100000,
+    "sqm": 33
+  },
+  "64033": {
+    "beds": 5,
+    "gh": false,
+    "name": "The Tavern 2a",
+    "rent": 300000,
+    "sqm": 111
+  },
+  "64034": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Tavern 2b",
+    "rent": 100000,
+    "sqm": 36
+  },
+  "64035": {
+    "beds": 1,
+    "gh": false,
+    "name": "The Tavern 2c",
+    "rent": 50000,
+    "sqm": 20
+  },
+  "64036": {
+    "beds": 2,
+    "gh": false,
+    "name": "The Tavern 2d",
+    "rent": 100000,
+    "sqm": 27
+  },
+  "65001": {
+    "beds": 2,
+    "gh": false,
+    "name": "Smuggler Backyard 1",
+    "rent": 25000,
+    "sqm": 27
+  },
+  "65002": {
+    "beds": 2,
+    "gh": false,
+    "name": "Smuggler Backyard 2",
+    "rent": 25000,
+    "sqm": 31
+  },
+  "65003": {
+    "beds": 2,
+    "gh": false,
+    "name": "Smuggler Backyard 3",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "65004": {
+    "beds": 1,
+    "gh": false,
+    "name": "Smuggler Backyard 4",
+    "rent": 25000,
+    "sqm": 22
+  },
+  "65005": {
+    "beds": 2,
+    "gh": false,
+    "name": "Smuggler Backyard 5",
+    "rent": 25000,
+    "sqm": 25
+  },
+  "65006": {
+    "beds": 5,
+    "gh": false,
+    "name": "Shady Trail 1",
+    "rent": 100000,
+    "sqm": 34
+  },
+  "65007": {
+    "beds": 2,
+    "gh": false,
+    "name": "Shady Trail 2",
+    "rent": 25000,
+    "sqm": 19
+  },
+  "65008": {
+    "beds": 1,
+    "gh": false,
+    "name": "Shady Trail 3",
+    "rent": 25000,
+    "sqm": 16
+  },
+  "65009": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rum Alley 1",
+    "rent": 25000,
+    "sqm": 25
+  },
+  "65010": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rum Alley 2",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "65011": {
+    "beds": 1,
+    "gh": false,
+    "name": "Rum Alley 3",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "65012": {
+    "beds": 1,
+    "gh": false,
+    "name": "Straycat's Corner 1",
+    "rent": 25000,
+    "sqm": 14
+  },
+  "65013": {
+    "beds": 1,
+    "gh": false,
+    "name": "Straycat's Corner 2",
+    "rent": 50000,
+    "sqm": 27
+  },
+  "65015": {
+    "beds": 2,
+    "gh": false,
+    "name": "Straycat's Corner 4",
+    "rent": 50000,
+    "sqm": 23
+  },
+  "65016": {
+    "beds": 2,
+    "gh": false,
+    "name": "Straycat's Corner 5",
+    "rent": 80000,
+    "sqm": 25
+  },
+  "65017": {
+    "beds": 1,
+    "gh": false,
+    "name": "Straycat's Corner 6",
+    "rent": 25000,
+    "sqm": 13
+  },
+  "65018": {
+    "beds": 2,
+    "gh": false,
+    "name": "Litter Promenade 1",
+    "rent": 25000,
+    "sqm": 15
+  },
+  "65019": {
+    "beds": 1,
+    "gh": false,
+    "name": "Litter Promenade 2",
+    "rent": 50000,
+    "sqm": 14
+  },
+  "65020": {
+    "beds": 1,
+    "gh": false,
+    "name": "Litter Promenade 3",
+    "rent": 25000,
+    "sqm": 21
+  },
+  "65021": {
+    "beds": 1,
+    "gh": false,
+    "name": "Litter Promenade 4",
+    "rent": 25000,
+    "sqm": 18
+  },
+  "65022": {
+    "beds": 2,
+    "gh": false,
+    "name": "Litter Promenade 5",
+    "rent": 25000,
+    "sqm": 23
+  },
+  "65023": {
+    "beds": 31,
+    "gh": true,
+    "name": "The Shelter",
+    "rent": 250000,
+    "sqm": 422
+  }
+}
