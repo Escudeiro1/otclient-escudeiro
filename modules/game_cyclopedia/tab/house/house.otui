@@ -72,46 +72,6 @@ UIWidget
     margin-top: 8
     margin-bottom: 8
     UIWidget
-    //MapRose
-      id: MapBorder
-      anchors.top: parent.top
-      anchors.right: parent.right
-      //image-source: /game_cyclopedia/images/map_borders/automap-rose-idle
-      margin-right: 10
-      margin-top: 50
-      visible: false
-    UIWidget
-      id: LayerIndicator
-      anchors.right: MapBorder.right
-      anchors.top: MapBorder.bottom
-      margin-top: 5
-      margin-right: 5
-      size: 14 67
-      //image-source: /game_cyclopedia/images/map_layers
-      image-rect: 0 0 14 67
-      image-clip: 112 0 14 67
-      visible: false
-    VerticalSeparator
-      id: LayerLine
-      anchors.top: LayerIndicator.top
-      anchors.bottom: LayerIndicator.bottom
-      anchors.left: LayerIndicator.right
-      margin-left: 5
-      visible: false
-    VerticalScrollBar
-      id: LayerScrollbar
-      anchors.top: LayerIndicator.top
-      anchors.bottom: LayerIndicator.bottom
-      anchors.left: LayerIndicator.right
-      margin-left: -1
-      margin-top: -16
-      margin-bottom: -16
-      step: 1
-      minimum: 1
-      maximum: 300
-      image-source: none
-      visible: false
-    UIWidget
       id: MapViewbase
       size: 188 212
       anchors.top: parent.top
@@ -121,57 +81,83 @@ UIWidget
       margin-right: 5
       image-source: /images/ui/panel_flat
       image-border: 10
-      UIWidget
-        id: reload
-        anchors.centerIn: parent
-        image-source: /game_cyclopedia/images/icon-refresh
-        opacity: 1.0
+      UIMinimap
+        id: houseMap
+        anchors.fill: parent
+        margin: 1
+        draggable: true
+        focusable: false
+        color: black
+        zoom: 2
+        min-zoom: -1
+        max-zoom: 5
         visible: false
-        $pressed:
-          opacity: 0.5
       UIWidget
         id: noHouse
         anchors.fill: parent
         margin: 1
         background-color: black
         Label
+          id: noHouseText
           !text: tr('No house selected')
           color: #C0C0C0
           text-auto-resize: true
           anchors.centerIn: parent
-      UIWidget
-        id: houseImage
-        anchors.fill: parent
-        margin: 1
-        visible: false
     UIWidget
-      id: ZoomOutButton
-      anchors.left: MapBorder.left
-      anchors.top: MapBorder.bottom
-      margin-left: 3
-      margin-top: 11
-      //image-source: /game_cyclopedia/images/button_zoommin
-      visible: false
-      $pressed:
-        //image-source: /game_cyclopedia/images/button_zoommin_pressed
+      id: houseLayers
+      image-source: /images/automap/automap_indicator_maplayers
+      anchors.left: MapViewbase.right
+      anchors.top: MapViewbase.top
+      image-clip: 98 0 14 67
+      size: 14 67
+      margin-left: 12
+      margin-top: 4
     UIWidget
-      id: ZoomInButton
-      anchors.left: ZoomOutButton.left
-      anchors.top: ZoomOutButton.bottom
-      margin-top: 2
-      //image-source: /game_cyclopedia/images/button_zoomout
-      visible: false
-      $pressed:
-        //image-source: /game_cyclopedia/images/button_zoomout_pressed
+      id: houseLayersMark
+      anchors.left: houseLayers.right
+      anchors.top: houseLayers.top
+      image-source: /images/automap/automap_indicator_slider_left
+      margin-left: 2
+      margin-top: 28
+    Button
+      id: houseFloorUp
+      image-source: /images/automap/automap_phantom
+      anchors.left: houseLayers.left
+      anchors.right: houseLayers.right
+      anchors.top: houseLayers.top
+      anchors.bottom: houseLayers.verticalCenter
+      @onClick: modules.game_cyclopedia.Cyclopedia.houseMapFloor(-1)
+    Button
+      id: houseFloorDown
+      image-source: /images/automap/automap_phantom
+      anchors.left: houseLayers.left
+      anchors.right: houseLayers.right
+      anchors.top: houseLayers.verticalCenter
+      anchors.bottom: houseLayers.bottom
+      @onClick: modules.game_cyclopedia.Cyclopedia.houseMapFloor(1)
     UIWidget
-      id: MapButton
-      anchors.left: ZoomInButton.left
-      anchors.top: ZoomInButton.bottom
-      margin-top: 2
-      //image-source: /game_cyclopedia/images/button_cyclopediamap
-      visible: false
+      id: houseZoomIn
+      size: 20 20
+      anchors.left: houseLayers.left
+      anchors.top: houseLayers.bottom
+      margin-top: 10
+      margin-left: -3
+      image-source: /images/automap/automap_buttons
+      image-clip: 0 40 20 20
+      @onClick: modules.game_cyclopedia.Cyclopedia.houseMapZoom(true)
       $pressed:
-        //image-source: /game_cyclopedia/images/button_cyclopediamap_pressed
+        image-clip: 20 40 20 20
+    UIWidget
+      id: houseZoomOut
+      size: 20 20
+      anchors.left: houseZoomIn.left
+      anchors.top: houseZoomIn.bottom
+      margin-top: 3
+      image-source: /images/automap/automap_buttons
+      image-clip: 0 20 20 20
+      @onClick: modules.game_cyclopedia.Cyclopedia.houseMapZoom(false)
+      $pressed:
+        image-clip: 20 20 20 20
     Label
       id: AuctionLabel
       anchors.left: MapViewbase.left
@@ -188,6 +174,16 @@ UIWidget
       margin-top: 3
       !text: tr('There is no bid so far.\nBe the first to bid on this house.')
       text-auto-resize: true
+    Label
+      id: bidStatus
+      anchors.left: MapViewbase.left
+      anchors.right: parent.right
+      anchors.top: AuctionText.bottom
+      margin-top: 8
+      margin-right: 7
+      text-wrap: true
+      text-auto-resize: true
+      visible: false
     Label
       id: subAuctionLabel
       anchors.left: MapViewbase.left
@@ -291,7 +287,8 @@ UIWidget
     !text: tr('Place Your Bid')
     text-align: top
     text-offset: 0 1
-    color: #909090
+    color: #F7F7F7
+    font: verdana-11px-antialised
     size: 413 358
     anchors.top: LateralBase.top
     anchors.left: LateralBase.right
@@ -308,7 +305,7 @@ UIWidget
       anchors.bottom: parent.bottom
       anchors.right: parent.right
       //font: verdana-bold-8px-antialiased
-      text-offset: 0 -1
+      text-offset: 0 2
       change-cursor-image: false
     Button
       id: bid
@@ -319,7 +316,7 @@ UIWidget
       anchors.right: cancel.left
       margin-right: 7
       //font: verdana-bold-8px-antialiased
-      text-offset: 0 -1
+      text-offset: 0 2
       change-cursor-image: false
     Label
       !text: tr('House Information')
@@ -330,8 +327,9 @@ UIWidget
     Label
       !text: tr('Name:')
       color: #909090
-      text-align: right
-      size: 90 15
+      text-align: left
+      text-auto-resize: true
+      height: 15
       anchors.top: prev.bottom
       anchors.left: parent.left
       margin-top: 2
@@ -341,12 +339,13 @@ UIWidget
       text-auto-resize: true
       anchors.top: prev.top
       anchors.left: prev.right
-      margin-left: 8
+      margin-left: 4
     Label
       !text: tr('Size:')
       color: #909090
-      text-align: right
-      size: 90 15
+      text-align: left
+      text-auto-resize: true
+      height: 15
       anchors.top: name.bottom
       anchors.left: parent.left
       margin-top: 2
@@ -356,12 +355,13 @@ UIWidget
       text-auto-resize: true
       anchors.top: prev.top
       anchors.left: prev.right
-      margin-left: 8
+      margin-left: 4
     Label
       !text: tr('Max. Beds:')
       color: #909090
-      text-align: right
-      size: 90 15
+      text-align: left
+      text-auto-resize: true
+      height: 15
       anchors.top: size.bottom
       anchors.left: parent.left
       margin-top: 2
@@ -371,12 +371,13 @@ UIWidget
       text-auto-resize: true
       anchors.top: prev.top
       anchors.left: prev.right
-      margin-left: 8
+      margin-left: 4
     Label
       !text: tr('Rent:')
       color: #909090
-      text-align: right
-      size: 90 15
+      text-align: left
+      text-auto-resize: true
+      height: 15
       anchors.top: beds.bottom
       anchors.left: parent.left
       margin-top: 2
@@ -386,11 +387,12 @@ UIWidget
       text-auto-resize: true
       anchors.top: prev.top
       anchors.left: prev.right
-      margin-left: 8
+      margin-left: 4
     UIWidget
       anchors.top: prev.top
       anchors.left: prev.right
       margin-top: 3
+      margin-left: 5
       image-source: /game_cyclopedia/images/icon_gold
     Label
       !text: tr('Auction Information')

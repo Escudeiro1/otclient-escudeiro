@@ -3,24 +3,7 @@ local UI = nil
 function showHouse()
     UI = g_ui.loadUI("house", contentContainer)
     UI:show()
-    UI.LateralBase.LayerScrollbar.decrementButton:setVisible(false)
-    UI.LateralBase.LayerScrollbar.incrementButton:setVisible(false)
-    UI.LateralBase.LayerScrollbar.sliderButton:setImageSource("")
-    --[[
-    g_ui.createWidget("MapLayerSelector", UI.LateralBase.LayerScrollbar.sliderButton)
-    function UI.LateralBase.LayerScrollbar:onValueChange(value)
-        local rect = {
-            width = 14,
-            height = 67,
-            y = 0,
-            x = Cyclopedia.ConvertLayer(value) * 14
-        }
-
-        UI.LateralBase.LayerIndicator:setImageClip(rect)
-    end
-    ]]--
-
-    UI.LateralBase.LayerScrollbar:setValue(150)
+    Cyclopedia.setupHouseMap()
 
     controllerCyclopedia.ui.CharmsBase:setVisible(false)
     controllerCyclopedia.ui.GoldBase:setVisible(true)
@@ -40,8 +23,9 @@ function showHouse()
     end
     UI.TopBase.StatesOption.onOptionChange = Cyclopedia.houseChangeState
 
-    for i = 0, #Cyclopedia.CityList do
-        UI.TopBase.CityOption:addOption(Cyclopedia.CityList[i].Title, i)
+    local towns = Cyclopedia.getHouseTowns()
+    for i = 0, #towns do
+        UI.TopBase.CityOption:addOption(towns[i].Title, i)
     end
     UI.TopBase.CityOption.onOptionChange = Cyclopedia.selectTown
 
@@ -136,6 +120,7 @@ local function resetSelectedInfo()
     UI.LateralBase.transferLabel:setVisible(false)
     UI.LateralBase.transferValue:setVisible(false)
     UI.LateralBase.transferGold:setVisible(false)
+    UI.LateralBase.bidStatus:setVisible(false)
 end
 
 -- Visibility from the Houses/Guildhalls radio and the state combo together,
@@ -172,7 +157,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
         if confirmWindow then
             confirmWindow:destroy()
             confirmWindow = nil
-            Cyclopedia.Toggle(true, false, 5)
         end
     end
 
@@ -190,7 +174,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
                 UI.ListBase:setVisible(true)
                 UI.bidArea:setVisible(false)
-                Cyclopedia.Toggle(true, false)
             end
         elseif message == 17 then
             confirmWindow = displayGeneralBox(tr("Summary"), tr(
@@ -205,7 +188,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.ListBase:setVisible(true)
             UI.bidArea:setVisible(false)
-            Cyclopedia.Toggle(true, false)
         end
     elseif type == 2 then
         if message == 0 then
@@ -219,7 +201,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.moveOutArea:setVisible(false)
             UI.ListBase:setVisible(true)
-            Cyclopedia.Toggle(true, false)
         end
     elseif type == 3 then
         if message == 0 then
@@ -234,7 +215,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.transferArea:setVisible(false)
             UI.ListBase:setVisible(true)
-            Cyclopedia.Toggle(true, false)
         elseif message == 4 then
             confirmWindow = displayGeneralBox(tr("Summary"), tr(
                 "Setting up a house transfer failed.\nA character with this name does not exist."), {
@@ -247,7 +227,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.transferArea:setVisible(false)
             UI.ListBase:setVisible(true)
-            Cyclopedia.Toggle(true, false)
         end
     elseif type == 5 then
         if message == 0 then
@@ -262,7 +241,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.cancelHouseTransferArea:setVisible(false)
             UI.ListBase:setVisible(true)
-            Cyclopedia.Toggle(true, false)
         end
     elseif type == 6 then
         if message == 0 then
@@ -276,7 +254,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
             UI.acceptTransferHouse:setVisible(false)
             UI.ListBase:setVisible(true)
-            Cyclopedia.Toggle(true, false)
         end
     elseif type == 7 and message == 0 then
         confirmWindow = displayGeneralBox(tr("Summary"), tr(
@@ -290,7 +267,6 @@ function Cyclopedia.houseMessage(houseId, type, message)
 
         UI.rejectTransferHouse:setVisible(false)
         UI.ListBase:setVisible(true)
-        Cyclopedia.Toggle(true, false)
     end
 end
 
@@ -313,7 +289,6 @@ function Cyclopedia.rejectTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestRejectHouseTransfer(house.id)
@@ -327,7 +302,6 @@ function Cyclopedia.rejectTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
@@ -346,11 +320,10 @@ function Cyclopedia.rejectTransfer()
                 anchor = AnchorHorizontalCenter
             }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 
-    UI.rejectTransferHouse.name:setText(house.name .. "asdasd")
+    UI.rejectTransferHouse.name:setText(house.name)
     UI.rejectTransferHouse.size:setText(house.sqm .. " sqm")
     UI.rejectTransferHouse.beds:setText(house.beds)
     UI.rejectTransferHouse.rent:setText((house.rent))
@@ -380,7 +353,6 @@ function Cyclopedia.acceptTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestAcceptHouseTransfer(house.id)
@@ -393,7 +365,6 @@ function Cyclopedia.acceptTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
@@ -412,11 +383,10 @@ function Cyclopedia.acceptTransfer()
                 anchor = AnchorHorizontalCenter
             }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 
-    UI.acceptTransferHouse.name:setText(house.name .. "22222")
+    UI.acceptTransferHouse.name:setText(house.name)
     UI.acceptTransferHouse.size:setText(house.sqm .. " sqm")
     UI.acceptTransferHouse.beds:setText(house.beds)
     UI.acceptTransferHouse.rent:setText((house.rent))
@@ -446,7 +416,6 @@ function Cyclopedia.cancelTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestCancelHouseTransfer(house.id)
@@ -460,7 +429,6 @@ function Cyclopedia.cancelTransfer()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
@@ -479,11 +447,10 @@ function Cyclopedia.cancelTransfer()
                     anchor = AnchorHorizontalCenter
                 }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 
-    UI.cancelHouseTransferArea.name:setText(house.name .. "888")
+    UI.cancelHouseTransferArea.name:setText(house.name)
     UI.cancelHouseTransferArea.size:setText(house.sqm .. " sqm")
     UI.cancelHouseTransferArea.beds:setText(house.beds)
     UI.cancelHouseTransferArea.rent:setText((house.rent))
@@ -549,7 +516,6 @@ function Cyclopedia.transferHouse()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestTransferHouse(house.id, timestemp, transfer, tonumber(value))
@@ -563,7 +529,6 @@ function Cyclopedia.transferHouse()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
@@ -582,11 +547,10 @@ function Cyclopedia.transferHouse()
                 anchor = AnchorHorizontalCenter
             }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 
-    UI.transferArea.name:setText(house.name .. "44444")
+    UI.transferArea.name:setText(house.name)
     UI.transferArea.size:setText(house.sqm .. " sqm")
     UI.transferArea.beds:setText(house.beds)
     UI.transferArea.rent:setText((house.rent))
@@ -683,7 +647,6 @@ function Cyclopedia.moveOutHouse()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestMoveOutHouse(house.id, timestemp)
@@ -693,7 +656,6 @@ function Cyclopedia.moveOutHouse()
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
@@ -712,7 +674,6 @@ function Cyclopedia.moveOutHouse()
                     anchor = AnchorHorizontalCenter
                 }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 
@@ -765,22 +726,22 @@ function Cyclopedia.bidHouse(widget)
 
     UI.ListBase:setVisible(false)
     UI.bidArea:setVisible(true)
-    UI.bidArea.name:setText(house.name .. "99889")
+    UI.bidArea.name:setText(house.name)
     UI.bidArea.size:setText(house.sqm .. " sqm")
     UI.bidArea.beds:setText(house.beds)
     UI.bidArea.rent:setText((house.rent))
 
     local labels = {{
         id = "hightestBidder",
-        name = "Highest Bidder: ",
+        name = "Highest Bidder:",
         value = house.bidName
     }, {
         id = "endTime",
-        name = "End Time: ",
+        name = "End Time:",
         value = time
     }, {
         id = "highestBid",
-        name = "Highest Bid: ",
+        name = "Highest Bid:",
         value = house.hightestBid
     }}
 
@@ -806,12 +767,17 @@ function Cyclopedia.bidHouse(widget)
         for index, data in ipairs(labels) do
             local label = g_ui.createWidget("Label", UI.bidArea)
             label:setId(data.id)
-            label:setText(data.name .. "44242")
+            label:setText(data.name)
             label:setColor("#909090")
-            label:setWidth(90)
             label:setHeight(15)
-            label:setTextAlign(AlignRight)
+            label:setTextAlign(AlignLeft)
             label:setMarginTop(2)
+            if data.id == "highestBid" then
+                -- gold rows share a fixed label column so their numbers line up
+                label:setWidth(72)
+            else
+                label:setTextAutoResize(true)
+            end
 
             if index == 1 then
                 label:addAnchor(AnchorTop, "prev", AnchorBottom)
@@ -821,20 +787,18 @@ function Cyclopedia.bidHouse(widget)
                 label:addAnchor(AnchorLeft, "parent", AnchorLeft)
             end
 
-            label:setMarginLeft(4)
-
             local value = g_ui.createWidget("Label", UI.bidArea)
             value:setId(data.id .. "_value")
             value:setText(data.value)
             value:setColor("#C0C0C0")
             value:addAnchor(AnchorTop, "prev", AnchorTop)
             value:addAnchor(AnchorLeft, "prev", AnchorRight)
-            value:setMarginLeft(5)
+            value:setMarginLeft(4)
 
             if data.id == "highestBid" then
                 value:setWidth(90)
                 value:setHeight(15)
-                value:setMarginLeft(7)
+                value:setMarginLeft(11)
                 value:setTextAlign(AlignRight)
 
                 local gold = g_ui.createWidget("UIWidget", UI.bidArea)
@@ -850,11 +814,11 @@ function Cyclopedia.bidHouse(widget)
         if house.bidHolderLimit then
             local label = g_ui.createWidget("Label", UI.bidArea)
             label:setId("yourLimit")
-            label:setText("Your Limit: ")
+            label:setText("Your Limit:")
             label:setColor("#909090")
-            label:setWidth(90)
+            label:setWidth(72)
             label:setHeight(15)
-            label:setTextAlign(AlignRight)
+            label:setTextAlign(AlignLeft)
             label:setMarginTop(2)
             label:addAnchor(AnchorTop, "highestBid", AnchorBottom)
             label:addAnchor(AnchorLeft, "parent", AnchorLeft)
@@ -947,7 +911,6 @@ function Cyclopedia.bidHouse(widget)
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
 
             Cyclopedia.requestBidHouse(house.id, value)
@@ -957,13 +920,12 @@ function Cyclopedia.bidHouse(widget)
             if confirmWindow then
                 confirmWindow:destroy()
                 confirmWindow = nil
-                Cyclopedia.Toggle(true, false, 5)
             end
         end
 
         if not confirmWindow then
             confirmWindow = displayGeneralBox(tr("Confirm House Action"), tr(
-                "Do you really want to bid on the house '%s'?\nYour have set your bid limit to %s.\nWhen the auction ends, the winning bid plus the rent of %sfor the first month will be debited from your\nbank account.",
+                "Do you really want to bid on the house '%s'?\nYour have set your bid limit to %s.\nWhen the auction ends, the winning bid plus the rent of %s for the first month will be debited from your\nbank account.",
                 house.name, comma_value(value), (house.rent)), {
                 {
                     text = tr("Yes"),
@@ -976,7 +938,6 @@ function Cyclopedia.bidHouse(widget)
                 anchor = AnchorHorizontalCenter
             }, yesCallback, noCallback)
 
-            Cyclopedia.Toggle(true, false)
         end
     end
 end
@@ -1059,9 +1020,6 @@ end
 
 function Cyclopedia.reloadHouseList()
     if not table.empty(Cyclopedia.House.Data) then
-        UI.LateralBase.MapViewbase.noHouse:setVisible(false)
-        UI.LateralBase.MapViewbase.houseImage:setVisible(false)
-        UI.LateralBase.MapViewbase.reload:setVisible(true)
         UI.LateralBase.AuctionLabel:setVisible(true)
         UI.LateralBase.AuctionText:setVisible(true)
         UI.ListBase.AuctionList:destroyChildren()
@@ -1133,9 +1091,7 @@ function Cyclopedia.reloadHouseList()
             Cyclopedia.selectHouse(UI.ListBase.AuctionList:getChildByIndex(1))
         end
     else
-        UI.LateralBase.MapViewbase.noHouse:setVisible(true)
-        UI.LateralBase.MapViewbase.reload:setVisible(false)
-        UI.LateralBase.MapViewbase.houseImage:setVisible(false)
+        Cyclopedia.showHouseMap(nil)
         UI.LateralBase.AuctionLabel:setVisible(false)
         UI.LateralBase.AuctionText:setVisible(false)
         UI.LateralBase.icons:destroyChildren()
@@ -1175,6 +1131,8 @@ function Cyclopedia.loadHouseList(data, other)
             sqm = house.sqm,
             gh = house.gh,
             shop = house.shop,
+            town = house.town,
+            entry = house.entry,
             visible = not house.gh,
             state = value.state,
             owner = names.owner or "?",
@@ -1402,37 +1360,32 @@ function Cyclopedia.selectHouse(widget)
         button:setMarginBottom(7)
         button.onClick = Cyclopedia.bidHouse
 
-        if widget.data.canBid == 0 then
-            button:setEnabled(true)
-            button:setTooltip("")
+        -- canBid is the server's reason code (canary BidErrorMessage, 0 = ok)
+        local status = UI.LateralBase.bidStatus
+        status:removeAnchor(AnchorTop)
+        if UI.LateralBase.yourLimitLabel:isVisible() then
+            status:addAnchor(AnchorTop, "yourLimitLabel", AnchorBottom)
         else
-            -- canBid is the server's reason code (canary BidErrorMessage)
-            local reason = Cyclopedia.HouseBidErrors[widget.data.canBid]
-            button:setTooltip(reason or tr("You cannot bid on this house (code %d).", widget.data.canBid or -1))
-            button:setEnabled(false)
+            status:addAnchor(AnchorTop, "AuctionText", AnchorBottom)
         end
+
+        if widget.data.isYourBid then
+            status:setText(tr("You hold the highest bid on this house."))
+            status:setColor("#44AD25")
+        elseif widget.data.canBid == 0 then
+            status:setText(tr("You meet the requirements to bid on this house."))
+            status:setColor("#44AD25")
+        else
+            local reason = Cyclopedia.HouseBidErrors[widget.data.canBid]
+            status:setText(reason or tr("You cannot bid on this house (code %d).", widget.data.canBid or -1))
+            status:setColor("#D33C3C")
+        end
+        status:setVisible(true)
+        button:setEnabled(widget.data.canBid == 0)
     end
 
     widget:setChecked(true)
-    UI.LateralBase.MapViewbase.noHouse:setVisible(false)
-    UI.LateralBase.MapViewbase.reload:setVisible(true)
-    UI.LateralBase.MapViewbase.houseImage:setVisible(false)
-
-    local imagePath = string.format("/game_cyclopedia/images/houses/%s.png", widget.data.id)
-    if g_resources.fileExists(imagePath) then
-        UI.LateralBase.MapViewbase.noHouse:setVisible(false)
-        UI.LateralBase.MapViewbase.reload:setVisible(false)
-        UI.LateralBase.MapViewbase.houseImage:setVisible(true)
-        UI.LateralBase.MapViewbase.houseImage:setImageSource(imagePath)
-    end
-
-    --[[
-    UI.LateralBase.MapViewbase.houseImage:setVisible(true)
-    HTTP.downloadImage("https://next-stage.pl/images/houses/A%20Horse%20farm.jpeg", function(path, err)
-        if err then g_logger.warning("HTTP error: " .. err .. " - ") return end
-        UI.LateralBase.MapViewbase.houseImage:setImageSource(path)
-      end)
-    ]]--
+    Cyclopedia.showHouseMap(widget.data)
 
     Cyclopedia.House.lastSelectedHouse = widget
 end
@@ -1441,7 +1394,8 @@ end
 -- state, so this comes from /game_cyclopedia/houses.json, keyed by the house
 -- client id (canary's houses.xml "clientid", the same id the list packet uses):
 -- { "<clientId>": { "name": "", "town": "", "description": "", "rent": 0,
---                   "beds": 0, "sqm": 0, "gh": false, "shop": false } }
+--                   "beds": 0, "sqm": 0, "gh": false, "shop": false,
+--                   "entry": { "x": 0, "y": 0, "z": 0 } } }
 HOUSE = {}
 local HOUSE_METADATA_FILE = '/game_cyclopedia/houses.json'
 
@@ -1482,7 +1436,8 @@ function Cyclopedia.getHouseInfo(clientId)
         beds = tonumber(entry.beds) or 0,
         sqm = tonumber(entry.sqm) or 0,
         gh = flag(entry.gh),
-        shop = flag(entry.shop)
+        shop = flag(entry.shop),
+        entry = type(entry.entry) == "table" and entry.entry or nil
     }
 end
 
@@ -1587,4 +1542,129 @@ function Cyclopedia.onHouseAuctionMessage(houseId, actionType, index, success)
     if pushedTown ~= lastTown then
         Cyclopedia.requestHouseList(lastTown)
     end
+end
+
+-- House map preview (MapViewbase). Uses the world map bundled with the client
+-- assets (satellite view on surface floors, static minimap underground), so it
+-- does not depend on what the player has explored and never touches g_minimap.
+local SEA_FLOOR = 7
+
+local function houseMapAlive()
+    return UI and not UI:isDestroyed() and UI.LateralBase.MapViewbase.houseMap
+end
+
+local function loadHouseMapFloors(floor)
+    -- loadFloors is incremental: floors already indexed are skipped.
+    local assetsDir = string.format("/data/things/%d", g_game.getClientVersion())
+    g_satelliteMap.loadFloors(assetsDir, math.min(floor, SEA_FLOOR), math.max(floor, SEA_FLOOR))
+end
+
+local function refreshHouseMapFloor()
+    if not houseMapAlive() then
+        return
+    end
+    local base = UI.LateralBase
+    local map = base.MapViewbase.houseMap
+    local floor = map:getCameraPosition().z
+
+    loadHouseMapFloors(floor)
+    map:setSatelliteMode(floor <= SEA_FLOOR and g_satelliteMap.hasChunksForView(floor))
+
+    base.houseLayers:setImageClip((floor * 14) .. ' 0 14 67')
+    base.houseLayersMark:setMarginTop(((floor + 1) * 4) - 3)
+
+    -- Entrance marker only on the entrance's own floor.
+    local entry = map.houseEntry
+    if map.cross then
+        map.cross:setVisible(entry ~= nil and entry.z == floor)
+    end
+end
+
+function Cyclopedia.setupHouseMap()
+    local map = UI.LateralBase.MapViewbase.houseMap
+    map:setUseStaticMinimap(true)
+    -- Preview only: no auto-walk or flag menu on click (dragging still pans).
+    map.onMouseRelease = function()
+        return true
+    end
+    Cyclopedia.showHouseMap(nil)
+end
+
+function Cyclopedia.showHouseMap(house)
+    if not houseMapAlive() then
+        return
+    end
+    local base = UI.LateralBase
+    local map = base.MapViewbase.houseMap
+    local entry = house and house.entry
+    local hasMap = entry ~= nil and tonumber(entry.x) ~= nil
+
+    map:setVisible(hasMap)
+    base.MapViewbase.noHouse:setVisible(not hasMap)
+    base.MapViewbase.noHouse.noHouseText:setText(house and tr('No map position for this house') or tr('No house selected'))
+    for _, id in ipairs({ 'houseLayers', 'houseLayersMark', 'houseFloorUp', 'houseFloorDown', 'houseZoomIn', 'houseZoomOut' }) do
+        base[id]:setVisible(hasMap)
+    end
+    if not hasMap then
+        map.houseEntry = nil
+        return
+    end
+
+    local pos = { x = entry.x, y = entry.y, z = entry.z }
+    map.houseEntry = pos
+    loadHouseMapFloors(pos.z)
+    map:setCameraPosition(pos)
+    map:setCrossPosition({ x = pos.x, y = pos.y, z = pos.z })
+    map.cross:setIcon('/game_cyclopedia/images/icon-map-house')
+    refreshHouseMapFloor()
+end
+
+function Cyclopedia.houseMapFloor(delta)
+    if not houseMapAlive() then
+        return
+    end
+    local map = UI.LateralBase.MapViewbase.houseMap
+    local floor = map:getCameraPosition().z
+    if delta < 0 and floor > 0 then
+        map:floorUp(1)
+    elseif delta > 0 and floor < 15 then
+        map:floorDown(1)
+    end
+    refreshHouseMapFloor()
+end
+
+function Cyclopedia.houseMapZoom(zoomIn)
+    if not houseMapAlive() then
+        return
+    end
+    local map = UI.LateralBase.MapViewbase.houseMap
+    if zoomIn then
+        map:zoomIn()
+    else
+        map:zoomOut()
+    end
+end
+
+-- Town dropdown: the towns that actually have houses in houses.json, so the
+-- names always match the server's town names; the hardcoded list is only a
+-- fallback when the metadata file is missing.
+function Cyclopedia.getHouseTowns()
+    local seen, names = {}, {}
+    for _, entry in pairs(HOUSE) do
+        local town = entry.town
+        if type(town) == "string" and town ~= "" and not seen[town] then
+            seen[town] = true
+            names[#names + 1] = town
+        end
+    end
+    if #names == 0 then
+        return Cyclopedia.CityList
+    end
+
+    table.sort(names)
+    local towns = { [0] = Cyclopedia.CityList[0] }
+    for i, name in ipairs(names) do
+        towns[i] = { Title = name }
+    end
+    return towns
 end

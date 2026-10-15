@@ -7,8 +7,8 @@ HouseBidArea < UIWidget
   Label
     !text: tr('Set bid limit:')
     color: #909090
-    text-align: right
-    size: 90 15
+    text-align: left
+    size: 72 15
     anchors.top: parent.top
     anchors.left: parent.left
     margin-top: 2
@@ -19,6 +19,7 @@ HouseBidArea < UIWidget
     anchors.top: parent.top
     anchors.left: prev.right
     padding-top: 1
+    padding-right: 5
     margin-top: 1
     margin-left: 5
   UIWidget
