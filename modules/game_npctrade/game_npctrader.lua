@@ -102,6 +102,8 @@ function controllerNpcTrader:onCloseNpcTrade()
         if controllerNpcTrader.ui and controllerNpcTrader.ui:isVisible() then
             controllerNpcTrader:unloadHtml()
         end
+        -- the window may close under a still mouse: drop a tooltip left by its buttons
+        g_tooltip.hideIfOwnerGone()
         controllerNpcTrader.isTradeOpen = false
         if controllerNpcTrader.sellAllWithDelayEvent then
             removeEvent(controllerNpcTrader.sellAllWithDelayEvent)

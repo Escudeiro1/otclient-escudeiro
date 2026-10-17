@@ -5,10 +5,15 @@ g_tooltip = {}
 local toolTipLabel
 local SpecialToolTipLabel
 local currentHoveredWidget
+-- widget whose hover tooltip is on screen (nil for tooltips shown directly by modules)
+local tooltipOwner
 
 -- private functions
 local function moveToolTip(first)
     if not first and (not toolTipLabel:isVisible() or toolTipLabel:getOpacity() < 0.1) then
+        return
+    end
+    if not first and g_tooltip.hideIfOwnerGone() then
         return
     end
 
@@ -37,6 +42,9 @@ local function moveSpecialToolTip(first)
     if not first and (not SpecialToolTipLabel:isVisible() or SpecialToolTipLabel:getOpacity() < 0.1) then
         return
     end
+    if not first and g_tooltip.hideIfOwnerGone() then
+        return
+    end
 
     local pos = g_window.getMousePosition()
     local windowSize = g_window.getSize()
@@ -60,8 +68,96 @@ local function moveSpecialToolTip(first)
     SpecialToolTipLabel:setPosition(pos)
 end
 
+-- Delayed tooltips (opt-in): a widget, or any ancestor, with tooltipDelayed = true
+-- shows its tooltip only after the mouse rests on it for TOOLTIP_DELAY ms, stays
+-- still (does not follow the cursor) and hides again as soon as the mouse moves.
+local TOOLTIP_DELAY = 500
+local delayedEvent
+local delayedWidget
+local delayedShown = false
+local delayedMousePos
+local stopDelayedTooltip -- defined below; used by the mouse-move handler
+
+local function wantsDelayedTooltip(widget)
+    local w = widget
+    for _ = 1, 6 do
+        if not w then
+            return false
+        end
+        if w.tooltipDelayed then
+            return true
+        end
+        w = w:getParent()
+    end
+    return false
+end
+
+local function hideDelayedTooltip(widget)
+    if widget.tooltip or widget.parseColoreDisplay then
+        g_tooltip.hide()
+    end
+    if widget.specialtooltip then
+        g_tooltip.hideSpecial()
+    end
+end
+
+local function showDelayedTooltip()
+    delayedEvent = nil
+    local widget = delayedWidget
+    if not widget or widget:isDestroyed() or g_mouse.isPressed() or
+        not widget:containsPoint(g_window.getMousePosition()) then
+        return
+    end
+    if widget.tooltip then
+        g_tooltip.display(widget.tooltip, true)
+    elseif widget.specialtooltip then
+        g_tooltip.displaySpecial(widget.specialtooltip, true)
+    elseif widget.parseColoreDisplay then
+        g_tooltip.parseColoreDisplay(widget.parseColoreDisplay, true)
+    end
+    delayedShown = true
+    tooltipOwner = widget
+end
+
+local function onDelayedMouseMove()
+    if not delayedWidget then
+        return
+    end
+    if delayedWidget:isDestroyed() or g_tooltip.hideIfOwnerGone() then
+        stopDelayedTooltip()
+        return
+    end
+    -- Only a real cursor move counts: HTML windows re-apply their bindings every
+    -- 50 ms, which can fire mouse-move events while the mouse is still.
+    local pos = g_window.getMousePosition()
+    if delayedMousePos and pos.x == delayedMousePos.x and pos.y == delayedMousePos.y then
+        return
+    end
+    delayedMousePos = pos
+    if delayedShown then
+        delayedShown = false
+        hideDelayedTooltip(delayedWidget)
+    end
+    removeEvent(delayedEvent)
+    delayedEvent = scheduleEvent(showDelayedTooltip, TOOLTIP_DELAY)
+end
+
+function stopDelayedTooltip()
+    removeEvent(delayedEvent)
+    delayedEvent = nil
+    delayedWidget = nil
+    delayedShown = false
+    delayedMousePos = nil
+    disconnect(rootWidget, {
+        onMouseMove = onDelayedMouseMove
+    })
+end
+
 local function onWidgetDestroy(widget)
     if widget == currentHoveredWidget then
+        if widget == delayedWidget then
+            stopDelayedTooltip()
+        end
         if widget.tooltip or widget.parseColoreDisplay then
             g_tooltip.hide()
         end
@@ -74,18 +170,35 @@ end
 
 local function onWidgetHoverChange(widget, hovered)
     if hovered then
+        if (widget.tooltip or widget.specialtooltip or widget.parseColoreDisplay) and wantsDelayedTooltip(widget) then
+            stopDelayedTooltip()
+            currentHoveredWidget = widget
+            delayedWidget = widget
+            delayedMousePos = g_window.getMousePosition()
+            delayedEvent = scheduleEvent(showDelayedTooltip, TOOLTIP_DELAY)
+            connect(rootWidget, {
+                onMouseMove = onDelayedMouseMove
+            })
+            return
+        end
         if widget.tooltip and not g_mouse.isPressed() then
             g_tooltip.display(widget.tooltip)
             currentHoveredWidget = widget
+            tooltipOwner = widget
         elseif widget.specialtooltip and not g_mouse.isPressed() then
             g_tooltip.displaySpecial(widget.specialtooltip)
             currentHoveredWidget = widget
+            tooltipOwner = widget
         elseif widget.parseColoreDisplay and not g_mouse.isPressed() then
             g_tooltip.parseColoreDisplay(widget.parseColoreDisplay)
             currentHoveredWidget = widget
+            tooltipOwner = widget
         end
     else
         if widget == currentHoveredWidget then
+            if widget == delayedWidget then
+                stopDelayedTooltip()
+            end
             if widget.tooltip or widget.parseColoreDisplay then
                 g_tooltip.hide()
             end
@@ -178,7 +291,9 @@ function g_tooltip.terminate()
     g_tooltip = nil
 end
 
-function g_tooltip.display(text)
+-- still = true: shown at the cursor but does not follow it (delayed tooltips)
+function g_tooltip.display(text, still)
+    tooltipOwner = nil
     if not text then
         return
     end
@@ -205,12 +320,16 @@ function g_tooltip.display(text)
     g_effects.fadeIn(toolTipLabel, 100)
     moveToolTip(true)
 
+    if still then
+        return
+    end
     connect(rootWidget, {
         onMouseMove = moveToolTip
     })
 end
 
-function g_tooltip.parseColoreDisplay(text)
+function g_tooltip.parseColoreDisplay(text, still)
+    tooltipOwner = nil
     if text == nil or text:len() == 0 then
         return
     end
@@ -227,12 +346,16 @@ function g_tooltip.parseColoreDisplay(text)
     g_effects.fadeIn(toolTipLabel, 100)
     moveToolTip(true)
 
+    if still then
+        return
+    end
     connect(rootWidget, {
         onMouseMove = moveToolTip
     })
 end
 
-function g_tooltip.displaySpecial(special)
+function g_tooltip.displaySpecial(special, still)
+    tooltipOwner = nil
     if not SpecialToolTipLabel then
         return
     end
@@ -286,12 +409,36 @@ function g_tooltip.displaySpecial(special)
     g_effects.fadeIn(SpecialToolTipLabel, 100)
     moveSpecialToolTip(true)
 
+    if still then
+        return
+    end
     connect(rootWidget, {
         onMouseMove = moveSpecialToolTip
     })
 end
 
+-- Safety net: hide a hover tooltip whose widget was destroyed or no longer
+-- has the cursor over it (e.g. a window closed under a still mouse without
+-- the usual hover-out / destroy notification reaching the tooltip).
+function g_tooltip.hideIfOwnerGone()
+    local owner = tooltipOwner
+    if not owner then
+        return false
+    end
+    if not owner:isDestroyed() and owner:isVisible() and owner:containsPoint(g_window.getMousePosition()) then
+        return false
+    end
+    g_tooltip.hide()
+    g_tooltip.hideSpecial()
+    if currentHoveredWidget == owner then
+        currentHoveredWidget = nil
+    end
+    stopDelayedTooltip()
+    return true
+end
+
 function g_tooltip.hide()
+    tooltipOwner = nil
     g_effects.fadeOut(toolTipLabel, 100)
 
     disconnect(rootWidget, {
@@ -300,6 +447,7 @@ function g_tooltip.hide()
 end
 
 function g_tooltip.hideSpecial()
+    tooltipOwner = nil
     g_effects.fadeOut(SpecialToolTipLabel, 100)
     disconnect(rootWidget, {
         onMouseMove = moveSpecialToolTip

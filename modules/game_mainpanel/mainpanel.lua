@@ -116,6 +116,7 @@ local function createButton_large(id, description, image, callback, special, fro
     end
     button:setId(id)
     button:setTooltip(description)
+    button.tooltipDelayed = true -- delayed tooltip (see TOOLTIP_DELAY in corelib/ui/tooltip.lua)
     button:setImageSource(image)
     button:setImageClip('0 0 108 20')
     button.onMouseRelease = function(widget, mousePos, mouseButton)
@@ -150,6 +151,7 @@ local function createButton(id, description, image, callback, special, front, in
 
     button:setId(id)
     button:setTooltip(description)
+    button.tooltipDelayed = true -- delayed tooltip (see TOOLTIP_DELAY in corelib/ui/tooltip.lua)
     button:setSize('20 20')
     button:setImageSource(image)
     button:setImageClip('0 0 20 20')

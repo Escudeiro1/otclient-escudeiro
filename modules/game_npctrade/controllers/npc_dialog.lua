@@ -150,6 +150,11 @@ function controllerNpcTrader:initNpcWindow(creature, buttons)
         self:loadHtml('templates/game_npctrader.html')
         self:fixTradeButtonHeights()
     end
+    -- NPC answer buttons (yes, no, trade...): delayed tooltip
+    local npcButtons = self:findWidget("#panelBotons")
+    if npcButtons then
+        npcButtons.tooltipDelayed = true
+    end
     self:setupWindowDragBehavior()
     local creatureOutfit = self:findWidget("#creatureOutfit")
     if creatureOutfit then
