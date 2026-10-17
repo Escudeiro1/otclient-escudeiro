@@ -20,7 +20,7 @@ local statsBarsDimensions = {
         height = 52
     },
     Default = {
-        height = 52
+        height = 35
     },
     Parallel = {
         height = 55

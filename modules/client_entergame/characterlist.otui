@@ -545,7 +545,7 @@ MainWindow
 
       Label
         id: premiumBenefitSpellsText
-        !text: tr('No level cap while training your skills offline')
+        !text: tr('10%% bonus to experience, proficiency and exercise training')
         anchors.top: premiumBenefitSpellsIcon.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         margin-top: 2
@@ -573,13 +573,16 @@ MainWindow
 
       Label
         id: premiumBenefitMountsText
-        !text: tr('Tame mounts to travel faster')
+        !text: tr('Extra regeneration and access to all 7 blessings from Henricus')
         anchors.top: premiumBenefitMountsIcon.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         margin-top: 2
-        text-auto-resize: true
         font: verdana-11px-monochrome
         color: #d7d7d7
+        width: 160
+        text-wrap: true
+        text-align: center
+        text-vertical-auto-resize: true
 
     UIWidget
       id: premiumBenefitVip
@@ -599,7 +602,7 @@ MainWindow
 
       Label
         id: premiumBenefitVipText
-        !text: tr('Imbue items with stronger effect')
+        !text: tr("Imbuements don't wear down while you're in a protection zone")
         anchors.top: premiumBenefitVipIcon.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         margin-top: 2

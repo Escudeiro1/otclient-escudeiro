@@ -1177,17 +1177,29 @@ function BattleListInstance:removeCreature(creature, all)
         end
         
         local sortType = self:getSortType()
-        local valuetoSearch = self:getAttributeByOrderType(battleButton, sortType)
-        assert(valuetoSearch, 'Could not find information (data) in sent battleButton')
+        -- no sort data: skip straight to the id fallback below
+        local valuetoSearch = self:getAttributeByOrderType(battleButton, sortType) or {}
         valuetoSearch.id = creatureId
         
         local index = binarySearch(self.binaryTree, valuetoSearch, BSComparatorSortType, sortType, creatureId)
-        if index ~= nil and creatureId == self.binaryTree[index].id then
-            table.remove(self.binaryTree, index)
-            BattleButtonPool:release(battleButton)
-            self.battleButtons[creatureId] = nil
-            return true
+        if index == nil or creatureId ~= self.binaryTree[index].id then
+            -- The sorted lookup missed (its sort value went stale): find it by id
+            -- so a dead creature can never stay stuck in the list.
+            index = nil
+            for i, entry in ipairs(self.binaryTree) do
+                if entry.id == creatureId then
+                    index = i
+                    break
+                end
+            end
         end
+        if index ~= nil then
+            table.remove(self.binaryTree, index)
+        end
+        -- release the button even if the tree had lost track of it
+        BattleButtonPool:release(battleButton)
+        self.battleButtons[creatureId] = nil
+        return true
     end
     return false
 end
@@ -2375,6 +2387,11 @@ function onCreatureHealthPercentChange(creature, healthPercent, oldHealthPercent
             end
         end
     end
+
+    -- A creature at 0% is dead: drop it even if no disappear event follows.
+    if healthPercent == 0 and not creature:isLocalPlayer() then
+        queueBattleRemoval(creature)
+    end
 end
 
 function onCreatureAppear(creature) -- Update battleButton once a creature appear (add)
@@ -2391,26 +2408,40 @@ function onCreatureAppear(creature) -- Update battleButton once a creature appea
     end
 end
 
-function onCreatureDisappear(creature) -- Update battleButton once a creature disappear (remove/dead)
-    -- Batch simultaneous disappears (e.g. AoE killing 50+ monsters) so all removals
-    -- process in one deferred event and correctBattleButtons runs only once.
+-- Batch simultaneous removals (e.g. AoE killing 50+ monsters) so they all
+-- process in one deferred event and correctBattleButtons runs only once.
+function queueBattleRemoval(creature)
     m_pendingDisappear[#m_pendingDisappear + 1] = creature
-    if not m_disappearPending then
-        m_disappearPending = true
-        scheduleEvent(function()
-            m_disappearPending = false
-            local batch = m_pendingDisappear
-            m_pendingDisappear = {}
-            for _, c in ipairs(batch) do
+    if m_disappearPending then
+        return
+    end
+    m_disappearPending = true
+    scheduleEvent(function()
+        m_disappearPending = false
+        local batch = m_pendingDisappear
+        m_pendingDisappear = {}
+        for _, c in ipairs(batch) do
+            -- A teleport fires disappear + appear back to back; the deferred
+            -- removal must not drop a creature that is alive and back on the map.
+            local stillThere = c:getPosition() ~= nil and c:getHealthPercent() > 0 and not c:isDead()
+            if not stillThere then
                 for _, instance in pairs(BattleListManager.instances) do
-                    instance:removeCreature(c)
+                    -- one failing removal must not strand the rest of the batch
+                    local ok, err = pcall(instance.removeCreature, instance, c)
+                    if not ok then
+                        g_logger.error('[battle] removeCreature failed: ' .. tostring(err))
+                    end
                 end
             end
-            for _, instance in pairs(BattleListManager.instances) do
-                instance:correctBattleButtons()
-            end
-        end, 0)
-    end
+        end
+        for _, instance in pairs(BattleListManager.instances) do
+            instance:correctBattleButtons()
+        end
+    end, 0)
+end
+
+function onCreatureDisappear(creature) -- Update battleButton once a creature disappear (remove/dead)
+    queueBattleRemoval(creature)
 end
 
 -- BattleWindow controllers
